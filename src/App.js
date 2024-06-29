@@ -1,13 +1,14 @@
 // import SetLevel from './SetLevel';
+import { Game } from "./components/AfterGame/Game";
+
 
 const App = () =>{
   return (
-    <div>
+    <>
       {/* <SetLevel></SetLevel> */}
-      {/* <Game></Game> */}
-      <h1>ahojte</h1>
+      <Game/>
       
-    </div>
+    </>
   );
 }
 
