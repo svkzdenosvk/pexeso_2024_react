@@ -1,9 +1,12 @@
-const Button = () =>{
+export const Button = ({my_setLevel,id,text}) =>{
+
+    //set level btn´s    
+
     return (
-      <>
-        <button></button>
-      </>
+     
+       <div onClick={(e) => {my_setLevel(e,id)}} id={id}>{text}</div>
+      
     );
   }
   
-  export default Button;
+  // export default Button;
