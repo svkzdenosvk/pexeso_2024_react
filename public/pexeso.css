@@ -8,6 +8,8 @@ html{
   box-sizing: border-box;
   height: 100vh;
   position:relative;
+  overflow:hidden;
+
 }
 #timeAndStart {
     display: none; }
@@ -32,12 +34,26 @@ html{
       background-color: #99103a; }
       #timeAndStart #start:hover {
         color: #cc0606; }
-  
+
+  .welcome{
+    position:absolute;
+    top: 15%;
+    width:100%;
+    text-align: center;
+    overflow:hidden;
+  }
+  .welcome h1{
+    font-size: 500%;
+  }
+  .welcome h3{
+    text-align:center;
+    margin-bottom: 70px;
+  }
+
   #levelBtns {
     /*----------------------------------------------------first flex row */
-    position:absolute;
-    width:100vw;
-    top:50%;
+    /* width:100vw; */
+ 
     text-align:center;
     display: -webkit-box;
     display: -ms-flexbox;
