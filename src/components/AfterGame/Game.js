@@ -1,11 +1,11 @@
 import { DivPicture } from './DivPicture.js';
 
 export const Game = () =>{
-    const arr= ["lightning", "drop", "sea", "space", "sun", "vibration", "wind", "wood"];
-    const fullArr= [...arr, ...arr];
+    const arrImg= ["lightning", "drop", "sea", "space", "sun", "vibration", "wind", "wood"];
+    const doubleImgs= [...arrImg, ...arrImg];
 
       //array of components -> div>img
-      const divItems = fullArr.map((pictureName,index) =>
+      const divItems = doubleImgs.map((pictureName,index) =>
 
         <DivPicture key={index} 
                     pictureName={pictureName} 

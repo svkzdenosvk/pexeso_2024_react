@@ -1,9 +1,65 @@
-// import SetLevel from './SetLevel';
+import { useState } from "react";
+
 import { Game } from "./components/AfterGame/Game";
 import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
 
 
 const App = () =>{
+
+ // ---------------------------
+ // ---------------------------useStates
+ // ---------------------------
+
+  const [level, setLevel] = useState();
+  const [color, setColor] = useState("");
+ // const [display, setDisplay] = useState("");
+  const [h1Context, setH1context] = useState( "Pexeso");
+
+  let [seconds, setSeconds] = useState(0);
+  let [intervalSecond, setIntervalSecond] = useState(0);
+
+  // ---------------------------
+ // ---------------------------set level fn´s
+ // ---------------------------
+
+  function _setLevelChanges(colorText,colorBG,) { /*--------------------------------- partial function for set level of the game*/
+    
+    //style -> color of H1 and seconds
+    setColor(colorText);
+    
+    // set background of page
+    document.getElementsByTagName("BODY")[0].setAttribute('style', 'background-color: '+ colorBG);
+    
+    // disappear settings buttons  
+    document.getElementById("levelBtns").setAttribute('style', 'display: none'); 
+    document.getElementsByTagName("H3")[0].setAttribute('style', 'display: none');
+    
+    //show timer and starter of game
+    // document.getElementById("timeAndStart").style.display="flex";
+    //document.getElementById("timeAndStart").setAttribute('style', 'display: flex');  
+     
+  }
+ 
+  function my_setLevel(e,leveliD ) {/*-----------------------------------------------------main f. for set level*/
+    
+    setLevel(leveliD)
+  
+      switch (e.target.id) {
+      
+        case "harder":
+          _setLevelChanges("white", "#4d141d");
+          break;
+        case "hardest":
+          _setLevelChanges("white", "black");
+          break;
+        case "normal":        
+          _setLevelChanges("black");
+          break;
+        default:
+          break;      
+      }
+  }
+
   return (
     <>
       
@@ -13,23 +69,20 @@ const App = () =>{
                        setSeconds={setSeconds} 
                        setIntervalSecond={setIntervalSecond}
                        color={color}/>  */}
+
          <div className="welcome">
-            <h1> {/*style={{color}}   {h1Context} */}Pexeso </h1>
+            <h1 style={{color}}> {h1Context} </h1>
           
             <h3>Vitajte v hre pexeso, pre začatie hry zvoľte náročnosť nižšie </h3>
 
-            <div id="levelBtns" /*style={{display}}*/ >
-              <SetLevelBtns /*my_setLevel={my_setLevel}*//>
+            <div id="levelBtns"  >
+              <SetLevelBtns my_setLevel={my_setLevel}/>
             </div>
-
          </div>
-      
-
-       
-
-      <div className="column_content" id="content">
-        <Game /*level={level} shuffle={shuffle} seconds={seconds} intervalSecond={intervalSecond}*//> 
-      </div>
+        
+         <div className="column_content" id="content">
+            <Game /*level={level} shuffle={shuffle} seconds={seconds} intervalSecond={intervalSecond}*//> 
+         </div>
     </>
     
   );
