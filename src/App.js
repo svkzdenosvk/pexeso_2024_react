@@ -5,8 +5,8 @@ import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
 
 const App = () =>{
   return (
-    <div className="App" >
-      <div>
+    <>
+      
          {/* <TimeAndStart level={level} 
                        shuffle={shuffle} 
                        seconds={seconds} 
@@ -23,14 +23,14 @@ const App = () =>{
             </div>
 
          </div>
-      </div>
+      
 
        
 
       <div className="column_content" id="content">
         <Game /*level={level} shuffle={shuffle} seconds={seconds} intervalSecond={intervalSecond}*//> 
       </div>
-    </div>
+    </>
     
   );
 }
