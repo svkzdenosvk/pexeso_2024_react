@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Game } from "./components/AfterGame/Game";
 import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
-
+import {TimeAndStart} from "./components/AfterGame/TimeAndStart"
 
 const App = () =>{
 
@@ -22,9 +22,9 @@ const App = () =>{
  // ---------------------------set level fn´s
  // ---------------------------
 
-  function _setLevelChanges(colorText,colorBG,) { /*--------------------------------- partial function for set level of the game*/
+  function _setLevelChanges(colorText,colorBG,) { /*--------------------------------- partial function for set level of the game (it´s also about change styles)*/
     
-    //style -> color of H1 and seconds
+    //style -> color of H1, H3 and seconds
     setColor(colorText);
     
     // set background of page
@@ -32,11 +32,12 @@ const App = () =>{
     
     // disappear settings buttons  
     document.getElementById("levelBtns").setAttribute('style', 'display: none'); 
-    document.getElementsByTagName("H3")[0].setAttribute('style', 'display: none');
-    
+
+    //change H3 content -> game instruction
+    document.getElementsByTagName("H3")[0].textContent="Pre začatie hry slačte tlačítko štart"
+
     //show timer and starter of game
-    // document.getElementById("timeAndStart").style.display="flex";
-    //document.getElementById("timeAndStart").setAttribute('style', 'display: flex');  
+    document.getElementById("timeAndStart").setAttribute('style', 'display: flex');  
      
   }
  
@@ -62,23 +63,24 @@ const App = () =>{
 
   return (
     <>
-      
-         {/* <TimeAndStart level={level} 
-                       shuffle={shuffle} 
-                       seconds={seconds} 
-                       setSeconds={setSeconds} 
-                       setIntervalSecond={setIntervalSecond}
-                       color={color}/>  */}
-
          <div className="welcome">
             <h1 style={{color}}> {h1Context} </h1>
           
-            <h3>Vitajte v hre pexeso, pre začatie hry zvoľte náročnosť nižšie </h3>
+            <h3 style={{color}}>Vitajte v hre pexeso, pre začatie hry zvoľte náročnosť nižšie </h3>
 
             <div id="levelBtns"  >
               <SetLevelBtns my_setLevel={my_setLevel}/>
             </div>
+
+            <TimeAndStart level={level} 
+                      //  shuffle={shuffle} 
+                       seconds={seconds} 
+                       setSeconds={setSeconds} 
+                       setIntervalSecond={setIntervalSecond}
+                       color={color}/> 
          </div>
+
+        
         
          <div className="column_content" id="content">
             <Game /*level={level} shuffle={shuffle} seconds={seconds} intervalSecond={intervalSecond}*//> 

@@ -4,7 +4,7 @@ export const Button = ({my_setLevel,id}) =>{
 
     return (
      
-       <div onClick={(e) => {my_setLevel(e,id)}} id={id}>{id.toUpperCase()}</div>
+       <div onClick={(e) => {my_setLevel(e,id)}} id={id} >{id.toUpperCase()}</div>
       
     );
   }

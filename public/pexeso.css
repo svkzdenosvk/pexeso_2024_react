@@ -7,7 +7,7 @@ html{
   box-sizing: border-box;
   margin:0;
   text-align: center;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   /* overflow:hidden; */
   display:flex;
@@ -50,6 +50,7 @@ body, #result{
     display: flex;
     flex-direction: column;
     justify-content: center;
+
 
    
   }
@@ -113,11 +114,11 @@ body, #result{
       #levelBtns #hardest:hover {
         color: #cc0606; }
   
-  h1 {
+  /* h1 { */
     /*-----------------------------------------------------text Pexeso  */
-    margin-top: 20px;
-    text-align: center;
-    color: #4d141d; }
+    /* margin-top: 20px; */
+    /* text-align: center; */
+    /* color: #4d141d; } */
   
   .column_content {
     /*----------------------------------------div of all images  */
@@ -214,8 +215,14 @@ body, #result{
 
       /* media queries */
       @media screen and (min-width: 1650px) {
+        #result{
+          text-align: center;
+          align-items: center;
+        }
+
         .welcome {
           width: 1650px;
+          /* margin:0, auto; */
         }
       }
 
