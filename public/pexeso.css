@@ -152,7 +152,7 @@ body, #result{
       margin-top: 1.5%; }
       .column_content .row .mask {
         /*--------------------------------------picture of joker  */
-        background-image: url("../public/pictures/joker.jpg");
+        background-image: url("pictures/joker.jpg");
         background-position: center; }
       .column_content .row .div_on_click {
         margin: 3%; }

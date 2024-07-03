@@ -1,8 +1,7 @@
 import { _stylingAfterStart } from '../../_inc/_inc_functions';
  
-export const TimeAndStart = ({level,/*shuffle,*/seconds,setSeconds,setIntervalSecond,color}) => {
+export const TimeAndStart = ({level,shuffle,seconds,setSeconds,setIntervalSecond,color}) => {
   
-  //  const start =document.getElementById("start");
     const secondsEl= document.getElementById("seconds");
     
   
@@ -14,12 +13,17 @@ export const TimeAndStart = ({level,/*shuffle,*/seconds,setSeconds,setIntervalSe
     function timer(){/*---------------------------------------------------------------button start */
      
         _stylingAfterStart();
+
+        //to shuffle before every game (doesn´t matter level)
+        if(seconds===0){
+          shuffle();
+        }
   
       // increment seconds + in hardest level shuffle img´s
       setIntervalSecond(setInterval(_incrementSeconds, 1000));
       if(level==="hardest"){/*---------------------------------------------------------working only in hardest version *//*maybe this can by removed from timer();*/
-         //setInterval(shuffle, 800);
-         console.log("you are in hardest level")
+         setInterval(shuffle, 800);
+         //console.log("you are in hardest level")
      }
   }
   
