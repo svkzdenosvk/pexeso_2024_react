@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { _stylingAfterLevel } from "./_inc/_inc_functions";
+
 import { Game } from "./components/AfterGame/Game";
 import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
 import {TimeAndStart} from "./components/AfterGame/TimeAndStart"
@@ -27,17 +29,7 @@ const App = () =>{
     //style -> color of H1, H3 and seconds
     setColor(colorText);
     
-    // set background of page
-    document.getElementsByTagName("BODY")[0].setAttribute('style', 'background-color: '+ colorBG);
-    
-    // disappear settings buttons  
-    document.getElementById("levelBtns").setAttribute('style', 'display: none'); 
-
-    //change H3 content -> game instruction
-    document.getElementsByTagName("H3")[0].textContent="Pre začatie hry slačte tlačítko štart"
-
-    //show timer and starter of game
-    document.getElementById("timeAndStart").setAttribute('style', 'display: flex');  
+    _stylingAfterLevel(colorBG);
      
   }
  

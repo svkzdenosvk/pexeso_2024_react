@@ -1,9 +1,8 @@
-
+import { _stylingAfterStart } from '../../_inc/_inc_functions';
+ 
 export const TimeAndStart = ({level,/*shuffle,*/seconds,setSeconds,setIntervalSecond,color}) => {
-
-    //this component is about start btn and seconds
   
-    const start =document.getElementById("start");
+  //  const start =document.getElementById("start");
     const secondsEl= document.getElementById("seconds");
     
   
@@ -14,18 +13,7 @@ export const TimeAndStart = ({level,/*shuffle,*/seconds,setSeconds,setIntervalSe
   
     function timer(){/*---------------------------------------------------------------button start */
      
-      //to hide start button 
-      start.style.display="none";
-      document.getElementsByTagName("H3")[0].setAttribute('style', 'display: none'); 
-      
-      //style H1
-      document.getElementsByClassName("welcome")[0].setAttribute('style', 'margin-top: 150px');
-
-      //styling all react app id result
-      document.getElementById("result").setAttribute('style', 'flex-direction: column'); 
-
-      // to see images
-      document.getElementsByClassName("column_content")[0].style.display="flex";
+        _stylingAfterStart();
   
       // increment seconds + in hardest level shuffle img´s
       setIntervalSecond(setInterval(_incrementSeconds, 1000));
