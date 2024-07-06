@@ -1,6 +1,6 @@
-export const Button = ({my_setLevel,id}) =>{
+export const LevelButton = ({my_setLevel,id}) =>{
 
-    //set level btn´s    
+    //single button to set level  
 
     return (
      
@@ -9,4 +9,3 @@ export const Button = ({my_setLevel,id}) =>{
     );
   }
   
-  // export default Button;

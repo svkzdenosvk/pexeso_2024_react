@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { _stylingAfterLevel } from "./_inc/_inc_functions";
+import { _stylingAfterLevel,_shuffleArray } from "./_inc/_inc_functions";
 
-import { Game } from "./components/AfterGame/Game";
+import { GameDivPictures } from "./components/AfterGame/GameDivPictures";
 import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
 import {TimeAndStart} from "./components/AfterGame/TimeAndStart"
 
@@ -14,8 +14,7 @@ const App = () =>{
 
   const [level, setLevel] = useState();
   const [color, setColor] = useState("");
- // const [display, setDisplay] = useState("");
-  const [h1Context, setH1context] = useState( "Pexeso");
+ // const [h1Context, setH1context] = useState( "Pexeso");
 
   let [seconds, setSeconds] = useState(0);
   let [intervalSecond, setIntervalSecond] = useState(0);
@@ -29,7 +28,7 @@ const App = () =>{
     //style -> color of H1, H3 and seconds
     setColor(colorText);
     
-    _stylingAfterLevel(colorBG);
+    _stylingAfterLevel(colorBG);/*----------------------------------------------------partial f. with style changes after select level*/
      
   }
  
@@ -52,44 +51,72 @@ const App = () =>{
           break;      
       }
   }
-   // ---------------------------
- // ---------------------------shuffle fn´s
- // ---------------------------
 
- function _shuffleArray(array) {/*-------------------------------------------------partial f. to shuffle random positions in array stolen from : https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array  (EDIT: Updating to ES6 / ECMAScript 2015) */
-  for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-  }
-}    
+  // ---------------------------
+ // ---------------------------shuffle function
+ // ---------------------------
+ 
+
+// function shuffle(){/*-------------------------------------------------------------function for shuffling (ONLY) in harder and the hardest version of game*/
+
+//   if(level!=="normal"||(level==="normal"&& seconds===0)){
+
+//      //get HTMLcollection
+//      let x= document.getElementsByClassName("div_on_click");/*--------------------collection of divs above image*/
+
+//      //convert collection to array
+//      let arr = Array.from(x);
+//      _shuffleArray(arr);/*--------------------------------------------------------partial f. to random shuffle of array, f. included from _inc_functions.js */
+
+//      //remove old collection
+//      let row = document.getElementById("row");
+//      row.innerHTML="";
+      
+//      // add new random order of collection
+//      for(let i = 0; i < arr.length; i++){
+//           row.appendChild(arr[i]);
+//      }
+//   }              
+// }
 
 function shuffle(){/*-------------------------------------------------------------function for shuffling (ONLY) in harder and the hardest version of game*/
 
-  if(level!=="normal"||(level==="normal"&& seconds===0)){
+    if(level!=="normal"||(level==="normal"&& seconds===0)){
+  
+       //get HTMLcollection
+      //  let x= document.getElementsByClassName("div_on_click");/*--------------------collection of divs above image*/
+       let x= document.getElementsByTagName("img");/*--------------------collection of divs above image*/
 
-     //get HTMLcollection
-     let x= document.getElementsByClassName("div_on_click");/*--------------------collection of divs above image*/
+       let arrSrc=[];
+       //convert collection to array
+       let arr = Array.from(x);
+       arr.forEach((element) => {
+        const startIndex = element.src.indexOf('pictures'); /*cut path before word "picture" ... like "http://localhost:3000/" */
+        const srcPath = element.src.substring(startIndex);
+        arrSrc.push(srcPath)
+       })
 
-     //convert collection to array
-     let arr = Array.from(x);
-     _shuffleArray(arr);
-
-     //remove old collection
-     let row = document.getElementById("row");
-     row.innerHTML="";
       
-     // add new random order of collection
-     for(let i = 0; i < arr.length; i++){
-          row.appendChild(arr[i]);
-     }
-  }              
-}
+       _shuffleArray(arrSrc);/*--------------------------------------------------------partial f. to random shuffle of array, f. included from _inc_functions.js */
 
+       arr.forEach((element,index) => {element.src =arrSrc[index]});
+
+       //old way rerendered div .. new method above change src in images, but sometimes the are some unexpected errors :(
+       //remove old collection
+      //  let row = document.getElementById("row");
+      //  row.innerHTML="";
+        
+      //  // add new random order of collection
+      //  for(let i = 0; i < arr.length; i++){
+      //       row.appendChild(arr[i]);
+      // }
+    }              
+  }
 
   return (
     <>
          <div className="welcome">
-            <h1 style={{color}}> {h1Context} </h1>
+            <h1 style={{color}}>Pexeso</h1>
           
             <h3 style={{color}}>Vitajte v hre pexeso, pre začatie hry zvoľte náročnosť nižšie </h3>
 
@@ -108,7 +135,7 @@ function shuffle(){/*-----------------------------------------------------------
         
         
          <div className="column_content" id="content">
-            <Game level={level} shuffle={shuffle} seconds={seconds} intervalSecond={intervalSecond}/> 
+            <GameDivPictures level={level} shuffle={shuffle} seconds={seconds} intervalSecond={intervalSecond}/> 
          </div>
     </>
     

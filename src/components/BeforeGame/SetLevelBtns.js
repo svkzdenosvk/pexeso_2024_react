@@ -1,12 +1,12 @@
-import {Button} from "./Button";
+import {LevelButton} from "./LevelButton";
 
-
+//all three buttons to set level
 export const SetLevelBtns = ({my_setLevel}) =>{
   
   const arrLvl= ["normal", "harder", "hardest"];
   const btnsLvl = arrLvl.map((level) =>
 
-    <Button my_setLevel={my_setLevel} id={level} key={level}/>
+    <LevelButton my_setLevel={my_setLevel} id={level} key={level}/>
 
   )
     return (

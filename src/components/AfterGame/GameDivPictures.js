@@ -2,7 +2,7 @@ import { DivPicture } from './DivPicture.js';
 import { useState } from "react";
 
 
-export const Game = ({level, shuffle, seconds, intervalSecond}) =>{
+export const GameDivPictures = ({level, shuffle, seconds, intervalSecond}) =>{
   const [stticSource, setStticSource] = useState("");
 
 
@@ -31,4 +31,3 @@ export const Game = ({level, shuffle, seconds, intervalSecond}) =>{
     );
   }
   
-  //export default Game;
