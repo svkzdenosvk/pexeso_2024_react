@@ -18,7 +18,7 @@ export const DivPicture = ({pictureName,index,stticSource,level,shuffle,setSttic
  // ---------------------------
 
   function checkEnd(){/*----------------------------------------------------------check if is end == each picture removed */
-    setTimeout(function(){
+    // setTimeout(function(){
         if(!document.getElementById("row").firstElementChild){/*------------------if all images on page are removed */
 
             stopTimer();/*--------------------------------------------------------stop increment seconds */
@@ -30,7 +30,7 @@ export const DivPicture = ({pictureName,index,stticSource,level,shuffle,setSttic
             document.getElementsByTagName("H1")[0].innerHTML = "Gratulácia, vyhrali ste za "+(timeArr[0]==="0"?"":timeArr[0]+"m")+" "+ timeArr[1]+"s";
             document.getElementsByTagName("H1")[0].classList.add('h1End');/*------------------------------------end ---animation of gratulation text */
         }
-    }, 50);
+    // }, 50);
 }
 
 
@@ -39,29 +39,32 @@ export const DivPicture = ({pictureName,index,stticSource,level,shuffle,setSttic
  // ---------------------------
 
 
-  function _deleteImg(el){/*--------------------------------------------------------partial f. to remove the same showed images*/
-    setTimeout(function(){/*--------------------------------------------------------own animation to disappear after rotate*/    
+  function _deleteImg(el,checkEndCallBack){/*--------------------------------------------------------partial f. to remove the same showed images*/
        el.remove();
-       checkEnd();/*----------------------------------------------------------------after remove check if all images is removed */
-     }, 300);
+       setTimeout(function(){
+        checkEndCallBack();
+       }, 50);
   }
 
-  function _animate(element){/*----------------------------------------------------- animation to rotate -> then delete div>img*/ 
+  function _animate(element, deleteImgCallBack,checkEndCallBack){/*----------------------------------------------------- animation to rotate -> then delete div>img*/ 
 
     element.classList.add("rotate-center");
-    _deleteImg(element);
+    //rewriten as callback f.
+     setTimeout(function(){
+       deleteImgCallBack(element,checkEndCallBack);
+   }, 210);
   }
   
   function animateAndDelete(first,second){/*-----------------------------------------matched img´s animate->delete*/ 
 
-    _animate(first);
-    _animate(second);
+    _animate(first, _deleteImg, checkEnd);
+    _animate(second, _deleteImg, checkEnd);
   }
 
   function _hideImage(elm){/*--------------------------------------------------------partial f. to hide showed image unmatched*/
     elm.classList.add('mask');/*-----------------------------------------------------hide image below joker´s image*/
     elm.firstElementChild.style.opacity="0";/*---------------------------------------hide image*/
-    elm.classList.remove('selected_img');/*------------------------------------------remove specific class for identification*/
+    elm.classList.remove('selected_Div_img');/*------------------------------------------remove specific class for identification*/
   }
 
  // ---------------------------
@@ -75,19 +78,20 @@ export const DivPicture = ({pictureName,index,stticSource,level,shuffle,setSttic
       var imgElm = element.firstElementChild;
       imgElm.style.opacity="100";/*--------------------------------------------------show image */
       element.classList.remove('mask');/*--------------------------------------------remove joker image */
-      element.classList.add('selected_img');/*---------------------------------------give specific class for identification*/
+      element.classList.add('selected_Div_img');/*---------------------------------------give specific class for identification*/
 
 
       if(stticSource===""){/*--------------------------------------------------------if no image is shown, get attribute from clicked*/
          
         setStticSource(imgElm.getAttribute("src"));
       }else{/*-----------------------------------------------------------------------compare sources attribute of showed and clicked */
-          
-          let firstSelectedImg = document.getElementsByClassName("selected_img")[0];
-          let secondSelectedImg= document.getElementsByClassName("selected_img")[1];
+          document.body.style.pointerEvents = "none";
+
+          let firstSelectedImg = document.getElementsByClassName("selected_Div_img")[0];
+          let secondSelectedImg= document.getElementsByClassName("selected_Div_img")[1];
 
           if(stticSource===imgElm.getAttribute("src")){/*----------------------------if the same --> remove images */
-               document.body.style.pointerEvents = "none";/*-------------------------prevent to show third image*/
+              //  document.body.style.pointerEvents = "none";/*-------------------------prevent to show third image*/
         
                   animateAndDelete(firstSelectedImg,secondSelectedImg);
                                                             
@@ -95,8 +99,8 @@ export const DivPicture = ({pictureName,index,stticSource,level,shuffle,setSttic
                   
                   setStticSource("");
                                      
-          }else{/*-------------------------------------------------------------------if NOT - the same src-path --> hide images below joker img */
-              document.body.style.pointerEvents = "none";/*--------------------------prevent to show third image*/
+          }else{/*-------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
+              // document.body.style.pointerEvents = "none";/*--------------------------prevent to show third image*/
 
               setTimeout(function(){
 
@@ -123,4 +127,3 @@ export const DivPicture = ({pictureName,index,stticSource,level,shuffle,setSttic
     )
   }
   
- // export default DivPicture;

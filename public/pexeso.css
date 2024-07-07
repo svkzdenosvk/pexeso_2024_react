@@ -9,126 +9,114 @@ html{
   text-align: center;
   height: 100%;
   width: 100%;
-  /* overflow:scroll; */
   display:flex;
-
 }
+
 body, #result{
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-
 }
 
-#result{
-  /* flex-direction: column; */
-
-}
 #timeAndStart {
-    display: none; }
-    #timeAndStart #seconds {
-      /*-------------------------------------------div of text - seconds increment  */
-      padding: 20px;
-      font-size: 300%;
-      float: left;
-      font-weight: bold;
-      color: #99103a;
-      border-radius: 0%; }
-      #timeAndStart #seconds:hover {
-        color: #cc0606; }
-    #timeAndStart #start {
-      /*---------------------------------------------button start of game  */
-      padding: 20px;
-      font-size: 300%;
-      float: left;
-      font-weight: bold;
-      color: white;
-      border-radius: 50%;
-      background-color: #99103a; }
-      #timeAndStart #start:hover {
-        color: #cc0606; }
+  display: none;
+}
 
-  .welcome{
-    /* position:absolute; */
-    width: 100%;
-    height: 100%;
-    /* margin:0,auto; */
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+#timeAndStart #seconds, #timeAndStart #start{
+  /*-------------------------------------------div of text - seconds increment  */
+  padding: 20px;
+  font-size: 300%;
+  float: left;
+  font-weight: bold;
+  /* color: #99103a; */
+  /* border-radius: 0%; */
+}
 
+/* #timeAndStart #seconds:hover {
+  color: #cc0606;
+} */
 
-   
+#timeAndStart #start { /*---------------------------------------------button start of game  */
+  /* padding: 20px;
+  font-size: 300%;
+  float: left;
+  font-weight: bold; */
+  color: white;
+  border-radius: 50%;
+  background-color: #99103a;
+}
+
+#timeAndStart #start:hover {
+  color: #cc0606;
+}
+
+.welcome{/*----------------------------------------------------------div ( H1, H3, level buttons and time + start button ) */
+   /* position:absolute; */
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   }
-  .welcome h1{
-    font-size: 500%;
-    margin-bottom: 70px;
+
+.welcome h1{
+  font-size: 500%;
+  margin-bottom: 70px;
     /* margin-top: -100px; */
-  }
-  .welcome h3{
-    /* margin-bottom: 50px; */
-    text-align:center;
-  }
+}
 
-  #levelBtns {
-    /*----------------------------------------------------first flex row */
-    
-    /* text-align:center; */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -webkit-box-pack: space-around;
-        -ms-flex-pack: space-around;
-            justify-content: space-around;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap; }
-    #levelBtns #normal {
-      /*--------------------------------------------button level-normal */
-      padding: 20px;
-      font-size: 300%;
-      float: left;
-      font-weight: bold;
-      color: black;
-      border-radius: 50%;
-      border: 5px solid black; }
-      #levelBtns #normal:hover {
-        color: #cc0606; }
-    #levelBtns #harder {
-      /*--------------------------------------------button level-harder */
-      padding: 20px;
-      font-size: 300%;
-      float: left;
-      font-weight: bold;
-      color: white;
-      border-radius: 50%;
-      background-color: #4d141d; }
-      #levelBtns #harder:hover {
-        color: #cc0606; }
-    #levelBtns #hardest {
-      /*-------------------------------------------button level-hardest */
-      padding: 20px;
-      font-size: 300%;
-      float: left;
-      font-weight: bold;
-      color: white;
-      border-radius: 50%;
-      background-color: black; }
-      #levelBtns #hardest:hover {
-        color: #cc0606; }
+.welcome h3{
+  text-align:center;
+}
+
+#levelBtns { /*----------------------------------------------------div -> level buttons */
+  /* text-align:center; */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: space-around;
+      -ms-flex-pack: space-around;
+          justify-content: space-around;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+#levelBtns #normal, #levelBtns #harder, #levelBtns #hardest {
+  padding: 20px;
+  font-size: 300%;
+  float: left;
+  font-weight: bold;
+  border-radius: 50%;
+}
   
-  /* h1 { */
-    /*-----------------------------------------------------text Pexeso  */
-    /* margin-top: 20px; */
-    /* text-align: center; */
-    /* color: #4d141d; } */
+#levelBtns #hardest:hover, #levelBtns #harder:hover, #levelBtns #normal:hover {
+  color: #cc0606; 
+}
+
+#levelBtns #normal{/*---------------------------------------------button level-normal */
+  color: black;
+  border: 5px solid black;
+}
+
+#levelBtns #harder {/*--------------------------------------------button level-harder */
+  color: white;
+  background-color: #4d141d;
+}
+
+#levelBtns #hardest {/*-------------------------------------------button level-hardest */
+  color: white;
+  background-color: black;
+}
+
+
+
   
   .column_content {
     /*----------------------------------------div of all images  */
@@ -163,13 +151,26 @@ body, #result{
       .column_content .row .mask {
         /*--------------------------------------picture of joker  */
         background-image: url("pictures/joker.jpg");
-        background-position: center; }
+        background-position: center; 
+        background-repeat: no-repeat;
+        background-size: auto;
+        opacity: 100%;
+        
+       }
+
       .column_content .row .div_on_click {
-        margin: 3%; }
-      .column_content .row img {
+        margin: 3%; 
         width: 125px;
         height: 125px;
-        opacity: 0%; }
+        
+      }
+      .column_content .row img {
+        width: 100%;
+        height: 100%;
+        opacity: 0%; 
+        transition: opacity 0.3s ease;
+
+    }
   
   /*----------------------------------------CLASSES ADDED BY JS------------------------------------------------ */
   /*------------------------------------------------------------------------------------------------------------*/
@@ -188,10 +189,15 @@ body, #result{
     -webkit-transition: font-size 0.52s;
     transition: font-size 0.52s; }
   
-  .selected_img {
+  .selected_Div_img {
     /*------------------------------------------------------for abstract usage -> for showed img */
-    pointer-events: none; }
+    pointer-events: none;
   
+   }
+   .selected_Div_img img{
+    opacity: 1;
+   }
+
   .rotate-center {
     /*---------------------------------------animation for match and before remove images*/
     -webkit-animation: rotate-center 0.2s ease-in-out both;
