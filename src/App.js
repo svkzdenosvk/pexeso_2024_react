@@ -23,7 +23,7 @@ const App = () =>{
  // ---------------------------set level fn´s
  // ---------------------------
 
-  function _setLevelChanges(colorText,colorBG,) { /*--------------------------------- partial function for set level of the game (it´s also about change styles)*/
+  function _setLevelStyleChanges(colorText,colorBG,) { /*--------------------------------- partial function for set level of the game (it´s also about change styles)*/
     
     //style -> color of H1, H3 and seconds
     setColor(colorText);
@@ -39,13 +39,13 @@ const App = () =>{
       switch (e.target.id) {
       
         case "harder":
-          _setLevelChanges("white", "#4d141d");
+          _setLevelStyleChanges("white", "#4d141d");
           break;
         case "hardest":
-          _setLevelChanges("white", "black");
+          _setLevelStyleChanges("white", "black");
           break;
         case "normal":        
-          _setLevelChanges("black");
+        _setLevelStyleChanges("black");
           break;
         default:
           break;      
@@ -81,17 +81,17 @@ const App = () =>{
 
 function shuffle(){/*-------------------------------------------------------------function for shuffling (ONLY) in harder and the hardest version of game*/
 
-    if(level!=="normal"||(level==="normal"&& seconds===0)){
+  if(level!=="hardest"){
+    //this is quicker version of shuffling but in level "hardest" it´s not working correctly
+    if(level==="harder"|| seconds===0){
   
-       //get HTMLcollection
-      //  let x= document.getElementsByClassName("div_on_click");/*--------------------collection of divs above image*/
+       //get HTMLcollection of pictures
        let x= document.getElementsByTagName("img");/*--------------------collection of divs above image*/
 
-       let arrSrc=[];
-       //convert collection to array
-       let arr = Array.from(x);
+       let arrSrc=[];/*--------------------------------------------------array of clean paths */
+       let arr = Array.from(x);/*----------------------------------------convert collection to array*/
        arr.forEach((element) => {
-        const startIndex = element.src.indexOf('pictures'); /*cut path before word "picture" ... like "http://localhost:3000/" */
+        const startIndex = element.src.indexOf('pictures'); /*-----------cut a path before word "picture" ... like "http://localhost:3000/" */
         const srcPath = element.src.substring(startIndex);
         arrSrc.push(srcPath)
        })
@@ -100,18 +100,25 @@ function shuffle(){/*-----------------------------------------------------------
        _shuffleArray(arrSrc);/*--------------------------------------------------------partial f. to random shuffle of array, f. included from _inc_functions.js */
 
        arr.forEach((element,index) => {element.src =arrSrc[index]});
+    } 
+  } else { /*this method is for the hardest level .. it´s maybe slower because of rerendering */
+     //get HTMLcollection
+     let x= document.getElementsByClassName("div_on_click");/*--------------------collection of divs above image*/
 
-       //old way rerendered div .. new method above change src in images, but sometimes the are some unexpected errors :(
-       //remove old collection
-      //  let row = document.getElementById("row");
-      //  row.innerHTML="";
-        
-      //  // add new random order of collection
-      //  for(let i = 0; i < arr.length; i++){
-      //       row.appendChild(arr[i]);
-      // }
-    }              
-  }
+     //convert collection to array
+     let arr = Array.from(x);
+     _shuffleArray(arr);/*--------------------------------------------------------partial f. to random shuffle of array, f. included from _inc_functions.js */
+
+     //remove old collection
+     let row = document.getElementById("row");
+     row.innerHTML="";
+      
+     // add new random order of collection
+     for(let i = 0; i < arr.length; i++){
+          row.appendChild(arr[i]);
+     }
+  }           
+}
 
   return (
     <>

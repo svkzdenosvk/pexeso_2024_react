@@ -22,7 +22,7 @@
        document.getElementsByTagName("H3")[0].setAttribute('style', 'display: none'); 
        
        //style H1
-       document.getElementsByClassName("welcome")[0].setAttribute('style', 'margin-top: 0px');
+      // document.getElementsByClassName("welcome")[0].setAttribute('style', 'margin-top: 0px');
  
        //styling all react app id result
        document.getElementById("result").setAttribute('style', 'flex-direction: column'); 

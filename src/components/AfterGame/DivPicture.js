@@ -107,11 +107,8 @@ export const DivPicture = ({pictureName,index,stticSource,level,shuffle,setSttic
 
                   setStticSource("");/*----------------------------------------------clear comparable variable */
 
-                  if(level!=="normal"){
-                    shuffle();/*-----------------------------------------------------in harder (and hardest) version ... shuffle after good trying*/
-                }
-
-                 
+                  shuffle();/*-----------------------------------------------==------in harder (and hardest) version ... shuffle after bad trying*/
+                    
               }, 300);
           }
       }
