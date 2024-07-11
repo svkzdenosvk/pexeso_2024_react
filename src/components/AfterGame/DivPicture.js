@@ -1,13 +1,13 @@
  //component about one single picture
 
-export const DivPicture = ({pictureName,index,stticSource,level,shuffle,setStticSource,seconds,intervalSecond}) =>{
+export const DivPicture = (props) =>{
 
  // ---------------------------
  // ---------------------------timing fn´s
  // ---------------------------
 
   function stopTimer(){/*----------------------------------------------------------stop seconds increment */
-    clearInterval(intervalSecond);
+    clearInterval(props.intervalSecond);
     document.getElementById("seconds").style.display="none";
   }
 
@@ -22,7 +22,7 @@ export const DivPicture = ({pictureName,index,stticSource,level,shuffle,setSttic
         if(!document.getElementById("row").firstElementChild){/*------------------if all images on page are removed */
 
             stopTimer();/*--------------------------------------------------------stop increment seconds */
-            let endTime=_fmtMSS(seconds);/*---------------------------------------formating time */
+            let endTime=_fmtMSS(props.seconds);/*---------------------------------------formating time */
 
             document.getElementsByTagName("BODY")[0].firstElementChild.classList.add('div_center');/*---------------start ---animation of gratulation text */
             let timeArr=endTime.split(":");/*--------------------------------------split time string (seconds:minutes) to array for separate minutes and second in gratulation text */
@@ -81,23 +81,23 @@ export const DivPicture = ({pictureName,index,stticSource,level,shuffle,setSttic
       element.classList.add('selected_Div_img');/*---------------------------------------give specific class for identification*/
 
 
-      if(stticSource===""){/*--------------------------------------------------------if no image is shown, get attribute from clicked*/
+      if(props.stticSource===""){/*--------------------------------------------------------if no image is shown, get attribute from clicked*/
          
-        setStticSource(imgElm.getAttribute("src"));
+        props.setStticSource(imgElm.getAttribute("src"));
       }else{/*-----------------------------------------------------------------------compare sources attribute of showed and clicked */
           document.body.style.pointerEvents = "none";
 
           let firstSelectedImg = document.getElementsByClassName("selected_Div_img")[0];
           let secondSelectedImg= document.getElementsByClassName("selected_Div_img")[1];
 
-          if(stticSource===imgElm.getAttribute("src")){/*----------------------------if the same --> remove images */
+          if(props.stticSource===imgElm.getAttribute("src")){/*----------------------------if the same --> remove images */
               //  document.body.style.pointerEvents = "none";/*-------------------------prevent to show third image*/
         
                   animateAndDelete(firstSelectedImg,secondSelectedImg);
                                                             
                   document.body.style.pointerEvents = "auto";/*----------------------give back functionality to pointer*/
                   
-                  setStticSource("");
+                  props.setStticSource("");
                                      
           }else{/*-------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
               // document.body.style.pointerEvents = "none";/*--------------------------prevent to show third image*/
@@ -109,9 +109,9 @@ export const DivPicture = ({pictureName,index,stticSource,level,shuffle,setSttic
 
                   document.body.style.pointerEvents = "auto";/*----------------------give back functionality to pointer*/
 
-                  setStticSource("");/*----------------------------------------------clear comparable variable */
+                  props.setStticSource("");/*----------------------------------------------clear comparable variable */
 
-                  shuffle();/*-----------------------------------------------==------in harder (and hardest) version ... shuffle after bad trying*/
+                  props.shuffle();/*-----------------------------------------------==------in harder (and hardest) version ... shuffle after bad trying*/
                     
               }, 300);
           }
@@ -121,8 +121,8 @@ export const DivPicture = ({pictureName,index,stticSource,level,shuffle,setSttic
 }
 
     return (
-        <div onClick={(e) => {mainFn(e.target.parentNode)}} className='mask div_on_click' key={index}>
-            <img  src={"pictures/pexeso/"+pictureName+".jpg"} alt='Smiley face' />  
+        <div onClick={(e) => {mainFn(e.target.parentNode)}} className='mask div_on_click' key={props.index}>
+            <img  src={"pictures/pexeso/"+props.pictureName+".jpg"} alt='Smiley face' />  
         </div> 
     )
   }

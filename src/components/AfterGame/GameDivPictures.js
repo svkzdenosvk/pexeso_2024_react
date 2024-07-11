@@ -2,7 +2,7 @@ import { DivPicture } from './DivPicture.js';
 import { useState } from "react";
 
 
-export const GameDivPictures = ({level, shuffle, seconds, intervalSecond}) =>{
+export const GameDivPictures = (props) =>{
   const [stticSource, setStticSource] = useState("");
 
 
@@ -15,11 +15,11 @@ export const GameDivPictures = ({level, shuffle, seconds, intervalSecond}) =>{
         <DivPicture key={index} 
                     pictureName={pictureName} 
                     stticSource={stticSource} 
-                    level={level} 
-                    shuffle={shuffle} 
+                    level={props.level} 
+                    shuffle={props.shuffle} 
                     setStticSource={setStticSource}
-                    seconds={seconds}
-                    intervalSecond={intervalSecond} />
+                    seconds={props.seconds}
+                    intervalSecond={props.intervalSecond} />
      );
 
     return (

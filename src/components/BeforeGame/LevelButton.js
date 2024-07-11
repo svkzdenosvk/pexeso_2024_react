@@ -1,10 +1,10 @@
-export const LevelButton = ({my_setLevel,id}) =>{
+export const LevelButton = (props) =>{
 
     //single button to set level  
 
     return (
      
-       <div onClick={(e) => {my_setLevel(e,id)}} id={id} >{id.toUpperCase()}</div>
+       <div onClick={(e) => {props.my_setLevel(e,props.id)}} id={props.id} >{props.id.toUpperCase()}</div>
       
     );
   }
