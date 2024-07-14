@@ -1,4 +1,4 @@
- //component about one single picture
+ //component about one single div > picture
 
 export const DivPicture = (props) =>{
 
@@ -63,8 +63,13 @@ export const DivPicture = (props) =>{
 
   function _hideImage(elm){/*--------------------------------------------------------partial f. to hide showed image unmatched*/
     elm.classList.add('mask');/*-----------------------------------------------------hide image below joker´s image*/
-    elm.firstElementChild.style.opacity="0";/*---------------------------------------hide image*/
+    // elm.firstElementChild.style.opacity="0";/*---------------------------------------hide image*/
     elm.classList.remove('selected_Div_img');/*------------------------------------------remove specific class for identification*/
+  }
+
+  function hideUnMatched(first, second){
+    _hideImage(first);
+    _hideImage(second);
   }
 
  // ---------------------------
@@ -76,7 +81,7 @@ export const DivPicture = (props) =>{
     if(element.classList.contains('mask')){/*----------------------------------------if on image is joker´s image */
 
       var imgElm = element.firstElementChild;
-      imgElm.style.opacity="100";/*--------------------------------------------------show image */
+      // imgElm.style.opacity="100";/*--------------------------------------------------show image */
       element.classList.remove('mask');/*--------------------------------------------remove joker image */
       element.classList.add('selected_Div_img');/*---------------------------------------give specific class for identification*/
 
@@ -104,8 +109,7 @@ export const DivPicture = (props) =>{
 
               setTimeout(function(){
 
-                  _hideImage(firstSelectedImg);
-                  _hideImage(secondSelectedImg);
+                  hideUnMatched(firstSelectedImg,secondSelectedImg);
 
                   document.body.style.pointerEvents = "auto";/*----------------------give back functionality to pointer*/
 

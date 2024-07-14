@@ -131,7 +131,7 @@ body, #result{
           flex: 50%;
   margin-top: 1.5%; 
 }
-.column_content .row .mask {/*--------------------------------------picture of joker  */
+.column_content .row .mask {/*--------------------------------------div with background of joker as parent of img   */
   background-image: url("pictures/joker.jpg");
   background-position: center; 
   background-repeat: no-repeat;
@@ -166,8 +166,12 @@ body, #result{
   -webkit-transition: font-size 0.52s;
   transition: font-size 0.52s; }
   
-.selected_Div_img {/*----------------------------------------selected div img -> to show img udnder joker  */
+.selected_Div_img {/*----------------------------------------prevent to select selected div > img  */
   pointer-events: none;
+}
+
+.column_content .row .selected_Div_img img{ /*---------------visible opacity of selected img */
+  opacity:100%
 }
 
 .rotate-center {  /*------------------------------------------animation for match and before remove images*/
