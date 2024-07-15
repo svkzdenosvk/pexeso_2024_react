@@ -22,10 +22,7 @@
        document.getElementsByTagName("H3")[0].setAttribute('style', 'display: none'); 
         
        //styling all react app id result
-      //  document.getElementById("result").setAttribute('style', 'flex-direction: column'); 
-      //  document.getElementById("result").setAttribute('style', 'justify-content: start'); 
        document.getElementById("result").setAttribute('style', 'justify-content: start; flex-direction: column');
-
 
        // to see images
        document.getElementsByClassName("column_content")[0].setAttribute('style', 'display: flex');

@@ -22,16 +22,15 @@ const App = () =>{
  // ---------------------------set level fn´s
  // ---------------------------
 
-  function _setLevelStyleChanges(colorText,colorBG,) { /*--------------------------------- partial function for set level of the game (it´s also about change styles)*/
+  function _setLevelStyleChanges(colorText,colorBG,) { /*--------------------------- partial function for set level of the game (it´s also about change styles)*/
     
     //style -> color of H1, H3 and seconds
     setColor(colorText);
     
     _stylingAfterLevel(colorBG);/*----------------------------------------------------partial f. with style changes after select level*/
-     
   }
  
-  function my_setLevel(e,leveliD ) {/*-----------------------------------------------------main f. for set level*/
+  function my_setLevel(e,leveliD ) {/*------------------------------------------------main f. for set level*/
     
     setLevel(leveliD)
   
@@ -44,14 +43,14 @@ const App = () =>{
           _setLevelStyleChanges("white", "black");
           break;
         case "normal":        
-        _setLevelStyleChanges("black");
+          _setLevelStyleChanges("black");
           break;
         default:
           break;      
       }
   }
 
-  // ---------------------------
+ // ---------------------------
  // ---------------------------shuffle function
  // ---------------------------
  
@@ -71,7 +70,6 @@ function shuffle(){/*-----------------------------------------------------------
         const srcPath = element.src.substring(startIndex);
         arrSrc.push(srcPath)
        })
-
       
        _shuffleArray(arrSrc);/*--------------------------------------------------------partial f. to random shuffle of array, f. included from _inc_functions.js */
 
@@ -114,14 +112,11 @@ function shuffle(){/*-----------------------------------------------------------
                        setIntervalSecond={setIntervalSecond}
                        color={color}/> 
          </div>
-
-        
         
          <div className="column_content" id="content">
             <GameDivPictures level={level} shuffle={shuffle} seconds={seconds} intervalSecond={intervalSecond}/> 
          </div>
     </>
-    
   );
 }
 

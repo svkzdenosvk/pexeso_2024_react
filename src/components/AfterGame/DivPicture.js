@@ -18,11 +18,10 @@ export const DivPicture = (props) =>{
  // ---------------------------
 
   function checkEnd(){/*----------------------------------------------------------check if is end == each picture removed */
-    // setTimeout(function(){
         if(!document.getElementById("row").firstElementChild){/*------------------if all images on page are removed */
 
             stopTimer();/*--------------------------------------------------------stop increment seconds */
-            let endTime=_fmtMSS(props.seconds);/*---------------------------------------formating time */
+            let endTime=_fmtMSS(props.seconds);/*---------------------------------formating time */
 
             document.getElementsByTagName("BODY")[0].firstElementChild.classList.add('div_center');/*---------------start ---animation of gratulation text */
             let timeArr=endTime.split(":");/*--------------------------------------split time string (seconds:minutes) to array for separate minutes and second in gratulation text */
@@ -30,19 +29,16 @@ export const DivPicture = (props) =>{
             document.getElementsByTagName("H1")[0].innerHTML = "Gratulácia, vyhrali ste za "+(timeArr[0]==="0"?"":timeArr[0]+"m")+" "+ timeArr[1]+"s";
             document.getElementsByTagName("H1")[0].classList.add('h1End');/*------------------------------------end ---animation of gratulation text */
         }
-    // }, 50);
 }
-
 
  // ---------------------------
  // ---------------------------fn´s to show / hide animate and delete div>imgs
  // ---------------------------
 
-
   function _deleteImg(el,checkEndCallBack){/*--------------------------------------------------------partial f. to remove the same showed images*/
        el.remove();
        setTimeout(function(){
-        checkEndCallBack();
+          checkEndCallBack();
        }, 50);
   }
 
@@ -56,15 +52,13 @@ export const DivPicture = (props) =>{
   }
   
   function animateAndDelete(first,second){/*-----------------------------------------matched img´s animate->delete*/ 
-
     _animate(first, _deleteImg, checkEnd);
     _animate(second, _deleteImg, checkEnd);
   }
 
   function _hideImage(elm){/*--------------------------------------------------------partial f. to hide showed image unmatched*/
     elm.classList.add('mask');/*-----------------------------------------------------hide image below joker´s image*/
-    // elm.firstElementChild.style.opacity="0";/*---------------------------------------hide image*/
-    elm.classList.remove('selected_Div_img');/*------------------------------------------remove specific class for identification*/
+    elm.classList.remove('selected_Div_img');/*--------------------------------------remove specific class for identification*/
   }
 
   function hideUnMatched(first, second){
@@ -77,26 +71,23 @@ export const DivPicture = (props) =>{
  // ---------------------------
 
  function mainFn(element) {/*--------------------------------------------------------the most main function to manage pexeso-code */
-       
+       console.log(element);
     if(element.classList.contains('mask')){/*----------------------------------------if on image is joker´s image */
 
       var imgElm = element.firstElementChild;
-      // imgElm.style.opacity="100";/*--------------------------------------------------show image */
       element.classList.remove('mask');/*--------------------------------------------remove joker image */
-      element.classList.add('selected_Div_img');/*---------------------------------------give specific class for identification*/
+      element.classList.add('selected_Div_img');/*-----------------------------------give specific class for identification*/
 
-
-      if(props.stticSource===""){/*--------------------------------------------------------if no image is shown, get attribute from clicked*/
+      if(props.stticSource===""){/*--------------------------------------------------if no image is shown, get attribute from clicked*/
          
-        props.setStticSource(imgElm.getAttribute("src"));
+         props.setStticSource(imgElm.getAttribute("src"));
       }else{/*-----------------------------------------------------------------------compare sources attribute of showed and clicked */
-          document.body.style.pointerEvents = "none";
+          document.body.style.pointerEvents = "none";/*------------------------------prevent to show third image */
 
           let firstSelectedImg = document.getElementsByClassName("selected_Div_img")[0];
           let secondSelectedImg= document.getElementsByClassName("selected_Div_img")[1];
 
-          if(props.stticSource===imgElm.getAttribute("src")){/*----------------------------if the same --> remove images */
-              //  document.body.style.pointerEvents = "none";/*-------------------------prevent to show third image*/
+          if(props.stticSource===imgElm.getAttribute("src")){/*----------------------if the same --> remove images */
         
                   animateAndDelete(firstSelectedImg,secondSelectedImg);
                                                             
@@ -105,7 +96,6 @@ export const DivPicture = (props) =>{
                   props.setStticSource("");
                                      
           }else{/*-------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
-              // document.body.style.pointerEvents = "none";/*--------------------------prevent to show third image*/
 
               setTimeout(function(){
 
@@ -113,14 +103,13 @@ export const DivPicture = (props) =>{
 
                   document.body.style.pointerEvents = "auto";/*----------------------give back functionality to pointer*/
 
-                  props.setStticSource("");/*----------------------------------------------clear comparable variable */
+                  props.setStticSource("");/*----------------------------------------clear comparable variable */
 
-                  props.shuffle();/*-----------------------------------------------==------in harder (and hardest) version ... shuffle after bad trying*/
+                  props.shuffle();/*-------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
                     
               }, 300);
           }
       }
-  
    }
 }
 
