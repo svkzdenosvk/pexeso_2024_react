@@ -16,17 +16,16 @@
     document.getElementById("timeAndStart").setAttribute('style', 'display: flex');  
  }
 
- export function _stylingAfterStart(){/*---------------------f. for style changes after click on "start" button ..inc to TimeAndStart.js*/
+ export function _stylingAfterStart(){/*-------------------------------------------------f. for style changes after click on "start" button ..inc to TimeAndStart.js*/
        //to hide start button 
        document.getElementById("start").setAttribute('style', 'display: none'); 
        document.getElementsByTagName("H3")[0].setAttribute('style', 'display: none'); 
-       
-       //style H1
-      // document.getElementsByClassName("welcome")[0].setAttribute('style', 'margin-top: 0px');
- 
+        
        //styling all react app id result
-       document.getElementById("result").setAttribute('style', 'flex-direction: column'); 
-       document.getElementById("result").setAttribute('style', 'justify-content: start'); 
+      //  document.getElementById("result").setAttribute('style', 'flex-direction: column'); 
+      //  document.getElementById("result").setAttribute('style', 'justify-content: start'); 
+       document.getElementById("result").setAttribute('style', 'justify-content: start; flex-direction: column');
+
 
        // to see images
        document.getElementsByClassName("column_content")[0].setAttribute('style', 'display: flex');

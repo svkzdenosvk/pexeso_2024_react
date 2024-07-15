@@ -14,7 +14,6 @@ const App = () =>{
 
   const [level, setLevel] = useState();
   const [color, setColor] = useState("");
- // const [h1Context, setH1context] = useState( "Pexeso");
 
   let [seconds, setSeconds] = useState(0);
   let [intervalSecond, setIntervalSecond] = useState(0);
@@ -56,29 +55,6 @@ const App = () =>{
  // ---------------------------shuffle function
  // ---------------------------
  
-
-// function shuffle(){/*-------------------------------------------------------------function for shuffling (ONLY) in harder and the hardest version of game*/
-
-//   if(level!=="normal"||(level==="normal"&& seconds===0)){
-
-//      //get HTMLcollection
-//      let x= document.getElementsByClassName("div_on_click");/*--------------------collection of divs above image*/
-
-//      //convert collection to array
-//      let arr = Array.from(x);
-//      _shuffleArray(arr);/*--------------------------------------------------------partial f. to random shuffle of array, f. included from _inc_functions.js */
-
-//      //remove old collection
-//      let row = document.getElementById("row");
-//      row.innerHTML="";
-      
-//      // add new random order of collection
-//      for(let i = 0; i < arr.length; i++){
-//           row.appendChild(arr[i]);
-//      }
-//   }              
-// }
-
 function shuffle(){/*-------------------------------------------------------------function for shuffling (ONLY) in harder and the hardest version of game*/
 
   if(level!=="hardest"){

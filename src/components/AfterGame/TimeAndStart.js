@@ -7,7 +7,8 @@ export const TimeAndStart = ({level,shuffle,seconds,setSeconds,setIntervalSecond
   
     function _incrementSeconds(){/*---------------------------------------------------partial f. for change seconds number by increment +1*/
       setSeconds(seconds=seconds+1);
-      secondsEl.innerHTML  = seconds + " s";
+      // secondsEl.innerHTML  = seconds + " s";
+        secondsEl.textContent  = seconds + " s"; /*-----------------------------------with textContent it´s more secure than with innerHTML*/ 
     }
   
     function timer(){/*---------------------------------------------------------------button start */
