@@ -59,9 +59,14 @@ export const DivPicture = (props) =>{
     _myToggle(element,'mask','selected_Div_img');
   }
 
-  function hideUnMatched(first, second){/*----------------------------------------------if shown images do not match -> hide them back  */
+  function hideUnMatched(first, second){/*---------------------------------------------if shown images do not match -> hide them back  */
     _myToggle(first, 'selected_Div_img', 'mask');
     _myToggle(second, 'selected_Div_img', 'mask');
+  }
+
+  function settingAfterComparison(){
+    document.body.style.pointerEvents = "auto";/*---------------------------------------give back functionality to pointer*/
+    props.setStticSource("");/*---------------------------------------------------------clear comparable variable */
   }
 
  // ---------------------------
@@ -87,10 +92,12 @@ export const DivPicture = (props) =>{
           if(props.stticSource===imgElm.getAttribute("src")){/*----------------------if the same --> remove images */
         
                   animateAndDelete(firstSelectedImg,secondSelectedImg);
+
+                  settingAfterComparison();
                                                             
-                  document.body.style.pointerEvents = "auto";/*----------------------give back functionality to pointer*/
+                  // document.body.style.pointerEvents = "auto";/*----------------------give back functionality to pointer*/
                   
-                  props.setStticSource("");
+                  // props.setStticSource("");
                                      
           }else{/*-------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
 
@@ -98,9 +105,7 @@ export const DivPicture = (props) =>{
 
                   hideUnMatched(firstSelectedImg,secondSelectedImg);
 
-                  document.body.style.pointerEvents = "auto";/*----------------------give back functionality to pointer*/
-
-                  props.setStticSource("");/*----------------------------------------clear comparable variable */
+                  settingAfterComparison();
 
                   props.shuffle();/*-------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
                     
