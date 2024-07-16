@@ -65,41 +65,37 @@ export const DivPicture = (props) =>{
   }
 
   function settingAfterComparison(){
-    document.body.style.pointerEvents = "auto";/*---------------------------------------give back functionality to pointer*/
-    props.setStticSource("");/*---------------------------------------------------------clear comparable variable */
+    document.body.style.pointerEvents = "auto";/*--------------------------------------give back functionality to pointer*/
+    props.setStticSource("");/*--------------------------------------------------------clear comparable variable */
   }
 
  // ---------------------------
  // ---------------------------main fn to compare
  // ---------------------------
 
-  function mainFn(element) {/*--------------------------------------------------------the most main function to manage pexeso-code */
+  function mainFn(element) {/*---------------------------------------------------------the most main function to manage pexeso-code */
 
     if(element.classList.contains('mask')){/*------------------------------------------if on image is joker´s image */
 
       var imgElm = element.firstElementChild;
-      showImg(element);/*------------------------------------------------------------remove joker image and show img under */
+      showImg(element);/*--------------------------------------------------------------remove joker image and show img under */
       
-      if(props.stticSource===""){/*--------------------------------------------------if no image is shown, get attribute from clicked*/
+      if(props.stticSource===""){/*----------------------------------------------------if no image is shown, get attribute from clicked*/
          
          props.setStticSource(imgElm.getAttribute("src"));
-      }else{/*-----------------------------------------------------------------------compare sources attribute of showed and clicked */
-          document.body.style.pointerEvents = "none";/*------------------------------prevent to show third image */
+      }else{/*-------------------------------------------------------------------------compare sources attribute of showed and clicked */
+          document.body.style.pointerEvents = "none";/*--------------------------------prevent to show third image */
 
           let firstSelectedImg = document.getElementsByClassName("selected_Div_img")[0];
           let secondSelectedImg= document.getElementsByClassName("selected_Div_img")[1];
 
-          if(props.stticSource===imgElm.getAttribute("src")){/*----------------------if the same --> remove images */
+          if(props.stticSource===imgElm.getAttribute("src")){/*------------------------if the same --> remove images */
         
                   animateAndDelete(firstSelectedImg,secondSelectedImg);
 
                   settingAfterComparison();
-                                                            
-                  // document.body.style.pointerEvents = "auto";/*----------------------give back functionality to pointer*/
-                  
-                  // props.setStticSource("");
-                                     
-          }else{/*-------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
+                                                                                                 
+          }else{/*---------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
 
               setTimeout(function(){
 
@@ -107,7 +103,7 @@ export const DivPicture = (props) =>{
 
                   settingAfterComparison();
 
-                  props.shuffle();/*-------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
+                  props.shuffle();/*---------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
                     
               }, 300);
           }
