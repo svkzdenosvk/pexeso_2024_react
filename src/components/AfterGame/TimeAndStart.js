@@ -4,7 +4,7 @@ export const TimeAndStart = ({level,shuffle,seconds,setSeconds,setIntervalSecond
   
     const secondsEl= document.getElementById("seconds");
     
-  //possible move this func to app with usestate and just send down function _incr
+  //possible move this func to app with usestate and just send down function _incr (react šetek 40.video)
     function _incrementSeconds(){/*---------------------------------------------------partial f. for change seconds number by increment +1*/
       setSeconds(seconds=seconds+1);
       // setSeconds(prevSeconds => prevSeconds + 1);
