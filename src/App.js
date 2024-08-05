@@ -17,6 +17,8 @@ const App = () =>{
 
   let [seconds, setSeconds] = useState(0);
   let [intervalSecond, setIntervalSecond] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+
 
   // ---------------------------
  // ---------------------------set level fn´s
@@ -110,11 +112,13 @@ function shuffle(){/*-----------------------------------------------------------
                        seconds={seconds} 
                        setSeconds={setSeconds} 
                        setIntervalSecond={setIntervalSecond}
-                       color={color}/> 
+                       color={color}
+                       isRunning={isRunning}
+                       setIsRunning={setIsRunning} /> 
          </div>
         
          <div className="column_content" id="content">
-            <GameDivPictures level={level} shuffle={shuffle} seconds={seconds} intervalSecond={intervalSecond}/> 
+            <GameDivPictures level={level} shuffle={shuffle} seconds={seconds} intervalSecond={intervalSecond} setIsRunning={setIsRunning}/> 
          </div>
     </>
   );

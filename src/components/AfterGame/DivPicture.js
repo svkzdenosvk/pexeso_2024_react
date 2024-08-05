@@ -10,6 +10,7 @@ export const DivPicture = (props) =>{
 
   function stopTimer(){/*----------------------------------------------------------stop seconds increment */
     clearInterval(props.intervalSecond);
+    props.setIsRunning(false);
     document.getElementById("seconds").style.display="none";
   }
 
