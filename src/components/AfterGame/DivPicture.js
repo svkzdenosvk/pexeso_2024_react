@@ -50,18 +50,29 @@ export const DivPicture = (props) =>{
      }, 210);
   }
   
-  function animateAndDelete(first,second){/*------------------------..-----------------matched img´s animate->delete*/ 
-    _animate(first, _deleteImg, checkEnd);
-    _animate(second, _deleteImg, checkEnd);
+  function animateAndDelete(){/*------------------------..-----------------matched img´s animate->delete*/ 
+    // _animate(first, _deleteImg, checkEnd);
+    // _animate(second, _deleteImg, checkEnd);
+
+    let selectedImgCol = document.getElementsByClassName("selected_Div_img")
+
+    for (let element of selectedImgCol) {
+      _animate(element, _deleteImg, checkEnd);
+    }
   }
 
   function showImg(element){
     _myToggle(element,'mask','selected_Div_img');
   }
 
-  function hideUnMatched(first, second){/*---------------------------------------------if shown images do not match -> hide them back  */
-    _myToggle(first, 'selected_Div_img', 'mask');
-    _myToggle(second, 'selected_Div_img', 'mask');
+  function hideUnMatched(){/*---------------------------------------------if shown images do not match -> hide them back  */
+    // _myToggle(first, 'selected_Div_img', 'mask');
+    // _myToggle(second, 'selected_Div_img', 'mask');
+    let selectedImgCol = document.getElementsByClassName("selected_Div_img")
+
+    for (let element of selectedImgCol) {
+      _myToggle(element, 'selected_Div_img', 'mask');
+    }
   }
 
   function settingAfterComparison(){
@@ -86,12 +97,17 @@ export const DivPicture = (props) =>{
       }else{/*-------------------------------------------------------------------------compare sources attribute of showed and clicked */
           document.body.style.pointerEvents = "none";/*--------------------------------prevent to show third image */
 
-          let firstSelectedImg = document.getElementsByClassName("selected_Div_img")[0];
-          let secondSelectedImg= document.getElementsByClassName("selected_Div_img")[1];
+          // let firstSelectedImg = document.getElementsByClassName("selected_Div_img")[0];
+          // let secondSelectedImg= document.getElementsByClassName("selected_Div_img")[1];
+          
+          // let selectedImgCol = document.getElementsByClassName("selected_Div_img")
 
           if(props.stticSource===imgElm.getAttribute("src")){/*------------------------if the same --> remove images */
         
-                  animateAndDelete(firstSelectedImg,secondSelectedImg);
+                  // animateAndDelete(firstSelectedImg,secondSelectedImg);
+                  animateAndDelete();
+                  // animateAndDelete();
+
 
                   settingAfterComparison();
                                                                                                  
@@ -99,8 +115,9 @@ export const DivPicture = (props) =>{
 
               setTimeout(function(){
 
-                  hideUnMatched(firstSelectedImg,secondSelectedImg);
-
+                  hideUnMatched();
+                  hideUnMatched();
+               
                   settingAfterComparison();
 
                   props.shuffle();/*---------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
