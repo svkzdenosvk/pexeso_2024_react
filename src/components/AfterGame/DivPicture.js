@@ -1,8 +1,12 @@
+import { useRef } from "react";
+
 import { _fmtMSS, _myToggle } from "./../../_inc/_inc_functions";
 
  //component about one single div > picture
 
 export const DivPicture = (props) =>{
+  const firstRef = useRef(null);
+  const secondRef = useRef(null);
 
  // ---------------------------
  // ---------------------------timing fn´s
@@ -37,6 +41,8 @@ export const DivPicture = (props) =>{
  // ---------------------------
 
   function _deleteImg(el,checkEndCallBack){/*-----------------------------------------partial f. to remove the same showed images*/
+   // console.log(el.firstElementChild)
+
     el.remove();
     setTimeout(function(){
       checkEndCallBack();
@@ -51,18 +57,41 @@ export const DivPicture = (props) =>{
      }, 210);
   }
   
-  function animateAndDelete(first,second){/*------------------------..-----------------matched img´s animate->delete*/ 
+  function animateAndDelete(first, second){/*------------------------..-----------------matched img´s animate->delete*/ 
     _animate(first, _deleteImg, checkEnd);
-    _animate(second, _deleteImg, checkEnd);
+
+    if(second) {
+      _animate(second, _deleteImg, checkEnd);
+    } else {
+      console.log("bug bol v animate")
+        const selectedImgAgain = document.getElementsByClassName("selected_Div_img");
+        console.log(selectedImgAgain.length)
+        for (let selectedElement of selectedImgAgain) {
+
+          _animate(selectedElement, _deleteImg, checkEnd);
+        }
+      }
+
+    // if(!second){ second= document.getElementsByClassName("selected_Div_img")[0];}
+    // _animate(second, _deleteImg, checkEnd);
+    // }
   }
 
   function showImg(element){
     _myToggle(element,'mask','selected_Div_img');
   }
 
-  function hideUnMatched(first, second){/*---------------------------------------------if shown images do not match -> hide them back  */
+  function hideUnMatched(first,second){/*---------------------------------------------if shown images do not match -> hide them back  */
     _myToggle(first, 'selected_Div_img', 'mask');
-    _myToggle(second, 'selected_Div_img', 'mask');
+
+    if(second) {
+      _myToggle(second, 'selected_Div_img', 'mask');
+    } else {
+        const selectedImgCol = document.getElementsByClassName("selected_Div_img");
+        for (let element of selectedImgCol) {
+          _myToggle(element, 'selected_Div_img', 'mask');
+        }
+      }
   }
 
   function settingAfterComparison(){
@@ -87,26 +116,33 @@ export const DivPicture = (props) =>{
       }else{/*-------------------------------------------------------------------------compare sources attribute of showed and clicked */
           document.body.style.pointerEvents = "none";/*--------------------------------prevent to show third image */
 
-          let firstSelectedImg = document.getElementsByClassName("selected_Div_img")[0];
-          let secondSelectedImg= document.getElementsByClassName("selected_Div_img")[1];
+          const selectedImgCol = document.getElementsByClassName("selected_Div_img");
 
+          firstRef.current = selectedImgCol[0];
+          secondRef.current= selectedImgCol[1];
+          
           if(props.stticSource===imgElm.getAttribute("src")){/*------------------------if the same --> remove images */
         
-                  animateAndDelete(firstSelectedImg,secondSelectedImg);
-
+                // setTimeout(function(){
+                  animateAndDelete(firstRef.current,secondRef.current);
+                  
                   settingAfterComparison();
+
+                // }, 300);
                                                                                                  
           }else{/*---------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
 
-              setTimeout(function(){
+                setTimeout(function(){
 
-                  hideUnMatched(firstSelectedImg,secondSelectedImg);
-
+                  hideUnMatched(firstRef.current,secondRef.current);
+               
                   settingAfterComparison();
 
-                  props.shuffle();/*---------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
-                    
-              }, 300);
+                  if( props.level==="harder" || props.level==="harder"){
+                    props.shuffle();/*---------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
+                  }  
+
+                }, 300);
           }
       }
     }

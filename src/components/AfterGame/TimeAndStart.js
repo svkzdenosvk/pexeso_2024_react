@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { _stylingAfterStart } from '../../_inc/_inc_functions';
  
 export const TimeAndStart = ({level,shuffle,seconds,setSeconds,setIntervalSecond,color,isRunning, setIsRunning}) => {
@@ -29,6 +29,7 @@ export const TimeAndStart = ({level,shuffle,seconds,setSeconds,setIntervalSecond
         // };
       }, [isRunning, setSeconds, setIntervalSecond]);
    
+
     function timer(){/*---------------------------------------------------------------button start */
      
       _stylingAfterStart();
