@@ -1,22 +1,11 @@
 import { _stylingAfterStart } from '../../_inc/_inc_functions';
  
 export const TimeAndStart = ({level,shuffle,seconds,setSeconds,setIntervalSecond,color}) => {
-  
-    const secondsEl= document.getElementById("seconds");
-    
-  //possible move this func to app with usestate and just send down function _incr (react šetek 40.video)
-    function _incrementSeconds(){/*---------------------------------------------------partial f. for change seconds number by increment +1*/
-      setSeconds(seconds=seconds+1);
-      // setSeconds(prevSeconds => prevSeconds + 1);
-
-      // setSeconds(seconds => seconds + 1);
-
-      // const increaseOne = seconds + 1;
-      // setSeconds(increaseOne);
       
-      // secondsEl.innerHTML  = seconds + " s";
-        secondsEl.textContent  = seconds + " s"; /*-----------------------------------with textContent it´s more secure than with innerHTML*/ 
-    }
+    function _incrementSeconds(){/*---------------------------------------------------partial f. for change seconds number by increment +1*/
+      // setSeconds(seconds=seconds+1);
+      setSeconds(prevSeconds => prevSeconds + 1);
+  }
   
     function timer(){/*---------------------------------------------------------------button start */
      
