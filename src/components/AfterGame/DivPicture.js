@@ -149,7 +149,7 @@ export const DivPicture = (props) =>{
   }
 
     return (
-        <div onClick={(e) => {mainFn(e.target.parentNode)}} className='mask div_on_click' key={props.index}>
+        <div onClick={(e) => {mainFn(e.target.parentNode)}} className='mask div_on_click' >
             <img  src={"pictures/pexeso/"+props.pictureName+".jpg"} alt='Smiley face' />  
         </div> 
     )
