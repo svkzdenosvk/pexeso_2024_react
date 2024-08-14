@@ -2,17 +2,24 @@ import { DivPicture } from './DivPicture.js';
 import { useState } from "react";
 
 
+const arrImg= ["lightning", "drop", "sea", "space", "sun", "vibration", "wind", "wood"];
+const doubleImgs= [...arrImg, ...arrImg];
+
+//generate UUID random keys
+const uuid = require('uuid')
+
+//creation of 2-dimensional array: - out of component to make id´s stable
+// ['123e4567-e89b-12d3-a456-426614174000', 'lightning'],
+// ['123e4567-e89b-12d3-a456-426614174001', 'drop'],..
+const imgsWithKeys = doubleImgs.map(pictureName => [uuid.v4(), pictureName]);
+
 export const GameDivPictures = (props) =>{
   const [stticSource, setStticSource] = useState("");
 
-
-    const arrImg= ["lightning", "drop", "sea", "space", "sun", "vibration", "wind", "wood"];
-    const doubleImgs= [...arrImg, ...arrImg];
-
       //array of img names -> div>img
-      const divItems = doubleImgs.map((pictureName,index) =>
+      const divItems = imgsWithKeys.map(([id, pictureName]) =>
 
-        <DivPicture key={index} 
+        <DivPicture key={id}         
                     pictureName={pictureName} 
                     stticSource={stticSource} 
                     level={props.level} 
