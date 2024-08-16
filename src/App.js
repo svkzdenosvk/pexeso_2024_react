@@ -98,7 +98,7 @@ const App = () =>{
 
 function shuffle(){/*-------------------------------------------------------------function for shuffling (ONLY) in harder and the hardest version of game*/
 
-  if(seconds===0 || level==="harder" || level==="harder"){ /*this method is for the hardest level .. it´s maybe slower because of rerendering */
+  if( level==="harder" || level==="hardest"){ /*this method is for the hardest level .. it´s maybe slower because of rerendering */
      //get HTMLcollection
      let x= document.getElementsByClassName("div_on_click");/*--------------------collection of divs above image*/
 

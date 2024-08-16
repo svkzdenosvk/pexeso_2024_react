@@ -24,10 +24,6 @@ export const TimeAndStart = ({level,shuffle,seconds,setSeconds,setIntervalSecond
      
       _stylingAfterStart();
 
-      //to shuffle before every game (doesn´t matter level)
-      if(seconds===0){
-        shuffle();
-      }
       setIsRunning(true);
 
       // in hardest level shuffle img´s

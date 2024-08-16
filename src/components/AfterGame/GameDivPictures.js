@@ -1,9 +1,12 @@
 import { DivPicture } from './DivPicture.js';
 import { useState } from "react";
-
+import {_shuffleArray }from '../../_inc/_inc_functions.js'
 
 const arrImg= ["lightning", "drop", "sea", "space", "sun", "vibration", "wind", "wood"];
 const doubleImgs= [...arrImg, ...arrImg];
+
+//to shuffle before every game
+_shuffleArray(doubleImgs)
 
 //generate UUID random keys
 const uuid = require('uuid')
