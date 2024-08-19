@@ -65,7 +65,7 @@ export const DivPicture = (props) =>{
     } else {
       console.log("bug bol v animate")
         const selectedImgAgain = document.getElementsByClassName("selected_Div_img");
-        console.log(selectedImgAgain.length)
+        // console.log(selectedImgAgain.length)
         for (let selectedElement of selectedImgAgain) {
 
           _animate(selectedElement, _deleteImg, checkEnd);
@@ -81,7 +81,7 @@ export const DivPicture = (props) =>{
     _myToggle(element,'mask','selected_Div_img');
   }
 
-  function hideUnMatched(first,second){/*---------------------------------------------if shown images do not match -> hide them back  */
+  function hideUnMatched(first,second,settingAfterComparisonCallBack){/*---------------------------------------------if shown images do not match -> hide them back  */
     _myToggle(first, 'selected_Div_img', 'mask');
 
     if(second) {
@@ -91,7 +91,10 @@ export const DivPicture = (props) =>{
         for (let element of selectedImgCol) {
           _myToggle(element, 'selected_Div_img', 'mask');
         }
-      }
+    }
+    setTimeout(function(){/*---------------------------------------------------------rewriten as callback f.*/
+      settingAfterComparisonCallBack();
+    }, 0);
   }
 
   function settingAfterComparison(){
@@ -120,11 +123,13 @@ export const DivPicture = (props) =>{
 
           firstRef.current = selectedImgCol[0];
           secondRef.current= selectedImgCol[1];
-          
+          console.log(selectedImgCol.length)
+
+
           if(props.stticSource===imgElm.getAttribute("src")){/*------------------------if the same --> remove images */
         
                 // setTimeout(function(){
-                  animateAndDelete(firstRef.current,secondRef.current);
+                  animateAndDelete(firstRef.current,secondRef.current,);
                   
                   settingAfterComparison();
 
@@ -134,7 +139,7 @@ export const DivPicture = (props) =>{
 
                 setTimeout(function(){
 
-                  hideUnMatched(firstRef.current,secondRef.current);
+                  hideUnMatched(firstRef.current,secondRef.current,settingAfterComparison);
                
                   settingAfterComparison();
 
