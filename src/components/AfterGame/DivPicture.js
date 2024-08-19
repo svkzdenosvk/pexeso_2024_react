@@ -143,10 +143,8 @@ export const DivPicture = (props) =>{
                
                   settingAfterComparison();
 
-                  if( props.level==="harder" || props.level==="hardest"){
-                    props.shuffle();/*---------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
-                  }  
-
+                  props.shuffle();/*---------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
+                  
                 }, 300);
           }
       }
