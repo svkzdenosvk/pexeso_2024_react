@@ -57,7 +57,7 @@ export const DivPicture = (props) =>{
      }, 210);
   }
   
-  function animateAndDelete(first, second){/*------------------------..-----------------matched img´s animate->delete*/ 
+  function animateAndDelete(first, second,settingAfterComparisonCallBack){/*------------------------..-----------------matched img´s animate->delete*/ 
     _animate(first, _deleteImg, checkEnd);
 
     if(second) {
@@ -71,6 +71,9 @@ export const DivPicture = (props) =>{
           _animate(selectedElement, _deleteImg, checkEnd);
         }
       }
+      setTimeout(function(){/*---------------------------------------------------------rewriten as callback f.*/
+        settingAfterComparisonCallBack();
+      }, 260);
 
     // if(!second){ second= document.getElementsByClassName("selected_Div_img")[0];}
     // _animate(second, _deleteImg, checkEnd);
@@ -129,10 +132,8 @@ export const DivPicture = (props) =>{
           if(props.stticSource===imgElm.getAttribute("src")){/*------------------------if the same --> remove images */
         
                 // setTimeout(function(){
-                  animateAndDelete(firstRef.current,secondRef.current,);
+                  animateAndDelete(firstRef.current,secondRef.current,settingAfterComparison);
                   
-                  settingAfterComparison();
-
                 // }, 300);
                                                                                                  
           }else{/*---------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
