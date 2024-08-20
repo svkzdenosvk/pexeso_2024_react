@@ -141,8 +141,6 @@ export const DivPicture = (props) =>{
 
                   hideUnMatched(firstRef.current,secondRef.current,settingAfterComparison);
                
-                  settingAfterComparison();
-
                   props.shuffle();/*---------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
                   
                 }, 300);
