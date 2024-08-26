@@ -29,27 +29,21 @@ const App = () =>{
     //style -> color of H1, H3 and seconds
     setColor(colorText);
     
-    _stylingAfterLevel(colorBG);/*----------------------------------------------------partial f. with style changes after select level*/
+    _stylingAfterLevel(colorBG);/*---------------------------------------------------partial f. with style changes after select level*/
   }
  
-  function my_setLevel(e,leveliD ) {/*------------------------------------------------main f. for set level*/
+  function my_setLevel(levelName) {/*-----------------------------------------------main f. for set level*/
     
-    setLevel(leveliD)
+    setLevel(levelName)
   
-      switch (e.target.id) {
-      
-        case "harder":
-          _setLevelStyleChanges("white", "#4d141d");
-          break;
-        case "hardest":
-          _setLevelStyleChanges("white", "black");
-          break;
-        case "normal":        
-          _setLevelStyleChanges("black");
-          break;
-        default:
-          break;      
-      }
+    const levelChanges = {
+      normal:  ["black"],
+      harder:  ["white", "#4d141d"],
+      hardest: ["white","black"]
+    }
+
+   _setLevelStyleChanges(levelChanges[levelName][0],levelChanges[levelName][1]); /*------using dynamic object properties instead of switch*/ 
+
   }
 
  // ---------------------------

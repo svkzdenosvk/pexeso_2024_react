@@ -4,7 +4,7 @@ export const LevelButton = (props) =>{
 
     return (
      
-       <div onClick={(e) => {props.my_setLevel(e,props.id)}} id={props.id} >{props.id.toUpperCase()}</div>
+       <div onClick={(e) => {props.my_setLevel(props.id)}} id={props.id} >{props.id.toUpperCase()}</div>
       
     );
   }
