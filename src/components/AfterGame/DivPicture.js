@@ -73,11 +73,8 @@ export const DivPicture = (props) =>{
       }
       setTimeout(function(){/*---------------------------------------------------------rewriten as callback f.*/
         settingAfterComparisonCallBack();
-      }, 260);
-
-    // if(!second){ second= document.getElementsByClassName("selected_Div_img")[0];}
-    // _animate(second, _deleteImg, checkEnd);
-    // }
+      }, 0);
+    // }, 260);
   }
 
   function showImg(element){
@@ -131,10 +128,10 @@ export const DivPicture = (props) =>{
 
           if(props.stticSource===imgElm.getAttribute("src")){/*------------------------if the same --> remove images */
         
-                // setTimeout(function(){
+                setTimeout(function(){
                   animateAndDelete(firstRef.current,secondRef.current,settingAfterComparison);
                   
-                // }, 300);
+                }, 265);
                                                                                                  
           }else{/*---------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
 
