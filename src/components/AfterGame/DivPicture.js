@@ -41,7 +41,6 @@ export const DivPicture = (props) =>{
  // ---------------------------
 
   function _deleteImg(el,checkEndCallBack){/*-----------------------------------------partial f. to remove the same showed images*/
-   // console.log(el.firstElementChild)
 
     el.remove();
     setTimeout(function(){
@@ -65,7 +64,6 @@ export const DivPicture = (props) =>{
     } else {
       console.log("bug bol v animate")
         const selectedImgAgain = document.getElementsByClassName("selected_Div_img");
-        // console.log(selectedImgAgain.length)
         for (let selectedElement of selectedImgAgain) {
 
           _animate(selectedElement, _deleteImg, checkEnd);
@@ -119,19 +117,29 @@ export const DivPicture = (props) =>{
       }else{/*-------------------------------------------------------------------------compare sources attribute of showed and clicked */
           document.body.style.pointerEvents = "none";/*--------------------------------prevent to show third image */
 
-          const selectedImgCol = document.getElementsByClassName("selected_Div_img");
+
+          let selectedImgCol
+          let iterationCount = 0
+          const maxIterations = 1000
+          
+          do{
+            selectedImgCol= document.getElementsByClassName("selected_Div_img");
+            iterationCount++
+            if (iterationCount > maxIterations) {/*------------------------------------prevent freezing browser and game */
+              console.warn("it is a never ending loop ")
+              break;
+            }
+          }while(selectedImgCol.length!==2)
 
           firstRef.current = selectedImgCol[0];
           secondRef.current= selectedImgCol[1];
-          console.log(selectedImgCol.length)
 
-
-          if(props.stticSource===imgElm.getAttribute("src")){/*------------------------if the same --> remove images */
+          if(props.stticSource===imgElm.getAttribute("src")){/*------------------------if matched --> remove images */
         
-                setTimeout(function(){
+                // setTimeout(function(){
                   animateAndDelete(firstRef.current,secondRef.current,settingAfterComparison);
                   
-                }, 265);
+                // }, 265);
                                                                                                  
           }else{/*---------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
 
@@ -141,7 +149,9 @@ export const DivPicture = (props) =>{
                
                   props.shuffle();/*---------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
                   
-                }, 300);
+                }, 250);
+                // }, 300);
+
           }
       }
     }
