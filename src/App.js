@@ -32,7 +32,7 @@ const App = () =>{
     _stylingAfterLevel(colorBG);/*---------------------------------------------------partial f. with style changes after select level*/
   }
  
-  function my_setLevel(levelName) {/*-----------------------------------------------main f. for set level*/
+  function my_setLevel(levelName) {/*------------------------------------------------main f. for set level*/
     
     setLevel(levelName)
   
@@ -42,7 +42,7 @@ const App = () =>{
       hardest: ["white","black"]
     }
 
-   _setLevelStyleChanges(levelChanges[levelName][0],levelChanges[levelName][1]); /*------using dynamic object properties instead of switch*/ 
+   _setLevelStyleChanges(levelChanges[levelName][0],levelChanges[levelName][1]); /*---using dynamic object properties instead of switch*/ 
 
   }
 
@@ -50,46 +50,6 @@ const App = () =>{
  // ---------------------------shuffle function
  // ---------------------------
  
-// function shuffle(){/*-------------------------------------------------------------function for shuffling (ONLY) in harder and the hardest version of game*/
-
-//   // if(level!=="hardest"){
-//   //   //this is quicker version of shuffling but in level "hardest" it´s not working correctly and also with slow internet not working corretly
-//   //   if(level==="harder"|| seconds===0){
-  
-//   //      //get HTMLcollection of pictures
-//   //      let x= document.getElementsByTagName("img");/*--------------------collection of divs above image*/
-
-//   //      let arrSrc=[];/*--------------------------------------------------array of clean paths */
-//   //      let arr = Array.from(x);/*----------------------------------------convert collection to array*/
-//   //      arr.forEach((element) => {
-//   //       const startIndex = element.src.indexOf('pictures'); /*-----------cut a path before word "picture" ... like "http://localhost:3000/" */
-//   //       const srcPath = element.src.substring(startIndex);
-//   //       arrSrc.push(srcPath)
-//   //      })
-      
-//   //      _shuffleArray(arrSrc);/*--------------------------------------------------------partial f. to random shuffle of array, f. included from _inc_functions.js */
-
-//   //      arr.forEach((element,index) => {element.src =arrSrc[index]});
-//   //   } 
-//    if(seconds===0 || level==="harder" || level==="harder"){ /*this method is for the hardest level .. it´s maybe slower because of rerendering */
-//      //get HTMLcollection
-//      let x= document.getElementsByClassName("div_on_click");/*--------------------collection of divs above image*/
-
-//      //convert collection to array
-//      let arr = Array.from(x);
-//      _shuffleArray(arr);/*--------------------------------------------------------partial f. to random shuffle of array, f. included from _inc_functions.js */
-
-//      //remove old collection
-//      let row = document.getElementById("row");
-//      row.innerHTML="";
-      
-//      // add new random order of collection
-//      for(let i = 0; i < arr.length; i++){
-//           row.appendChild(arr[i]);
-//      }
-//   }           
-// }
-
 function shuffle(){/*-------------------------------------------------------------function for shuffling (ONLY) in harder and the hardest version of game*/
 
   if( level==="harder" || level==="hardest"){ /*this method is for the hardest level .. it´s maybe slower because of rerendering */
