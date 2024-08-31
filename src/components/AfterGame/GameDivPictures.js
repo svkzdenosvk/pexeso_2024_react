@@ -1,4 +1,4 @@
-import { DivPicture } from './DivPicture.js';
+// import { DivPicture } from './DivPicture.js';
 // import { useState, useRef, useEffect } from "react";
 import { useState, useRef } from "react";
 
@@ -27,8 +27,42 @@ export const GameDivPictures = (props) =>{
 
  const [stticSource, setStticSource] = useState("");
   let divItems = []
+  // let divRefs = useRef([]);
+
 //  let [divImgs, setGameDivImgs] = useState(divItems);
 
+  //array of img names -> div>img
+  // divItems = imgsWithKeys.map(([id, pictureName]) =>
+    divItems = imgsWithKeys.map(([id, pictureName]) =>(
+      { id: id, imgPath: pictureName, selected: false }
+    ))
+    console.log(divItems)
+    // <DivPicture 
+    //             sendingFunction={mainFn}
+    //             key={id}         
+    //             pictureName={pictureName}
+    // />
+//     <div onClick={(e) => {mainFn(e.target.parentNode)}} className='mask div_on_click' key={id} >
+//     <img  src={"pictures/pexeso/"+pictureName+".jpg"} alt='Smiley face' />  
+// </div> 
+
+      //   `
+      //   <div onClick="(e) => {mainFn(e.target.parentNode)}" className="mask div_on_click">
+      //     <img src="pictures/pexeso/${props.pictureName}.jpg" alt="Smiley face" />
+      //   </div>
+      // // `
+//  )
+
+//  let DivArray= [
+//   { id: 1, imgPath: "Alice", selected: false },
+//   { id: 2, name: "Bob", age: 30, selected: true }, // Tento objekt má pridanú vlastnosť 'selected'
+//   { id: 3, name: "Charlie", age: 25 }
+// ]
+
+
+//  divItems.forEach(obj => {
+//   obj.imgPath = obj.props.pictureName; // Pridanie novej vlastnosti 'isActive' s hodnotou true
+// });
  // ---------------------------
  // ---------------------------timing fn´s
  // ---------------------------
@@ -98,7 +132,33 @@ function animateAndDelete(first, second,settingAfterComparisonCallBack){/*------
 
 function showImg(element){
   _myToggle(element,'mask','selected_Div_img');
-}
+};
+
+// function showImg2(element){
+//   // _myToggle(element,'mask','selected_Div_img');
+
+//   // divItems.forEach(obj => {
+//   //   obj == obj.props.pictureName; // Pridanie novej vlastnosti 'isActive' s hodnotou true
+//   // });
+
+//   divItems = divItems.map(div => {
+//     if (div.id === element.id) {
+//       // Vrátime nový objekt s pridanou vlastnosťou 'selected'
+//       return { ...div, selected: true };
+//     }
+//     // Vrátime pôvodný objekt, ak sa nezhoduje
+//     return div;
+// }
+
+// const showImg = (divItems, targetUser) => {
+//   return usersArray.map(user => {
+//     if (user.id === targetUser.id) {
+//       // Vrátime nový objekt s pridanou vlastnosťou 'selected'
+//       return { ...user, selected: true };
+//     }
+//     // Vrátime pôvodný objekt, ak sa nezhoduje
+//     return user;
+  // )};
 
 function hideUnMatched(first,second,settingAfterComparisonCallBack){/*---------------------------------------------if shown images do not match -> hide them back  */
   _myToggle(first, 'selected_Div_img', 'mask');
@@ -144,7 +204,7 @@ function settingAfterComparison(){
 
         let selectedImgCol
         let iterationCount = 0
-        const maxIterations = 10000
+        const maxIterations = 100000
         
         do{
           selectedImgCol= document.getElementsByClassName("selected_Div_img");
@@ -162,7 +222,10 @@ function settingAfterComparison(){
       
               // setTimeout(function(){
                 animateAndDelete(firstRef.current,secondRef.current,settingAfterComparison);
-                
+                for (let jeden of divItems) {
+                  // console.log(jeden._owner.alternate.memoizedState.memoizedState.current.classList)
+                  console.log(jeden)
+                }
               // }, 265);
                                                                                                
         }else{/*---------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
@@ -183,14 +246,14 @@ function settingAfterComparison(){
 
   // useEffect(() => {
       //array of img names -> div>img
-       divItems = imgsWithKeys.map(([id, pictureName]) =>
+    //    divItems = imgsWithKeys.map(([id, pictureName]) =>
 
-        <DivPicture 
-                    sendingFunction={mainFn}
-                    key={id}         
-                    pictureName={pictureName}
-        />
-     )
+    //     <DivPicture 
+    //                 sendingFunction={mainFn}
+    //                 key={id}         
+    //                 pictureName={pictureName}
+    //     />
+    //  )
 // console.log(Array.isArray(divItems))
 //  useEffect(() => {
 //   setGameDivImgs(divItems);
@@ -201,14 +264,39 @@ function settingAfterComparison(){
 
 
 
-    return (
-        <div className="row" id="row">
+    // return (
+    //     <div className="row" id="row">
 
-             {/* {divImgs} */}
-             {divItems}
+    //          {/* {divRefs} */}
+    //          {divItems} 
 
-        </div> 
-    );
+    //     </div> 
+    // );
+    // {divItems.map( (oneDiv) =>{
+    //     return  <div onClick={(e) => {mainFn(e.target.parentNode)}} className='mask div_on_click' key={oneDiv.id} >
+    //         <img  src={"pictures/pexeso/"+ oneDiv.imgPath +".jpg"} alt='Smiley face' />  
+    //     </div> 
+       
+    // })}
+    return <>
+         {divItems.map(oneDiv => (
+      <div
+        onClick={(e) => mainFn(e.target.parentNode)}
+        className='mask div_on_click'
+        key={oneDiv.id}
+      >
+        <img
+          src={"pictures/pexeso/" + oneDiv.imgPath + ".jpg"}
+          //  src={"pictures/pexeso/sun.jpg"}
+
+          alt='Smiley face'
+        />
+      </div>
+    ))}
+    
+      </>
+   
+    
   }
   
  
