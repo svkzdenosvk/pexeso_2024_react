@@ -1,6 +1,6 @@
-// import { DivPicture } from './DivPicture.js';
-// import { useState, useRef, useEffect } from "react";
-import { useState, useRef } from "react";
+import { DivPicture } from './DivPicture.js';
+// import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 
 import { _fmtMSS, _myToggle } from "./../../_inc/_inc_functions";
@@ -20,49 +20,26 @@ const uuid = require('uuid')
 // ['123e4567-e89b-12d3-a456-426614174001', 'drop'],..
 const imgsWithKeys = doubleImgs.map(pictureName => [uuid.v4(), pictureName]);
 
+let divItems 
+
+//array of img names -> div>img
+divItems = imgsWithKeys.map(([id, pictureName]) =>(
+  { id: id, imgPath: pictureName }
+))
+
+// for (let jeden of divItems) {
+//   console.log("zaciatok hry",jeden.selected)
+// }
+
 export const GameDivPictures = (props) =>{
 
  const firstRef = useRef(null);
  const secondRef = useRef(null);
 
  const [stticSource, setStticSource] = useState("");
-  let divItems = []
-  // let divRefs = useRef([]);
 
-//  let [divImgs, setGameDivImgs] = useState(divItems);
+ let [divImgs, setGameDivImgs] = useState(divItems);
 
-  //array of img names -> div>img
-  // divItems = imgsWithKeys.map(([id, pictureName]) =>
-    divItems = imgsWithKeys.map(([id, pictureName]) =>(
-      { id: id, imgPath: pictureName, selected: false }
-    ))
-    console.log(divItems)
-    // <DivPicture 
-    //             sendingFunction={mainFn}
-    //             key={id}         
-    //             pictureName={pictureName}
-    // />
-//     <div onClick={(e) => {mainFn(e.target.parentNode)}} className='mask div_on_click' key={id} >
-//     <img  src={"pictures/pexeso/"+pictureName+".jpg"} alt='Smiley face' />  
-// </div> 
-
-      //   `
-      //   <div onClick="(e) => {mainFn(e.target.parentNode)}" className="mask div_on_click">
-      //     <img src="pictures/pexeso/${props.pictureName}.jpg" alt="Smiley face" />
-      //   </div>
-      // // `
-//  )
-
-//  let DivArray= [
-//   { id: 1, imgPath: "Alice", selected: false },
-//   { id: 2, name: "Bob", age: 30, selected: true }, // Tento objekt má pridanú vlastnosť 'selected'
-//   { id: 3, name: "Charlie", age: 25 }
-// ]
-
-
-//  divItems.forEach(obj => {
-//   obj.imgPath = obj.props.pictureName; // Pridanie novej vlastnosti 'isActive' s hodnotou true
-// });
  // ---------------------------
  // ---------------------------timing fn´s
  // ---------------------------
@@ -97,7 +74,7 @@ function checkEnd(){/*----------------------------------------------------------
 
 function _deleteImg(el,checkEndCallBack){/*-----------------------------------------partial f. to remove the same showed images*/
 
-  el.remove();
+  // el.remove();
   setTimeout(function(){
     checkEndCallBack();
   }, 50);
@@ -130,35 +107,38 @@ function animateAndDelete(first, second,settingAfterComparisonCallBack){/*------
   // }, 260);
 }
 
-function showImg(element){
+function showImg(element,divObject){
   _myToggle(element,'mask','selected_Div_img');
-};
+  
+  // let selectedArr = divImgs.map(oneDiv => {
+  //    if (oneDiv === divObject) {
+  //  //if (oneDiv.id === divObject.id) {
 
-// function showImg2(element){
-//   // _myToggle(element,'mask','selected_Div_img');
+  //       return { ...oneDiv, selected: true }; /*------------------------------------------set selected atribute on clicked img (divImg) */
+  //    } else {
+  //       return oneDiv;/*------------------------------------------------------------------return without change unclicked img (divImg)*/
+  //    }
+  // });
 
-//   // divItems.forEach(obj => {
-//   //   obj == obj.props.pictureName; // Pridanie novej vlastnosti 'isActive' s hodnotou true
-//   // });
+  setGameDivImgs(prevArr => {
+    return prevArr.map(oneDiv => {
+      if (oneDiv.id === divObject.id) {
+        return { ...oneDiv, selected: true }; // Nastaví selected: true na nový objekt
+      } else {
+        return oneDiv; // Vráti nezmenený objekt
+      }
+    });
+  });
 
-//   divItems = divItems.map(div => {
-//     if (div.id === element.id) {
-//       // Vrátime nový objekt s pridanou vlastnosťou 'selected'
-//       return { ...div, selected: true };
-//     }
-//     // Vrátime pôvodný objekt, ak sa nezhoduje
-//     return div;
-// }
+  // setGameDivImgs(selectedArr)
 
-// const showImg = (divItems, targetUser) => {
-//   return usersArray.map(user => {
-//     if (user.id === targetUser.id) {
-//       // Vrátime nový objekt s pridanou vlastnosťou 'selected'
-//       return { ...user, selected: true };
-//     }
-//     // Vrátime pôvodný objekt, ak sa nezhoduje
-//     return user;
-  // )};
+  // setGameDivImgs(selectedArr)/*-----------------------------------------------------------set changed array */
+
+  // for (let jeden of divImgs) {
+  //   console.log(jeden.selected)
+  // }
+ 
+}
 
 function hideUnMatched(first,second,settingAfterComparisonCallBack){/*---------------------------------------------if shown images do not match -> hide them back  */
   _myToggle(first, 'selected_Div_img', 'mask');
@@ -171,64 +151,97 @@ function hideUnMatched(first,second,settingAfterComparisonCallBack){/*----------
         _myToggle(element, 'selected_Div_img', 'mask');
       }
   }
-  setTimeout(function(){/*---------------------------------------------------------rewriten as callback f.*/
+  setTimeout(function(){/*---------------------------------------------------------------rewriten as callback f.*/
     settingAfterComparisonCallBack();
   }, 0);
 }
 
 function settingAfterComparison(){
-  document.body.style.pointerEvents = "auto";/*--------------------------------------give back functionality to pointer*/
-  setStticSource("");/*--------------------------------------------------------clear comparable variable */
+  document.body.style.pointerEvents = "auto";/*-------------------------------------------give back functionality to pointer*/
+  setStticSource("");/*-------------------------------------------------------------------clear comparable variable */
 }
 
-  // ---------------------------
+ // ---------------------------
  // ---------------------------main fn to compare
  // ---------------------------
 
-//function mainFn(element,id) {/*---------------------------------------------------------the most main function to manage pexeso-code */
-  function mainFn(element) {/*---------------------------------------------------------the most main function to manage pexeso-code */
-
-  if(element.classList.contains('mask')){/*------------------------------------------if on image is joker´s image */
+function mainFn(element, divObject) {/*---------------------------------------------the most main function to manage pexeso-code */
+ 
+  if(element.classList.contains('mask')&& divObject.selected!==true){/*-------------if on image is joker´s image */
 
     // var imgElm = element.firstElementChild;
     let imgElm = element.firstElementChild;
 
-    showImg(element);/*--------------------------------------------------------------remove joker image and show img under */
+    showImg(element,divObject);/*----------------------------------------------------remove joker image and show img under */
     
-    if(stticSource===""){/*----------------------------------------------------if no image is shown, get attribute from clicked*/
+    if(stticSource===""){/*----------------------------------------------------------if no image is shown, get attribute from clicked*/
        
        setStticSource(imgElm.getAttribute("src"));
     }else{/*-------------------------------------------------------------------------compare sources attribute of showed and clicked */
         document.body.style.pointerEvents = "none";/*--------------------------------prevent to show third image */
 
-
         let selectedImgCol
         let iterationCount = 0
         const maxIterations = 100000
         
-        do{
+        do {
           selectedImgCol= document.getElementsByClassName("selected_Div_img");
           iterationCount++
           if (iterationCount > maxIterations) {/*------------------------------------prevent freezing browser and game */
             console.warn("it is a never ending loop ")
             break;
           }
-        }while(selectedImgCol.length!==2)
+        } while(selectedImgCol.length!==2)
 
         firstRef.current = selectedImgCol[0];
         secondRef.current= selectedImgCol[1];
 
-        if(stticSource===imgElm.getAttribute("src")){/*------------------------if matched --> remove images */
-      
+        if(stticSource===imgElm.getAttribute("src")){/*------------------------------if matched --> remove images */
+          
+//           let selectedArr = divImgs.filter(oneDiv => oneDiv.selected === true);
+// // console.log(selectedArr)
+//           if (selectedArr.length===2 && selectedArr[0].imgPath=== selectedArr[1].imgPath ) {
+//             let afterMatchArr = divImgs.filter(oneDiv => oneDiv.selected !== true);
+// // console.log("som tu")
+//             setGameDivImgs(afterMatchArr)
+
+            // animateAndDelete(firstRef.current,secondRef.current,settingAfterComparison);
+
+          // } 
+
+
+          //  let afterMatchArr = divImgs.map(oneDiv => {
+          //    if (oneDiv.selected === true) {
+          //       return { ...oneDiv, selected: false };/*---------------------------change 2 selected img´s to nonselected and hide */
+          //    } else {
+          //       return oneDiv;/*---------------------------------------------------if img wasn´t selected -> nothing to change  */
+          //     }
+          //   })
+           // setGameDivImgs(afterMatchArr)
+
               // setTimeout(function(){
-                animateAndDelete(firstRef.current,secondRef.current,settingAfterComparison);
-                for (let jeden of divItems) {
-                  // console.log(jeden._owner.alternate.memoizedState.memoizedState.current.classList)
-                  console.log(jeden)
-                }
+                // animateAndDelete(firstRef.current,secondRef.current,settingAfterComparison);
+                // for (let jeden of divItems) {
+                //   // console.log(jeden._owner.alternate.memoizedState.memoizedState.current.classList)
+                //   console.log(jeden)
+                // }
               // }, 265);
                                                                                                
         }else{/*---------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
+   
+              let selectedArr = divImgs.map(oneDiv => {
+                if (oneDiv.selected === true) {
+                  return { ...oneDiv, selected: false };/*---------------------------change 2 selected img´s to nonselected and hide */
+                } else {
+                  return oneDiv;/*---------------------------------------------------if img wasn´t selected -> nothing to change  */
+                }
+              });
+              
+              setGameDivImgs(selectedArr)
+             
+              // for (let jeden of divImgs) {
+              //   console.log(jeden)
+              // }
 
               setTimeout(function(){
 
@@ -236,24 +249,41 @@ function settingAfterComparison(){
              
                 props.shuffle();/*---------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
                 
-              }, 250);
+               }, 250);
               // }, 300);
 
         }
     }
   }
 }
+useEffect(() => console.log("re-render because x changed:", divImgs), [divImgs])
+
+useEffect(() => {
+  //miesto get elemenet selected .. len pridat rotate classu .. a mozno tie classy pridat aj cez komponent 
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  let selectedImgCol= document.getElementsByClassName("selected_Div_img");
+  animateAndDelete(selectedImgCol[0],selectedImgCol[1],settingAfterComparison);
+
+  setTimeout(function(){
+
+  let selectedArr = divImgs.filter(oneDiv => oneDiv.selected === true);
+
+//  let selectedImgCol= document.getElementsByClassName("selected_Div_img");
+// console.log(selectedArr)
+          if (selectedArr.length===2 && selectedArr[0].imgPath=== selectedArr[1].imgPath ) {
+            // animateAndDelete(selectedImgCol[0],selectedImgCol[1],settingAfterComparison);
+            let afterMatchArr = divImgs.filter(oneDiv => oneDiv.selected !== true);
+// console.log("som tu")
+            setGameDivImgs(afterMatchArr)
+          }
+  }, 210);
+
+}, [divImgs,animateAndDelete])
+
 
   // useEffect(() => {
       //array of img names -> div>img
-    //    divItems = imgsWithKeys.map(([id, pictureName]) =>
-
-    //     <DivPicture 
-    //                 sendingFunction={mainFn}
-    //                 key={id}         
-    //                 pictureName={pictureName}
-    //     />
-    //  )
+    //  
 // console.log(Array.isArray(divItems))
 //  useEffect(() => {
 //   setGameDivImgs(divItems);
@@ -278,25 +308,41 @@ function settingAfterComparison(){
     //     </div> 
        
     // })}
-    return <>
-         {divItems.map(oneDiv => (
-      <div
-        onClick={(e) => mainFn(e.target.parentNode)}
-        className='mask div_on_click'
-        key={oneDiv.id}
-      >
-        <img
-          src={"pictures/pexeso/" + oneDiv.imgPath + ".jpg"}
-          //  src={"pictures/pexeso/sun.jpg"}
+    // console.log(divImgs)
+    // return <>
+    //      {divImgs.map(oneDiv => (
 
-          alt='Smiley face'
+    //   <div
+    //     key={oneDiv.id}
+    //     onClick={(e) => mainFn(e.target.parentNode,oneDiv)}
+    //     className=' mask div_on_click '
+        
+    //   >
+    //     <img
+    //       src={"pictures/pexeso/" + oneDiv.imgPath + ".jpg"}
+    //       //  src={"pictures/pexeso/sun.jpg"}
+
+    //       alt='Smiley face'
+    //     />
+    //   </div>
+    // ))}
+    
+    //   </>
+
+      return (
+    <>
+      {divImgs.map((oneDiv) => (      //array of img names -> div>img
+
+        <DivPicture
+          key={oneDiv.id} // Unikátny kľúč pre každý prvok v iterácii
+          sendingFunction={mainFn}
+          pictureName={oneDiv.imgPath} // Použitie atribútu raz
+          // id={oneDiv.id}
+          object={oneDiv}
         />
-      </div>
-    ))}
-    
-      </>
-   
-    
+      ))}
+    </>
+  );
   }
   
  
