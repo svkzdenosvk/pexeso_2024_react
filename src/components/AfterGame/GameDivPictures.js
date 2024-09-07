@@ -27,8 +27,6 @@ let divItems = imgsWithKeys.map(([id, pictureName]) =>(
 export const GameDivPictures = (props) =>{
  let {level,seconds, intervalSecond, setIsRunning} = props
 
-//  const [stticSource, setStticSource] = useState("");
-
  let [divImgs, setGameDivImgs] = useState(divItems);
 
  // ---------------------------
@@ -39,7 +37,7 @@ export const GameDivPictures = (props) =>{
   clearInterval(intervalSecond);
   setIsRunning(false);
   document.getElementById("seconds").style.display="none";
-}, [intervalSecond,setIsRunning]); // pridaj ako závislosť
+}, [intervalSecond,setIsRunning]); // dependencies
 
 
 // ---------------------------
@@ -48,13 +46,12 @@ export const GameDivPictures = (props) =>{
 
 const checkEnd = useCallback(() => {  
 //  checkEnd(){/*------------------------------------------------------------check if is end == each picture removed */
-        if(!document.getElementById("row").firstElementChild){/*--------------------if all images on page are removed */
-
-            stopTimer();/*----------------------------------------------------------stop increment seconds */
-            let endTime=_fmtMSS(seconds);/*-----------------------------------formating time */
+        if(!document.getElementById("row").firstElementChild){/*-------------if all images on page are removed */
+            stopTimer();/*---------------------------------------------------stop increment seconds */
+            let endTime=_fmtMSS(seconds);/*----------------------------------formating time */
 
             document.getElementsByTagName("BODY")[0].firstElementChild.classList.add('div_center');/*---------------start ---animation of gratulation text */
-            let timeArr=endTime.split(":");/*---------------------------------------split time string (seconds:minutes) to array for separate minutes and second in gratulation text */
+            let timeArr=endTime.split(":");/*--------------------------------split time string (seconds:minutes) to array for separate minutes and second in gratulation text */
 
             document.getElementsByTagName("H1")[0].innerHTML = "Gratulácia, vyhrali ste za "+(timeArr[0]==="0"?"":timeArr[0]+"m")+" "+ timeArr[1]+"s";
             document.getElementsByTagName("H1")[0].classList.add('h1End');/*---------end ---animation of gratulation text */
@@ -67,19 +64,13 @@ const checkEnd = useCallback(() => {
   // ---------------------------
 
   function showImg(element,divObject){
-  // _myToggle(element,'mask','selected_Div_img');
-    
-    // let selectedArr = divImgs.map(oneDiv => {
-    //    if (oneDiv === divObject) {
-    //  //if (oneDiv.id === divObject.id) {
+   
+    let selectedArr = divImgs.filter(oneDiv => oneDiv.classNames.includes("selected_Div_img"));
 
-    //       return { ...oneDiv, selected: true }; /*------------------------------------------set selected atribute on clicked img (divImg) */
-    //    } else {
-    //       return oneDiv;/*------------------------------------------------------------------return without change unclicked img (divImg)*/
-    //    }
-    // });
 
-    setGameDivImgs(prevArr => {
+    if(element.classList.contains('mask')&& divObject.selected!==true&& (selectedArr.length===0||selectedArr.length===1)){/*-------------if divImg is not selected + prevent 3 imgs show*/
+
+    setGameDivImgs(prevArr => { /*maybe this way it should update DivImgs quicker */
       return prevArr.map(oneDiv => {
         if (oneDiv.id === divObject.id) {
           // return { ...oneDiv, selected: true }; // set selected on clicked Div -img
@@ -93,38 +84,6 @@ const checkEnd = useCallback(() => {
     });
 
     // setGameDivImgs(selectedArr)/*-----------------------------------------------------------set changed array */
-  
-  }
-
-  // function settingAfterComparison(){
-  //   document.body.style.pointerEvents = "auto";/*-------------------------------------------give back functionality to pointer*/
-  //   // setStticSource("");/*-------------------------------------------------------------------clear comparable variable */
-  // }
-
-  // ---------------------------
-  // ---------------------------main fn to compare
-  // ---------------------------
-
-  function mainFn(element, divObject) {/*---------------------------------------------the most main function to manage pexeso-code */
-  
-    if(element.classList.contains('mask')&& divObject.selected!==true){/*-------------if on image is joker´s image */
-
-      // let imgElm = element.firstElementChild;
-
-      showImg(element,divObject);/*----------------------------------------------------remove joker image and show img under */
-      
-      // if(stticSource===""){/*----------------------------------------------------------if no image is shown, get attribute from clicked*/
-        
-        // setStticSource(imgElm.getAttribute("src"));
-      // }else{/*-------------------------------------------------------------------------compare sources attribute of showed and clicked */
-        //  document.body.style.pointerEvents = "none";/*-----------!!toto mozno sa odkomentuje!!---------------------prevent to show third image */
-
-          // if(stticSource===imgElm.getAttribute("src")){/*------------------------------if matched --> remove images */
-                                                                                                              
-          // }else{/*---------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
-    
-          // }
-      // }
     }
   }
 
@@ -141,7 +100,7 @@ const checkEnd = useCallback(() => {
     let selectedArr = divImgs.filter(oneDiv => oneDiv.classNames.includes("selected_Div_img"));
     
             if (selectedArr.length===2){
-              document.body.style.pointerEvents = "none";/*---------------------------prevent to show third image */
+              /* document.body.style.pointerEvents = "none";---------------------------prevent to show third image */
               if (selectedArr[0].imgPath=== selectedArr[1].imgPath){/* if match */
             
                 let afterMatchArr = divImgs.map(oneDiv => {
@@ -162,7 +121,6 @@ const checkEnd = useCallback(() => {
                   let afterAfterMatchArr = afterMatchArr.filter(oneDiv => oneDiv.selected !== true);
                   setGameDivImgs(afterAfterMatchArr);
                 }, 200);
-              // checkEnd()
                       
               // setGameDivImgs(afterAfterMatchArr)
 
@@ -186,14 +144,13 @@ const checkEnd = useCallback(() => {
 
             // setGameDivImgs(afterMatchArr)
             // }
-            // settingAfterComparison()
             document.body.style.pointerEvents = "auto";/*-------------------------------------------give back functionality to pointer*/
+      checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
     }, 250);
       // }, 210);
-      checkEnd() /* checking whether all images are out -> so that´s end of the game  */
+      // checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
-      // settingAfterComparison()
   }, [divImgs,checkEnd,level])
 
   return (
@@ -203,7 +160,7 @@ const checkEnd = useCallback(() => {
 
           <DivPicture
             key={oneDiv.id} // unique key for each div
-            sendingFunction={mainFn}
+            sendingFunction={showImg}
             pictureName={oneDiv.imgPath} // name of image
             classNames={oneDiv.classNames}
             object={oneDiv}
