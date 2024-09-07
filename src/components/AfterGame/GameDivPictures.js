@@ -1,5 +1,5 @@
 import { DivPicture } from './DivPicture.js';
-import { useState, useEffect } from "react";
+import { useState, useEffect,useCallback } from "react";
 
 
 import { _fmtMSS } from "./../../_inc/_inc_functions";
@@ -25,9 +25,9 @@ let divItems = imgsWithKeys.map(([id, pictureName]) =>(
 ))
 
 export const GameDivPictures = (props) =>{
- let {level} = props
+ let {level,seconds, intervalSecond, setIsRunning} = props
 
- const [stticSource, setStticSource] = useState("");
+//  const [stticSource, setStticSource] = useState("");
 
  let [divImgs, setGameDivImgs] = useState(divItems);
 
@@ -35,21 +35,23 @@ export const GameDivPictures = (props) =>{
  // ---------------------------timing fn´s
  // ---------------------------
 
- function stopTimer(){/*----------------------------------------------------------stop seconds increment */
-  clearInterval(props.intervalSecond);
-  props.setIsRunning(false);
+ let stopTimer= useCallback(() => { /*----------------------------------------------------------stop seconds increment */
+  clearInterval(intervalSecond);
+  setIsRunning(false);
   document.getElementById("seconds").style.display="none";
-}
+}, [intervalSecond,setIsRunning]); // pridaj ako závislosť
+
 
 // ---------------------------
 // ---------------------------ending fn
 // ---------------------------
 
-  function checkEnd(){/*------------------------------------------------------------check if is end == each picture removed */
+const checkEnd = useCallback(() => {  
+//  checkEnd(){/*------------------------------------------------------------check if is end == each picture removed */
         if(!document.getElementById("row").firstElementChild){/*--------------------if all images on page are removed */
 
             stopTimer();/*----------------------------------------------------------stop increment seconds */
-            let endTime=_fmtMSS(props.seconds);/*-----------------------------------formating time */
+            let endTime=_fmtMSS(seconds);/*-----------------------------------formating time */
 
             document.getElementsByTagName("BODY")[0].firstElementChild.classList.add('div_center');/*---------------start ---animation of gratulation text */
             let timeArr=endTime.split(":");/*---------------------------------------split time string (seconds:minutes) to array for separate minutes and second in gratulation text */
@@ -57,7 +59,8 @@ export const GameDivPictures = (props) =>{
             document.getElementsByTagName("H1")[0].innerHTML = "Gratulácia, vyhrali ste za "+(timeArr[0]==="0"?"":timeArr[0]+"m")+" "+ timeArr[1]+"s";
             document.getElementsByTagName("H1")[0].classList.add('h1End');/*---------end ---animation of gratulation text */
         }
-  }
+      }, [seconds,stopTimer]); // adding dependencies
+
 
   // ---------------------------
   // ---------------------------fn´s to show div>imgs
@@ -93,10 +96,10 @@ export const GameDivPictures = (props) =>{
   
   }
 
-  function settingAfterComparison(){
-    document.body.style.pointerEvents = "auto";/*-------------------------------------------give back functionality to pointer*/
-    setStticSource("");/*-------------------------------------------------------------------clear comparable variable */
-  }
+  // function settingAfterComparison(){
+  //   document.body.style.pointerEvents = "auto";/*-------------------------------------------give back functionality to pointer*/
+  //   // setStticSource("");/*-------------------------------------------------------------------clear comparable variable */
+  // }
 
   // ---------------------------
   // ---------------------------main fn to compare
@@ -106,22 +109,22 @@ export const GameDivPictures = (props) =>{
   
     if(element.classList.contains('mask')&& divObject.selected!==true){/*-------------if on image is joker´s image */
 
-      let imgElm = element.firstElementChild;
+      // let imgElm = element.firstElementChild;
 
       showImg(element,divObject);/*----------------------------------------------------remove joker image and show img under */
       
-      if(stticSource===""){/*----------------------------------------------------------if no image is shown, get attribute from clicked*/
+      // if(stticSource===""){/*----------------------------------------------------------if no image is shown, get attribute from clicked*/
         
-        setStticSource(imgElm.getAttribute("src"));
-      }else{/*-------------------------------------------------------------------------compare sources attribute of showed and clicked */
+        // setStticSource(imgElm.getAttribute("src"));
+      // }else{/*-------------------------------------------------------------------------compare sources attribute of showed and clicked */
         //  document.body.style.pointerEvents = "none";/*-----------!!toto mozno sa odkomentuje!!---------------------prevent to show third image */
 
-          if(stticSource===imgElm.getAttribute("src")){/*------------------------------if matched --> remove images */
+          // if(stticSource===imgElm.getAttribute("src")){/*------------------------------if matched --> remove images */
                                                                                                               
-          }else{/*---------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
+          // }else{/*---------------------------------------------------------------------if NOT the same src-path --> hide images below joker img */
     
-          }
-      }
+          // }
+      // }
     }
   }
 
@@ -184,12 +187,14 @@ export const GameDivPictures = (props) =>{
             // setGameDivImgs(afterMatchArr)
             // }
             // settingAfterComparison()
+            document.body.style.pointerEvents = "auto";/*-------------------------------------------give back functionality to pointer*/
+
     }, 250);
       // }, 210);
       checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
-      settingAfterComparison()
-  }, [divImgs, settingAfterComparison,checkEnd,level])
+      // settingAfterComparison()
+  }, [divImgs,checkEnd,level])
 
   return (
      <div className="row" id="row">

@@ -93,9 +93,7 @@ function shuffle(){/*-----------------------------------------------------------
          </div>
         
          <div className="column_content" id="content">
-            {/* <div className="row" id="row"> */}
-                <GameDivPictures level={level} /*shuffle={shuffle}*/ seconds={seconds} intervalSecond={intervalSecond} setIsRunning={setIsRunning}/> 
-            {/* </div> */}
+                <GameDivPictures level={level} seconds={seconds} intervalSecond={intervalSecond} setIsRunning={setIsRunning}/> 
          </div>
     </>
   );
