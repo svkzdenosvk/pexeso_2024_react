@@ -1,31 +1,13 @@
 import { DivPicture } from './DivPicture.js';
-import { useState, useEffect,useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 
 import { _fmtMSS } from "./../../_inc/_inc_functions";
-import {_shuffleArray }from '../../_inc/_inc_functions.js'
-
-const arrImg= ["lightning", "drop", "sea", "space", "sun", "vibration", "wind", "wood"];
-const doubleImgs= [...arrImg, ...arrImg];
-
-//to shuffle before every game
-_shuffleArray(doubleImgs)
-
-//generate UUID random keys
-const uuid = require('uuid')
-
-//creation of 2-dimensional array: - out of component to make id´s stable
-// ['123e4567-e89b-12d3-a456-426614174000', 'lightning'],
-// ['123e4567-e89b-12d3-a456-426614174001', 'drop'],..
-const imgsWithKeys = doubleImgs.map(pictureName => [uuid.v4(), pictureName]);
-
-//array of img names -> div>img
-let divItems = imgsWithKeys.map(([id, pictureName]) =>(
-  { id: id, imgPath: pictureName, classNames:["mask"] } 
-))
+import { _shuffleArray } from '../../_inc/_inc_functions.js';
+import { divItems } from '../../_inc/data.js'; /*------------------------------------------------data -> source of names of pictures and array of objects from these names  */
 
 export const GameDivPictures = (props) =>{
- let {level,seconds, intervalSecond, setIsRunning} = props
+ let {level,seconds, intervalSecond, setIsRunning} = props /*------------------------------------props destructuring */
 
  let [divImgs, setGameDivImgs] = useState(divItems);
 
@@ -44,8 +26,7 @@ export const GameDivPictures = (props) =>{
 // ---------------------------ending fn
 // ---------------------------
 
-const checkEnd = useCallback(() => {  
-//  checkEnd(){/*------------------------------------------------------------check if is end == each picture removed */
+const checkEnd = useCallback(() => { /*--------------------------------------check if is end == each picture removed */
         if(!document.getElementById("row").firstElementChild){/*-------------if all images on page are removed */
             stopTimer();/*---------------------------------------------------stop increment seconds */
             let endTime=_fmtMSS(seconds);/*----------------------------------formating time */
@@ -54,7 +35,7 @@ const checkEnd = useCallback(() => {
             let timeArr=endTime.split(":");/*--------------------------------split time string (seconds:minutes) to array for separate minutes and second in gratulation text */
 
             document.getElementsByTagName("H1")[0].innerHTML = "Gratulácia, vyhrali ste za "+(timeArr[0]==="0"?"":timeArr[0]+"m")+" "+ timeArr[1]+"s";
-            document.getElementsByTagName("H1")[0].classList.add('h1End');/*---------end ---animation of gratulation text */
+            document.getElementsByTagName("H1")[0].classList.add('h1End');/*-end ---animation of gratulation text */
         }
       }, [seconds,stopTimer]); // adding dependencies
 
@@ -70,7 +51,7 @@ const checkEnd = useCallback(() => {
 
     if(element.classList.contains('mask')&& divObject.selected!==true&& (selectedArr.length===0||selectedArr.length===1)){/*-------------if divImg is not selected + prevent 3 imgs show*/
 
-    setGameDivImgs(prevArr => { /*maybe this way it should update DivImgs quicker */
+    setGameDivImgs(prevArr => { /*-------------------------------------------maybe this way it should update DivImgs quicker */
       return prevArr.map(oneDiv => {
         if (oneDiv.id === divObject.id) {
           // return { ...oneDiv, selected: true }; // set selected on clicked Div -img
@@ -78,20 +59,17 @@ const checkEnd = useCallback(() => {
             ...oneDiv.classNames.filter(className => className !== "mask"), "selected_Div_img" // remove 'mask' and add "selected" class
           ] }
         } else {
-          return oneDiv; //return untouched object
+          return oneDiv; //--------------------------------------------------return untouched object
         }
       });
     });
 
-    // setGameDivImgs(selectedArr)/*-----------------------------------------------------------set changed array */
+    // setGameDivImgs(selectedArr)/*-----------------------------------------set changed array */
     }
   }
 
-  // useEffect(() => console.log("re-render because x changed:", divImgs), [divImgs])
-
-  useEffect(() => {}, [divImgs]); /*re-render to update value of divImgs after setstate(usestate) */
+ // useEffect(() => {}, [divImgs]); /*re-render to update value of divImgs after setstate(usestate) */
   
-
   useEffect(() => {
     
     setTimeout(function(){
