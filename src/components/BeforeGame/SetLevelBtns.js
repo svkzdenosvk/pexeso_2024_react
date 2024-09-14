@@ -4,9 +4,9 @@ import {LevelButton} from "./LevelButton";
 export const SetLevelBtns = (props) =>{
   
   const arrLvl= ["normal", "harder", "hardest"];
-  const btnsLvl = arrLvl.map((level) =>
+  const btnsLvl = arrLvl.map((level_one) =>
 
-    <LevelButton my_setLevel={props.my_setLevel} id={level} key={level}/>
+    <LevelButton my_setLevel={props.my_setLevel} id={level_one} key={level_one}/>
 
   )
     return (
