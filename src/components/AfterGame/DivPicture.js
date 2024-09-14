@@ -1,13 +1,9 @@
-import { useRef } from "react";
-
 import { _fmtMSS, _myToggle } from "./../../_inc/_inc_functions";
 
  //component about one single div > picture
 
 export const DivPicture = (props) =>{
-  const firstRef = useRef(null);
-  const secondRef = useRef(null);
-
+  
  // ---------------------------
  // ---------------------------timing fn´s
  // ---------------------------
@@ -120,7 +116,7 @@ export const DivPicture = (props) =>{
 
           let selectedImgCol
           let iterationCount = 0
-          const maxIterations = 1000
+          const maxIterations = 100000
           
           do{
             selectedImgCol= document.getElementsByClassName("selected_Div_img");
@@ -131,13 +127,10 @@ export const DivPicture = (props) =>{
             }
           }while(selectedImgCol.length!==2)
 
-          firstRef.current = selectedImgCol[0];
-          secondRef.current= selectedImgCol[1];
-
           if(props.stticSource===imgElm.getAttribute("src")){/*------------------------if matched --> remove images */
         
                 // setTimeout(function(){
-                  animateAndDelete(firstRef.current,secondRef.current,settingAfterComparison);
+                  animateAndDelete(selectedImgCol[0],selectedImgCol[1],settingAfterComparison);
                   
                 // }, 265);
                                                                                                  
@@ -145,7 +138,7 @@ export const DivPicture = (props) =>{
 
                 setTimeout(function(){
 
-                  hideUnMatched(firstRef.current,secondRef.current,settingAfterComparison);
+                  hideUnMatched(selectedImgCol[0],selectedImgCol[1],settingAfterComparison);
                
                   props.shuffle();/*---------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
                   

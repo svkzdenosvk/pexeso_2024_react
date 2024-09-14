@@ -1,0 +1,237 @@
+/*-------------------------------------MIXINs-------------------------------------------*/
+/*--------------------------------------------------------------------------------------*/
+/*------------------------------------CSS SELECTORS ------------------------------------*/
+/*--------------------------------------------------------------------------------------*/
+html{
+    padding: 0;
+    margin:0;
+    box-sizing: border-box;
+    text-align: center;
+    height: 100vh;
+    width: 100vw;
+    display:flex;
+    overflow-x: hidden;
+  }
+  
+  body, #result{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #timeAndStart {
+    display: none;
+  }
+  
+  #timeAndStart #seconds, #timeAndStart #start{/*----------------------div seconds and start  */
+    padding: 20px;
+    font-size: 300%;
+    float: left;
+    font-weight: bold;
+  }
+  
+  #timeAndStart #start { /*---------------------------------------------button start of game  */
+    color: white;
+    border-radius: 50%;
+    background-color: #99103a;
+  }
+  
+  #timeAndStart #start:hover {
+    color: #cc0606;
+  }
+  
+  .welcome{/*----------------------------------------------------------div ( H1, H3, level buttons and time + start button ) */
+    width: 100%;
+    height: 100%;
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    }
+  
+  .welcome h1{
+    font-size: 500%;
+    margin-bottom: 70px;
+  }
+  
+  .welcome h3{
+    text-align:center;
+  }
+  
+  #levelBtns { /*----------------------------------------------------div -> level buttons */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: space-around;
+        -ms-flex-pack: space-around;
+            justify-content: space-around;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  
+  #levelBtns #normal, #levelBtns #harder, #levelBtns #hardest {
+    padding: 20px;
+    font-size: 300%;
+    float: left;
+    font-weight: bold;
+    border-radius: 50%;
+  }
+    
+  #levelBtns #hardest:hover, #levelBtns #harder:hover, #levelBtns #normal:hover {
+    color: #cc0606; 
+  }
+  
+  #levelBtns #normal{/*---------------------------------------------button level-normal */
+    color: black;
+    border: 5px solid black;
+  }
+  
+  #levelBtns #harder {/*--------------------------------------------button level-harder */
+    color: white;
+    background-color: #4d141d;
+  }
+  
+  #levelBtns #hardest {/*-------------------------------------------button level-hardest */
+    color: white;
+    background-color: black;
+  }
+  
+  .column_content { /*-----------------------------------------------div of all images  */
+    /* margin: auto; */
+    max-width: 850px;
+    display: none;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+  }
+  .column_content .row {/*-------------------------------------------row of images  */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-flex: 50%;
+        -ms-flex: 50%;
+            flex: 50%;
+    margin-top: 1.5%; 
+  }
+  .column_content .row .mask {/*--------------------------------------div with background of joker as parent of img   */
+    background-image: url("../public/pictures/joker.jpg");
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-size: auto;
+    opacity: 100%;
+    }
+  
+  .column_content .row .div_on_click {
+    margin: 3%; 
+    width: 125px;
+    height: 125px; 
+  }
+  .column_content .row img {
+    width: 100%;
+    height: 100%;
+    opacity: 0%; 
+    /* transition: opacity 0.05s ease; */
+  }
+    
+  /*----------------------------------------CLASSES ADDED BY JS------------------------------------------------ */
+  /*------------------------------------------------------------------------------------------------------------*/
+  .div_center {  /*-------------------------------------------centering h1 in the end */
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); }
+    
+  .h1End { /*--------------------------------------------------text of gratulation  */
+    font-size: 750%;
+    -webkit-transition: font-size 0.52s;
+    transition: font-size 0.52s; }
+    
+  .selected_Div_img {/*----------------------------------------prevent to select selected div > img  */
+    pointer-events: none;
+  }
+  
+  .column_content .row .selected_Div_img img{ /*---------------visible opacity of selected img */
+    opacity:100%
+  }
+  
+  .rotate-center {  /*------------------------------------------animation for match and before remove images*/
+    -webkit-animation: rotate-center 0.2s ease-in-out both;
+    animation: rotate-center 0.2s ease-in-out both; 
+  }
+  
+  /* ----------------------------------------------
+    * Generated by Animista on 2021-12-12 2:25:40
+    * Licensed under FreeBSD License.
+    * See http://animista.net/license for more info. 
+    * w: http://animista.net, t: @cssanimista
+    * ---------------------------------------------- */
+  /**
+    * ----------------------------------------
+    * animation rotate-center
+    * ----------------------------------------
+    */
+  @-webkit-keyframes rotate-center {
+    0% {
+      -webkit-transform: rotate(0);
+      transform: rotate(0); }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg); } }
+  @keyframes rotate-center {
+    0% {
+      -webkit-transform: rotate(0);
+      transform: rotate(0); }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg); } }
+  
+  /* media queries */
+  @media screen and (min-width: 1650px) {
+    #result{
+      text-align: center;
+      align-items: center;
+    }
+  
+    .welcome {
+      width: 1650px;
+    }
+  }
+  
+  /* media queries */
+  @media screen and (max-width: 540px) {
+    .welcome h1 {
+      margin-bottom: 0px;
+      /* margin-top: 0px; */
+    }
+    #levelBtns div{
+      margin-top:2%;
+    }
+  }
