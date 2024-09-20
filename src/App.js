@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useRef, useState/* ,useReducer */} from "react";
 
 import { _stylingAfterLevel,_shuffleArray } from "./_inc/_inc_functions";
 
 import { GameDivPictures } from "./components/AfterGame/GameDivPictures";
 import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
 import {TimeAndStart} from "./components/AfterGame/TimeAndStart"
+
+// const reducer = () => {
+
+// }
+
+// const defaultState = {
+//   level:"",
+//   color:"",
+//   isRunning:false
+// }
 
 const App = () =>{
 
@@ -16,10 +26,21 @@ const App = () =>{
   const [color, setColor] = useState("");
 
   let [seconds, setSeconds] = useState(0);
-  let [intervalSecond, setIntervalSecond] = useState(0);
+ 
   const [isRunning, setIsRunning] = useState(false);
 
+ // ---------------------------
+ // ---------------------------useRefs
+ // ---------------------------
 
+   // let [intervalSecond, setIntervalSecond] = useState(0);
+   const intervalSecondRef = useRef(null); // Ref of  ID of iterval seconds ... according to chat GPT it´s quicker than useState, because it prevents re-rendering
+
+ // ---------------------------
+ // ---------------------------useReducer
+ // ---------------------------
+
+// const [state,dispatch] = useReducer(reducer, defaultState)
   // ---------------------------
  // ---------------------------set level fn´s
  // ---------------------------
@@ -92,14 +113,16 @@ function shuffle(){/*-----------------------------------------------------------
                        shuffle={shuffle} 
                        seconds={seconds} 
                        setSeconds={setSeconds} 
-                       setIntervalSecond={setIntervalSecond}
+                       intervalSecondRef={intervalSecondRef}
+                      //  setIntervalSecond={setIntervalSecond}
                        color={color}
                        isRunning={isRunning}
                        setIsRunning={setIsRunning} /> 
          </div>
         
          <div className="column_content" id="content">
-            <GameDivPictures level={level} shuffle={shuffle} seconds={seconds} intervalSecond={intervalSecond} setIsRunning={setIsRunning}/> 
+            <GameDivPictures level={level} shuffle={shuffle} seconds={seconds} intervalSecondRef={intervalSecondRef}
+ /*intervalSecond={intervalSecond}*/ setIsRunning={setIsRunning}/> 
          </div>
     </>
   );

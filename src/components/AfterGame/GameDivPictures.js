@@ -29,7 +29,8 @@ export const GameDivPictures = (props) =>{
                     shuffle={props.shuffle} 
                     setStticSource={setStticSource}
                     seconds={props.seconds}
-                    intervalSecond={props.intervalSecond}
+                    // intervalSecond={props.intervalSecond}
+                    intervalSecondRef={props.intervalSecondRef}
                     setIsRunning={props.setIsRunning}/>
      );
 

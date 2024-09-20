@@ -9,7 +9,9 @@ export const DivPicture = (props) =>{
  // ---------------------------
 
   function stopTimer(){/*----------------------------------------------------------stop seconds increment */
-    clearInterval(props.intervalSecond);
+    // clearInterval(props.intervalSecond);
+    clearInterval(props.intervalSecondRef.current);
+
     props.setIsRunning(false);
     document.getElementById("seconds").style.display="none";
   }
@@ -101,7 +103,6 @@ export const DivPicture = (props) =>{
  // ---------------------------
 
   function mainFn(element) {/*---------------------------------------------------------the most main function to manage pexeso-code */
-
     if(element.classList.contains('mask')){/*------------------------------------------if on image is joker´s image */
 
       var imgElm = element.firstElementChild;
