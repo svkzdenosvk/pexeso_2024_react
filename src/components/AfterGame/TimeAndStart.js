@@ -1,12 +1,10 @@
 import { _stylingAfterStart } from '../../_inc/_inc_functions';
  
-export const TimeAndStart = ({level,shuffle,seconds,setSeconds, intervalSecondRef/*setIntervalSecond*/,color}) => {
+export const TimeAndStart = ({level,shuffle,seconds,setSeconds, intervalSecondRef,color/*, dispatch*/}) => {
       
     function _incrementSeconds(){/*---------------------------------------------------partial f. for change seconds number by increment +1*/
       // setSeconds(seconds=seconds+1);
       setSeconds(prevSeconds => prevSeconds + 1);
-      console.log("v timer",intervalSecondRef.current)
-
   }
   
     function timer(){/*---------------------------------------------------------------button start */
@@ -14,7 +12,6 @@ export const TimeAndStart = ({level,shuffle,seconds,setSeconds, intervalSecondRe
       _stylingAfterStart();
   
       // increment seconds + in hardest level shuffle img´s
-      // setIntervalSecond(setInterval(_incrementSeconds, 1000));
       intervalSecondRef.current=setInterval(_incrementSeconds, 1000);
 
       if(level==="hardest"){/*---------------------------------------------------------working only in hardest version *//*maybe this can by removed from timer();*/

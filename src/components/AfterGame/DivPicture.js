@@ -9,10 +9,9 @@ export const DivPicture = (props) =>{
  // ---------------------------
 
   function stopTimer(){/*----------------------------------------------------------stop seconds increment */
-    // clearInterval(props.intervalSecond);
     clearInterval(props.intervalSecondRef.current);
 
-    props.setIsRunning(false);
+    // props.dispatch({type: "STOP_GAME"})
     document.getElementById("seconds").style.display="none";
   }
 
@@ -70,7 +69,6 @@ export const DivPicture = (props) =>{
       setTimeout(function(){/*---------------------------------------------------------rewriten as callback f.*/
         settingAfterComparisonCallBack();
       }, 0);
-    // }, 260);
   }
 
   function showImg(element){
@@ -144,8 +142,6 @@ export const DivPicture = (props) =>{
                   props.shuffle();/*---------------------------------------------------in harder (and hardest) version ... shuffle after bad trying*/
                   
                 }, 250);
-                // }, 300);
-
           }
       }
     }
