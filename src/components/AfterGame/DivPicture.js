@@ -11,7 +11,6 @@ export const DivPicture = (props) =>{
   function stopTimer(){/*----------------------------------------------------------stop seconds increment */
     clearInterval(props.intervalSecondRef.current);
 
-    // props.dispatch({type: "STOP_GAME"})
     document.getElementById("seconds").style.display="none";
   }
 

@@ -1,4 +1,4 @@
-import { useRef, useState ,useReducer } from "react";
+import { useRef,useReducer } from "react";
 
 import { _stylingAfterLevel,_shuffleArray } from "./_inc/_inc_functions";
 
@@ -8,6 +8,11 @@ import {TimeAndStart} from "./components/AfterGame/TimeAndStart"
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'SET_SECONDS':
+      return { 
+        ...state,
+        seconds: state.seconds + 1
+      }
     case 'SET_COLOR':
       return { 
         ...state,
@@ -26,13 +31,10 @@ const reducer = (state, action) => {
 const defaultState = {
   level:"",
   color:"black",
+  seconds:0
 }
 
 const App = () =>{
-
- // ---------------------------useStates
-
-let [seconds, setSeconds] = useState(0);
  
  // ---------------------------useRefs
 
@@ -114,17 +116,14 @@ function shuffle(){/*-----------------------------------------------------------
 
             <TimeAndStart level={state.level} 
                        shuffle={shuffle} 
-                       seconds={seconds} 
-                       setSeconds={setSeconds} 
+                       seconds={state.seconds} 
+                       dispatch={dispatch} 
                        intervalSecondRef={intervalSecondRef}
-                      //  dispatch={dispatch} 
-                       color={state.color}/>
-                    
+                       color={state.color}/>                   
          </div>
         
          <div className="column_content" id="content">
-            <GameDivPictures level={state.level} shuffle={shuffle} seconds={seconds} intervalSecondRef={intervalSecondRef}
- /* dispatch={dispatch}*//> 
+            <GameDivPictures level={state.level} shuffle={shuffle} seconds={state.seconds} intervalSecondRef={intervalSecondRef} /> 
          </div>
     </>
   );

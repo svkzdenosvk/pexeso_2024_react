@@ -1,10 +1,10 @@
 import { _stylingAfterStart } from '../../_inc/_inc_functions';
  
-export const TimeAndStart = ({level,shuffle,seconds,setSeconds, intervalSecondRef,color/*, dispatch*/}) => {
+export const TimeAndStart = ({level,shuffle,seconds, intervalSecondRef,color, dispatch}) => {
       
     function _incrementSeconds(){/*---------------------------------------------------partial f. for change seconds number by increment +1*/
       // setSeconds(seconds=seconds+1);
-      setSeconds(prevSeconds => prevSeconds + 1);
+      dispatch({type: "SET_SECONDS" })
   }
   
     function timer(){/*---------------------------------------------------------------button start */
