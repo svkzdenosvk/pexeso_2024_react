@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { /*useState*/ useRef, useReducer } from "react";
 
 import { _stylingAfterLevel,_shuffleArray } from "./_inc/_inc_functions";
 
@@ -6,19 +6,68 @@ import { GameDivPictures } from "./components/AfterGame/GameDivPictures";
 import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
 import {TimeAndStart} from "./components/AfterGame/TimeAndStart"
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_SECONDS':
+      return { 
+        ...state,
+        seconds: state.seconds + 1
+      }
+    case 'SET_START_GAME':
+      return { 
+        ...state,
+        isRunning: true
+      }  
+    case 'SET_STOP_GAME':
+    return { 
+      ...state,
+      isRunning: false
+    } 
+    case 'SET_COLOR':
+      return { 
+        ...state,
+        color: action.payload
+      }
+    case 'SET_LEVEL':
+      return {
+        ...state,
+        level: action.payload
+      }
+    default:
+      return state;
+  }
+}
+
+const defaultState = {
+  level:"",
+  color:"black",
+  seconds:0,
+  isRunning:false
+}
+
 const App = () =>{
+
+ // ---------------------------useRefs
+ const intervalSecondRef = useRef(null); // Ref of  ID of iterval seconds ... according to chat GPT it´s quicker than useState, because it prevents re-rendering
+
 
  // ---------------------------
  // ---------------------------useStates
  // ---------------------------
 
-  const [level, setLevel] = useState();
-  const [color, setColor] = useState("");
+  // const [level, setLevel] = useState();
+  // const [color, setColor] = useState("");
 
-  let [seconds, setSeconds] = useState(0);
-  let [intervalSecond, setIntervalSecond] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
+  // let [seconds, setSeconds] = useState(0);
+  // let [intervalSecond, setIntervalSecond] = useState(0);
+  // const [isRunning, setIsRunning] = useState(false);
+ // ---------------------------useReducer
 
+ const [state,dispatch] = useReducer(reducer, defaultState)
+ /*-------------------------------------------------------------------------------------------------------------------------------------------- 
+ /*--------------------------------------------------------------------------------------------------------------------------------------------
+ /*--------------------------------------------------------------------------------------------------------------------------------------------*/
+ 
 
   // ---------------------------
  // ---------------------------set level fn´s
@@ -27,14 +76,14 @@ const App = () =>{
   function _setLevelStyleChanges(colorText,colorBG,) { /*--------------------------- partial function for set level of the game (it´s also about change styles)*/
     
     //style -> color of H1, H3 and seconds
-    setColor(colorText);
+    dispatch({type: "SET_COLOR", payload: colorText })
     
     _stylingAfterLevel(colorBG);/*---------------------------------------------------partial f. with style changes after select level*/
   }
  
   function my_setLevel(levelName) {/*------------------------------------------------main f. for set level*/
     
-    setLevel(levelName)
+    dispatch({type: "SET_LEVEL", payload: levelName })
   
     const levelChanges = {
       normal:  ["black"],
@@ -52,7 +101,7 @@ const App = () =>{
  
 function shuffle(){/*-------------------------------------------------------------function for shuffling (ONLY) in harder and the hardest version of game*/
 
-  if( level==="harder" || level==="hardest"){ /*this method is for the hardest level .. it´s maybe slower because of rerendering */
+  if( state.level==="harder" || state.level==="hardest"){ /*this method is for the hardest level .. it´s maybe slower because of rerendering */
      //get HTMLcollection
      let x= document.getElementsByClassName("div_on_click");/*--------------------collection of divs above image*/
 
@@ -74,26 +123,26 @@ function shuffle(){/*-----------------------------------------------------------
   return (
     <>
          <div className="welcome">
-            <h1 style={{color}}>Pexeso</h1>
+            <h1 style={{color: state.color}}>Pexeso</h1>
           
-            <h3 style={{color}}>Vitajte v hre pexeso, pre začatie hry zvoľte náročnosť nižšie </h3>
+            <h3 style={{color: state.color}}>Vitajte v hre pexeso, pre začatie hry zvoľte náročnosť nižšie </h3>
 
             <div id="levelBtns"  >
               <SetLevelBtns my_setLevel={my_setLevel}/>
             </div>
 
-            <TimeAndStart level={level} 
+            <TimeAndStart level={state.level} 
                        shuffle={shuffle} 
-                       seconds={seconds} 
-                       setSeconds={setSeconds} 
-                       setIntervalSecond={setIntervalSecond}
-                       color={color}
-                       isRunning={isRunning}
-                       setIsRunning={setIsRunning} /> 
+                       seconds={state.seconds} 
+                       dispatch={dispatch}
+                       intervalSecondRef={intervalSecondRef}
+                       color={state.color}
+                       isRunning={state.isRunning}
+                       /> 
          </div>
         
          <div className="column_content" id="content">
-                <GameDivPictures level={level} seconds={seconds} intervalSecond={intervalSecond} setIsRunning={setIsRunning}/> 
+                <GameDivPictures level={state.level} seconds={state.seconds} intervalSecondRef={intervalSecondRef} setIsRunning={state.setIsRunning} dispatch={dispatch}/> 
          </div>
     </>
   );

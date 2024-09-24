@@ -6,8 +6,7 @@ import { _fmtMSS } from "./../../_inc/_inc_functions";
 import { _shuffleArray } from '../../_inc/_inc_functions.js';
 import { divItems } from '../../_inc/data.js'; /*------------------------------------------------data -> source of names of pictures and array of objects from these names  */
 
-export const GameDivPictures = (props) =>{
- let {level,seconds, intervalSecond, setIsRunning} = props /*------------------------------------props destructuring */
+export const GameDivPictures = ({level,seconds, intervalSecondRef,dispatch}) =>{
 
  let [divImgs, setGameDivImgs] = useState(divItems);
 
@@ -16,11 +15,12 @@ export const GameDivPictures = (props) =>{
  // ---------------------------
 
  let stopTimer= useCallback(() => { /*----------------------------------------------------------stop seconds increment */
-  clearInterval(intervalSecond);
-  setIsRunning(false);
-  document.getElementById("seconds").style.display="none";
-}, [intervalSecond,setIsRunning]); // dependencies
+  clearInterval(intervalSecondRef.current);
 
+  dispatch({type: "SET_STOP_GAME" })
+
+  document.getElementById("seconds").style.display="none";
+}, [intervalSecondRef,dispatch]); // dependencies
 
 // ---------------------------
 // ---------------------------ending fn
@@ -39,7 +39,6 @@ const checkEnd = useCallback(() => { /*--------------------------------------che
         }
       }, [seconds,stopTimer]); // adding dependencies
 
-
   // ---------------------------
   // ---------------------------fn´s to show div>imgs
   // ---------------------------
@@ -48,13 +47,12 @@ const checkEnd = useCallback(() => { /*--------------------------------------che
    
     let selectedArr = divImgs.filter(oneDiv => oneDiv.classNames.includes("selected_Div_img"));
 
-
     if(element.classList.contains('mask')&& divObject.selected!==true&& (selectedArr.length===0||selectedArr.length===1)){/*-------------if divImg is not selected + prevent 3 imgs show*/
 
     setGameDivImgs(prevArr => { /*-------------------------------------------maybe this way it should update DivImgs quicker */
       return prevArr.map(oneDiv => {
         if (oneDiv.id === divObject.id) {
-          // return { ...oneDiv, selected: true }; // set selected on clicked Div -img
+
           return { ...oneDiv, selected: true, classNames: [
             ...oneDiv.classNames.filter(className => className !== "mask"), "selected_Div_img" // remove 'mask' and add "selected" class
           ] }
