@@ -50,17 +50,6 @@ const App = () =>{
  // ---------------------------useRefs
  const intervalSecondRef = useRef(null); // Ref of  ID of iterval seconds ... according to chat GPT it´s quicker than useState, because it prevents re-rendering
 
-
- // ---------------------------
- // ---------------------------useStates
- // ---------------------------
-
-  // const [level, setLevel] = useState();
-  // const [color, setColor] = useState("");
-
-  // let [seconds, setSeconds] = useState(0);
-  // let [intervalSecond, setIntervalSecond] = useState(0);
-  // const [isRunning, setIsRunning] = useState(false);
  // ---------------------------useReducer
 
  const [state,dispatch] = useReducer(reducer, defaultState)
