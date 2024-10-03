@@ -6,6 +6,8 @@ import { GameDivPictures } from "./components/AfterGame/GameDivPictures";
 import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
 import {TimeAndStart} from "./components/AfterGame/TimeAndStart"
 
+import { divItems } from './_inc/data.js'; /*------------------------------------------------data -> source of names of pictures and array of objects from these names  */
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'SET_SECONDS':
@@ -42,7 +44,8 @@ const defaultState = {
   level:"",
   color:"black",
   seconds:0,
-  isRunning:false
+  isRunning:false,
+  divImgs:divItems,
 }
 
 const App = () =>{
