@@ -8,6 +8,14 @@ import { divItems } from '../../_inc/data.js'; /*-------------------------------
 
 const reducerImg = (stateImg, action) => {
   switch (action.type) {
+    case 'HARDEST_LEVEL_SHUFFLE':
+      _shuffleArray(stateImg.divImgs)
+      return { 
+        ...stateImg,
+        divImgs: stateImg.divImgs
+                // divImgs: ""
+
+      } 
     case 'SHOW_ONE':
     //       if(element.classList.contains('mask')&& divObject.selected!==true&& (selectedArr.length===0||selectedArr.length===1)){/*-------------if divImg is not selected + prevent 3 imgs show*/
 
@@ -39,7 +47,7 @@ const reducerImg = (stateImg, action) => {
       });
 
       // if(action.payload==="harder"||action.payload==="hardest"){
-      if(action.payload==="harder"){
+      if(action.payload==="harder"/*||action.payload==="hardest"*/){
 
          _shuffleArray(afterUnMatchArr)
       }
@@ -88,8 +96,7 @@ const defaultStateImg = {
 }
 
 // export const GameDivPictures = ({level,seconds, intervalSecondRef,dispatch}) =>{
-  export const GameDivPictures = (props) =>{
-const {intervalSecondRef,dispatch} =props
+  export const GameDivPictures = ({intervalSecondRef, dispatch, isRunning, seconds, level, intervalShuffleHardestRef}) =>{
   // ---------------------------useReducer
 
  const [stateImg,dispatchImg] = useReducer(reducerImg, defaultStateImg)
@@ -116,7 +123,7 @@ const {intervalSecondRef,dispatch} =props
 const checkEnd = useCallback(() => { /*--------------------------------------check if is end == each picture removed */
         if(!document.getElementById("row").firstElementChild){/*-------------if all images on page are removed */
             stopTimer();/*---------------------------------------------------stop increment seconds */
-            let endTime=_fmtMSS(props.seconds);/*----------------------------------formating time */
+            let endTime=_fmtMSS(seconds);/*----------------------------------formating time */
 
             document.getElementsByTagName("BODY")[0].firstElementChild.classList.add('div_center');/*---------------start ---animation of gratulation text */
             let timeArr=endTime.split(":");/*--------------------------------split time string (seconds:minutes) to array for separate minutes and second in gratulation text */
@@ -124,7 +131,23 @@ const checkEnd = useCallback(() => { /*--------------------------------------che
             document.getElementsByTagName("H1")[0].innerHTML = "Gratulácia, vyhrali ste za "+(timeArr[0]==="0"?"":timeArr[0]+"m")+" "+ timeArr[1]+"s";
             document.getElementsByTagName("H1")[0].classList.add('h1End');/*-end ---animation of gratulation text */
         }
-      }, [props.seconds,stopTimer]); // adding dependencies
+      }, [seconds,stopTimer]); // adding dependencies
+
+  // ---------------------------implementácia uloženia a obnovy scrollu---------------------------
+  
+  // Funkcia na uloženie aktuálnej polohy scrollu
+  // const saveScrollPosition = () => {
+  //   const scrollPosition = window.scrollY;
+  //   localStorage.setItem('scrollPosition', scrollPosition);
+  // };
+
+  // // Funkcia na obnovenie polohy scrollu
+  // const restoreScrollPosition = () => {
+  //   const scrollPosition = localStorage.getItem('scrollPosition');
+  //   if (scrollPosition) {
+  //     window.scrollTo(0, parseInt(scrollPosition, 10)); // nastaví späť scroll
+  //   }
+  // };
 
   // ---------------------------
   // ---------------------------fn´s to show div>imgs
@@ -153,12 +176,34 @@ const checkEnd = useCallback(() => { /*--------------------------------------che
 
     // setGameDivImgs(selectedArr)/*-----------------------------------------set changed array */
     }
+
+
   }
 
  // useEffect(() => {}, [divImgs]); /*re-render to update value of divImgs after setstate(usestate) */
-  
+//  useEffect(() => {
+//   if (!isRunning || level!=="hardest") return;
+// console.log("som v shuffle hardest")
+//   function _shuffle_hardest() {
+//     // setSeconds(seconds => seconds + 1);
+//     dispatchImg({type: "HARDEST_LEVEL_SHUFFLE" })
+
+//   }
+//   // set interval to increase seconds
+//   const intervalShuffleHardest = setInterval(_shuffle_hardest, 400);
+//   // setIntervalSecond(secondInterval);
+//   // intervalSecondRef.current=setInterval(_shuffle_hardest, 400);
+//   // intervalShuffleHardestRef.current  = setInterval(_shuffle_hardest, 400);
+//   // setInterval(_shuffle_hardest, 600);
+//   // Cleaning the interval when unmounting or changing dependencies
+//   return () => {
+//     clearInterval(intervalShuffleHardest);
+//   };
+// }, [isRunning, intervalShuffleHardestRef,level]);
+
+
   useEffect(() => {
-    
+
     setTimeout(function(){
 
           let selectedArr
@@ -223,7 +268,7 @@ const checkEnd = useCallback(() => { /*--------------------------------------che
                 //   {_shuffleArray(selectedArr)}
 
                 // setGameDivImgs(selectedArr)  
-                dispatchImg({type: "UN_MATCH",payload:props.level })
+                dispatchImg({type: "UN_MATCH",payload:level })
            
               }
             }
@@ -232,12 +277,23 @@ const checkEnd = useCallback(() => { /*--------------------------------------che
             // }
             document.body.style.pointerEvents = "auto";/*-------------------------------------------give back functionality to pointer*/
       checkEnd() /* checking whether all images are out -> so that´s end of the game  */
+      // saveScrollPosition(); // Uloženie scrollu po zmene obsahu
 
     }, 200);
       // }, 210);
       // checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
-  }, [stateImg.divImgs,checkEnd,props.level])
+      if (level === "hardest") {
+        const intervalShuffleHardest = setInterval(() => {
+          dispatchImg({ type: "HARDEST_LEVEL_SHUFFLE" });
+        }, 400);
+    
+        return () => clearInterval(intervalShuffleHardest);
+      }
+    
+      // restoreScrollPosition(); // Obnova pozície scrollu po aktualizácii stavu
+
+  }, [stateImg.divImgs,checkEnd,level])
 
   return (
      <div className="row" id="row">

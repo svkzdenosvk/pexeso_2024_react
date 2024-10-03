@@ -1,6 +1,6 @@
 import { /*useState*/ useRef, useReducer } from "react";
 
-import { _stylingAfterLevel,_shuffleArray } from "./_inc/_inc_functions";
+import { _stylingAfterLevel,/*_shuffleArray*/ } from "./_inc/_inc_functions";
 
 import { GameDivPictures } from "./components/AfterGame/GameDivPictures";
 import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
@@ -49,6 +49,7 @@ const App = () =>{
 
  // ---------------------------useRefs
  const intervalSecondRef = useRef(null); // Ref of  ID of iterval seconds ... according to chat GPT it´s quicker than useState, because it prevents re-rendering
+ const intervalShuffleHardestRef = useRef(null); 
 
  // ---------------------------useReducer
 
@@ -88,26 +89,26 @@ const App = () =>{
  // ---------------------------shuffle function
  // ---------------------------
  
-function shuffle(){/*-------------------------------------------------------------function for shuffling (ONLY) in harder and the hardest version of game*/
+// function shuffle(){/*-------------------------------------------------------------function for shuffling (ONLY) in harder and the hardest version of game*/
 
-  if( state.level==="harder" || state.level==="hardest"){ /*this method is for the hardest level .. it´s maybe slower because of rerendering */
-     //get HTMLcollection
-     let x= document.getElementsByClassName("div_on_click");/*--------------------collection of divs above image*/
+//   if( state.level==="harder" || state.level==="hardest"){ /*this method is for the hardest level .. it´s maybe slower because of rerendering */
+//      //get HTMLcollection
+//      let x= document.getElementsByClassName("div_on_click");/*--------------------collection of divs above image*/
 
-     //convert collection to array
-     let arr = Array.from(x);
-     _shuffleArray(arr);/*--------------------------------------------------------partial f. to random shuffle of array, f. included from _inc_functions.js */
+//      //convert collection to array
+//      let arr = Array.from(x);
+//      _shuffleArray(arr);/*--------------------------------------------------------partial f. to random shuffle of array, f. included from _inc_functions.js */
 
-     //remove old collection
-     let row = document.getElementById("row");
-     row.innerHTML="";
+//      //remove old collection
+//      let row = document.getElementById("row");
+//      row.innerHTML="";
       
-     // add new random order of collection
-     for(let i = 0; i < arr.length; i++){
-          row.appendChild(arr[i]);
-     }
-  }           
-}
+//      // add new random order of collection
+//      for(let i = 0; i < arr.length; i++){
+//           row.appendChild(arr[i]);
+//      }
+//   }           
+// }
 
   return (
     <>
@@ -121,7 +122,7 @@ function shuffle(){/*-----------------------------------------------------------
             </div>
 
             <TimeAndStart level={state.level} 
-                       shuffle={shuffle} 
+                      //  shuffle={shuffle} 
                        seconds={state.seconds} 
                        dispatch={dispatch}
                        intervalSecondRef={intervalSecondRef}
@@ -131,7 +132,7 @@ function shuffle(){/*-----------------------------------------------------------
          </div>
         
          <div className="column_content" id="content">
-                <GameDivPictures level={state.level} seconds={state.seconds} intervalSecondRef={intervalSecondRef} setIsRunning={state.setIsRunning} dispatch={dispatch}/> 
+                <GameDivPictures level={state.level} seconds={state.seconds} intervalSecondRef={intervalSecondRef} intervalShuffleHardestRef={intervalShuffleHardestRef} isRunning={state.isRunning} dispatch={dispatch}/> 
          </div>
     </>
   );

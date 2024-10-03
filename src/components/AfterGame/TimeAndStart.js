@@ -30,9 +30,9 @@ export const TimeAndStart = ({level,shuffle,seconds,/*setSeconds,*/intervalSecon
       dispatch({type: "SET_START_GAME" })
 
       // in hardest level shuffle img´s
-      if(level==="hardest"){/*---------------------------------------------------------working only in hardest version *//*maybe this can by removed from timer();*/
-         setInterval(shuffle, 800);
-      }
+      // if(level==="hardest"){/*---------------------------------------------------------working only in hardest version *//*maybe this can by removed from timer();*/
+      //    setInterval(shuffle, 800);
+      // }
     }
     
     return (
