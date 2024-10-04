@@ -1,5 +1,5 @@
- //component about one single div > picture
-
+ 
+//component about one single div > picture
 export const DivPicture = (props) =>{
 
     return (
@@ -7,5 +7,5 @@ export const DivPicture = (props) =>{
             <img  src={"pictures/pexeso/"+props.pictureName+".jpg"} alt='Smiley face' />  
         </div> 
     )
-  }
+}
   
