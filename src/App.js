@@ -49,8 +49,8 @@ const App = () =>{
 
  // ---------------------------useRefs
 
- const intervalSecondRef = useRef(null); // Ref of  ID of iterval seconds ... according to chat GPT it´s quicker than useState, because it prevents re-rendering
- const intervalShuffleHardestRef = useRef(null); 
+ const intervalSecondRef = useRef(null); // Ref of  ID of interval seconds ... according to chat GPT it´s quicker than useState, because it prevents re-rendering
+ const intervalShuffleHardestRef = useRef(null); // Ref of  ID of interval in hardest level for shuffeling
 
  // ---------------------------useReducer
 

@@ -65,11 +65,6 @@ const reducerImg = (stateImg, action) => {
         ...stateImg,
         divImgs: afterMatchArr
       }
-    case 'SET_START_GAME':
-      return { 
-            ...stateImg,
-            isRunning: true
-      }  
     case 'REMOVE_AFTER_MATCH':
      
       let afterAfterMatchArr = stateImg.divImgs.filter(oneDiv => !oneDiv.classNames.includes("rotate-center"));
@@ -171,7 +166,7 @@ const defaultStateImg = {
     }, 200);
       // checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
-    if (level === "hardest") {
+    if (level === "hardest") {//---------------------------------------------------------------------in the hardest level shuffeling every 400 ms
       const intervalShuffleHardest = setInterval(() => {
         dispatchImg({ type: "HARDEST_LEVEL_SHUFFLE" });
       }, 400);
