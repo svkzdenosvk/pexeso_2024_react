@@ -1,4 +1,4 @@
-import { /*useState*/ useRef, useReducer } from "react";
+import { useState, useRef, useReducer } from "react";
 
 import { _stylingAfterLevel,_shuffleArray } from "./_inc/_inc_functions";
 
@@ -10,11 +10,7 @@ import { divItems } from './_inc/data.js'; /*-----------------------------------
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'SET_SECONDS':
-      return { 
-        ...state,
-        seconds: state.seconds + 1
-      }
+   
     case 'SET_START_GAME':
       return { 
         ...state,
@@ -35,6 +31,74 @@ const reducer = (state, action) => {
         ...state,
         level: action.payload
       }
+    /*------------------------------------------cases about managing imgs */  
+    case 'HARDEST_LEVEL_SHUFFLE':
+      _shuffleArray(state.divImgs)
+
+      return { 
+        ...state,
+        divImgs: state.divImgs
+      } 
+    case 'SHOW_ONE':
+      let filteredArr=state.divImgs.map(oneDiv => {
+          if (oneDiv.id === action.payload.id) {
+  
+            return { ...oneDiv, selected: true, classNames: [
+              ...oneDiv.classNames.filter(className => className !== "mask"), "selected_Div_img" // remove 'mask' and add "selected" class
+            ] }
+          } else {
+            return oneDiv; //--------------------------------------------------return untouched object
+          }
+        });
+      
+      return { 
+        ...state,
+        divImgs: filteredArr
+      } 
+    case 'UN_MATCH':
+      let afterUnMatchArr = state.divImgs.map(oneDiv => {
+        if ((oneDiv.selected === true)&& (oneDiv.classNames.includes("selected_Div_img"))) {
+          return { ...oneDiv, selected: false, classNames: [
+            ...oneDiv.classNames.filter(className => className !== "selected_Div_img"), "mask" // remove "selected" and add "mask" class
+          ] }/*-------------------------------------------------------------change 2 selected img´s to nonselected and hide */
+        } else {
+          return oneDiv;/*---------------------------------------------------if img wasn´t selected -> nothing to change  */
+        }
+      });
+
+      if(action.payload==="harder"/*||action.payload==="hardest"*/){
+
+         _shuffleArray(afterUnMatchArr)
+      }
+      return { 
+        ...state,
+        divImgs: afterUnMatchArr
+      }
+    case 'MATCH':
+        let afterMatchArr = state.divImgs.map(oneDiv => {
+          if ((oneDiv.selected === true)&& (oneDiv.classNames.includes("selected_Div_img"))) {
+            return { ...oneDiv, classNames: [
+              ...oneDiv.classNames.filter(className => className !== "selected_Div_img"), "rotate-center" /* remove selected and add rotate */
+            ] }/*-------------------------------------------------------------change 2 selected img´s to nonselected and hide */
+          } else {
+            return oneDiv;/*---------------------------------------------------if img wasn´t selected -> nothing to change  */
+          }
+        });
+
+        // let afterAfterMatchArr = afterMatchArr.filter(oneDiv => oneDiv.selected !== true);
+      return { 
+        ...state,
+        divImgs: afterMatchArr
+      }
+    
+    case 'REMOVE_AFTER_MATCH':
+     
+      let afterAfterMatchArr = state.divImgs.filter(oneDiv => !oneDiv.classNames.includes("rotate-center"));
+
+      return { 
+        ...state,
+        divImgs: afterAfterMatchArr
+      } 
     default:
       return state;
   }
@@ -43,12 +107,14 @@ const reducer = (state, action) => {
 const defaultState = {
   level:"",
   color:"black",
-  seconds:0,
   isRunning:false,
   divImgs:divItems,
 }
 
 const App = () =>{
+  
+ // ---------------------------useState
+  let [seconds, setSeconds] = useState(0);
 
  // ---------------------------useRefs
  const intervalSecondRef = useRef(null); // Ref of  ID of iterval seconds ... according to chat GPT it´s quicker than useState, because it prevents re-rendering
@@ -87,31 +153,6 @@ const App = () =>{
 
   }
 
- // ---------------------------
- // ---------------------------shuffle function
- // ---------------------------
- 
-function shuffle(){/*-------------------------------------------------------------function for shuffling (ONLY) in harder and the hardest version of game*/
-
-  if( state.level==="harder" || state.level==="hardest"){ /*this method is for the hardest level .. it´s maybe slower because of rerendering */
-     //get HTMLcollection
-     let x= document.getElementsByClassName("div_on_click");/*--------------------collection of divs above image*/
-
-     //convert collection to array
-     let arr = Array.from(x);
-     _shuffleArray(arr);/*--------------------------------------------------------partial f. to random shuffle of array, f. included from _inc_functions.js */
-
-     //remove old collection
-     let row = document.getElementById("row");
-     row.innerHTML="";
-      
-     // add new random order of collection
-     for(let i = 0; i < arr.length; i++){
-          row.appendChild(arr[i]);
-     }
-  }           
-}
-
   return (
     <>
          <div className="welcome">
@@ -123,18 +164,18 @@ function shuffle(){/*-----------------------------------------------------------
               <SetLevelBtns my_setLevel={my_setLevel}/>
             </div>
 
-            <TimeAndStart level={state.level} 
-                       shuffle={shuffle} 
-                       seconds={state.seconds} 
-                       dispatch={dispatch}
-                       intervalSecondRef={intervalSecondRef}
-                       color={state.color}
-                       isRunning={state.isRunning}
-                       /> 
+            <TimeAndStart 
+                          seconds={seconds} 
+                          setSeconds={setSeconds}
+                          dispatch={dispatch}
+                          intervalSecondRef={intervalSecondRef}
+                          color={state.color}
+                          isRunning={state.isRunning}
+                          /> 
          </div>
         
          <div className="column_content" id="content">
-                <GameDivPictures level={state.level} seconds={state.seconds} intervalSecondRef={intervalSecondRef} setIsRunning={state.setIsRunning} dispatch={dispatch}/> 
+                <GameDivPictures divImgs={state.divImgs} level={state.level} seconds={seconds} intervalSecondRef={intervalSecondRef} setIsRunning={state.setIsRunning} dispatch={dispatch}/> 
          </div>
     </>
   );
