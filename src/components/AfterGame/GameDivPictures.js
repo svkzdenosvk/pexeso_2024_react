@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom'
+
 import { DivPicture } from './DivPicture.js';
 import { useReducer, useEffect, useCallback } from "react";
 
@@ -112,6 +114,8 @@ const defaultStateImg = {
 
           document.getElementsByTagName("H1")[0].innerHTML = "Gratulácia, vyhrali ste za "+(timeArr[0]==="0"?"":timeArr[0]+"m")+" "+ timeArr[1]+"s";
           document.getElementsByTagName("H1")[0].classList.add('h1End');/*-end ---animation of gratulation text */
+
+          <Link to="/">Klikni sem a poď na hlavnú stránku</Link>
       }
   }, [seconds,stopTimer]); // adding dependencies
 
