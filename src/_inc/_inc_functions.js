@@ -52,3 +52,10 @@ export function _myToggle(elm,removedClass, addedClass){
   elm.classList.add(addedClass);
   elm.classList.remove(removedClass);
 }
+
+// ---------------------------function to reload page (after game to start new game)
+
+export function handleRefresh (e){
+  e.preventDefault();  
+  window.location.reload();
+};

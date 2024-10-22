@@ -1,6 +1,6 @@
 import { useRef, useReducer } from "react";
 
-import { _stylingAfterLevel } from "./_inc/_inc_functions";
+import { _stylingAfterLevel, handleRefresh } from "./_inc/_inc_functions";
 
 import { GameDivPictures } from "./components/AfterGame/GameDivPictures";
 import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
@@ -21,7 +21,8 @@ const reducer = (state, action) => {
     case 'SET_STOP_GAME':
     return { 
       ...state,
-      isRunning: false
+      isRunning: false,
+      isEnd: true
     } 
     case 'SET_COLOR':
       return { 
@@ -42,7 +43,8 @@ const defaultState = {
   level:"",
   color:"black",
   seconds:0,
-  isRunning:false
+  isRunning:false,
+  isEnd:false
 }
 
 const AppGame = () =>{
@@ -88,7 +90,10 @@ const AppGame = () =>{
   return (
     <>
          <div className="welcome">
+         
             <h1 style={{color: state.color}}>Pexeso</h1>
+            {state.isEnd &&  <button onClick={handleRefresh}>Klikni a vyskúšaj to znova </button>}
+
           
             <h3 style={{color: state.color}}>Vitajte v hre pexeso, pre začatie hry zvoľte náročnosť nižšie </h3>
 
@@ -108,6 +113,7 @@ const AppGame = () =>{
          <div className="column_content" id="content">
                 <GameDivPictures level={state.level} seconds={state.seconds} intervalSecondRef={intervalSecondRef} intervalShuffleHardestRef={intervalShuffleHardestRef} isRunning={state.isRunning} dispatch={dispatch}/> 
          </div>
+
     </>
   );
 }
