@@ -4,9 +4,9 @@ import './index.css';
 import App from './App';
 
 const container = document.getElementById('result')
-const root = createRoot(container)
 
-root.render(<App/>)
-// root.render(<App tab="home"/>)
+const loadingElement = document.getElementById('loading')
+loadingElement.remove() //after loading delete temporary message
 
-
+const root = createRoot(container);
+root.render(<App />)

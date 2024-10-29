@@ -7,7 +7,15 @@ import { useReducer, useEffect, useCallback } from "react";
 
 import { _fmtMSS } from "./../../_inc/_inc_functions";
 import { _shuffleArray } from '../../_inc/_inc_functions.js';
-import { divItems } from '../../_inc/data.js'; /*------------------------------------------------data -> source of names of pictures and array of objects from these names  */
+// import { divItems } from '../../_inc/data.js'; /*------------------------------------------------data -> source of names of pictures and array of objects from these names  */
+
+import { fetchImageNames  } from '../../_inc/data.js';
+
+let divItems
+// (async () => {
+  divItems = await fetchImageNames (); // waiting for img names array from firebase db
+
+// })();
 
 const reducerImg = (stateImg, action) => {
   switch (action.type) {
@@ -171,7 +179,6 @@ const defaultStateImg = {
       checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
     }, 200);
-      // checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
     if (level === "hardest") {//---------------------------------------------------------------------in the hardest level shuffeling every 400 ms
       const intervalShuffleHardest = setInterval(() => {

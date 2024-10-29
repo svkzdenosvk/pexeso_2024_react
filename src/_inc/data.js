@@ -1,23 +1,44 @@
 import {_shuffleArray }from './_inc_functions.js'
 
+import { projectFirestore } from "../firebase/config";
+import { collection, getDocs } from 'firebase/firestore';
 
-const arrImg= ["lightning", "drop", "sea", "space", "sun", "vibration", "wind", "wood"];
-const doubleImgs= [...arrImg, ...arrImg];
-
-//to shuffle before every game
-_shuffleArray(doubleImgs)
-
-//generate UUID random keys
 const uuid = require('uuid')
 
-//creation of 2-dimensional array: - out of component to make id´s stable
+// const arrImg= ["lightning", "drop", "sea", "space", "sun", "vibration", "wind", "wood"];
+export async function fetchImageNames() {
+  const arrImg = []; // create empty array -> it will be filled with img´s names 
+
+  try {
+    // loading docs from Firebase
+    const snapshot = await getDocs(collection(projectFirestore, "pexeso-img-names"));
+    snapshot.forEach((doc) => {
+      const name = doc.data().name;
+      if (name) {
+        arrImg.push(name); // add name to array 
+      }
+    });
+  } catch (error) {
+    console.error("Chyba pri načítaní dát z Firestore:", error);
+    return []; // if error return empty array 
+  }
+
+  const doubleImgs = [...arrImg, ...arrImg];
+
+  //to shuffle before every game
+  _shuffleArray(doubleImgs);
+
+  //creation of 2-dimensional array: - out of component to make id´s stable
 // ['123e4567-e89b-12d3-a456-426614174000', 'lightning'],
 // ['123e4567-e89b-12d3-a456-426614174001', 'drop'],..
-const imgsWithKeys = doubleImgs.map(pictureName => [uuid.v4(), pictureName]);
+  const imgsWithKeys = doubleImgs.map(pictureName => [uuid.v4(), pictureName]);
 
 //array of img names -> div>img
-let divItems = imgsWithKeys.map(([id, pictureName]) =>(
-  { id: id, imgPath: pictureName, classNames:["mask"] } 
-))
+let divItems = imgsWithKeys.map(([id, pictureName]) => ({
+    id: id,
+    imgPath: pictureName,
+    classNames: ["mask"],
+  }));
 
-export {divItems}
+  return divItems; // return final array 
+}
