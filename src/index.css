@@ -7,26 +7,36 @@ html{
     margin:0;
     box-sizing: border-box;
     text-align: center;
-    height: 100vh;
-    /* width: 100vw; */
-    /* width: 100%; */
+    
+     /* min-width: 100vw;  */
+    /* max-width: 100vw;  */
     /* display:flex; */
+
     overflow-x: hidden;
+    /* overflow-y: overlay; */
+
   }
-  
+  body{
+    padding:0px;
+    margin:0px;
+    box-sizing: border-box;
+    min-height: 100vh;
+    /* height: 100%; */
+  }
   /* body, #result{ */
    #result{
     margin:0;
     padding:0;
     box-sizing: border-box;
-    height: 100%;
-    width: 100%;
+    min-height: 100vh;
+    /* height: 100%; */
+    /* width: 100%; */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
   }
-  
+
   #timeAndStart {
     display: none;
   }
@@ -61,7 +71,8 @@ html{
     }
   
   .welcome h1{
-    font-size: 500%;
+    /* font-size: 500%; */
+    font-size: calc(2rem + 5vw);
     margin-bottom: 70px;
   }
   
@@ -69,17 +80,22 @@ html{
     text-align:center;
   }
 
-  .welcome button { /*--------------------------------------------------refresh button after end of the game to refresh the page and try game again*/
-    background-color: goldenrod; 
+  .welcome .end-game-btn { /*--------------------------------------------------refresh button after end of the game to refresh the page and try game again*/
+    /* background-color: goldenrod;  */
+    background-color: grey; 
+
+    max-width:300px;  /* trying this*/ 
     border: none; 
-    color: black; 
+    /* color: black;  */
+    color: white; 
+
     font-weight: bold;
     padding: 15px 32px; 
     text-align: center; 
     text-decoration: none; 
     display: inline-block; 
     font-size: 16px; 
-    margin: 4px 2px; 
+    margin: 4px auto; 
     cursor: pointer; 
     border-radius: 8px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
@@ -88,9 +104,12 @@ html{
     justify-content: center; 
 }
 
-  .welcome button:hover {
-      background-color: #FFC300; 
-      transform: translateY(-2px); 
+  .welcome .end-game-btn:hover {
+      /* background-color: #FFC300;  */
+      color: goldenrod;
+      /* background-color: #4d4d4d; */
+      background-color: #696969;
+      /* transform: translateY(-2px);  */
   }
   
   #levelBtns { /*----------------------------------------------------div -> level buttons */

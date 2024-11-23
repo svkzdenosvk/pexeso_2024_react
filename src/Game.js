@@ -1,6 +1,8 @@
 import { useRef, useReducer } from "react";
+// import { Link } from "react-router-dom";
 
-import { _stylingAfterLevel, handleRefresh } from "./_inc/_inc_functions";
+
+import { _stylingAfterLevel } from "./_inc/_inc_functions";
 
 import { GameDivPictures } from "./components/AfterGame/GameDivPictures";
 import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
@@ -92,9 +94,11 @@ const AppGame = () =>{
          <div className="welcome">
          
             <h1 style={{color: state.color}}>Pexeso</h1>
-            {state.isEnd &&  <button onClick={handleRefresh}>Klikni a vyskúšaj to znova </button>}
 
-          
+            {state.isEnd &&  <a href="/game" class="end-game-btn" > Hraj znova </a>}
+
+            {!state.isRunning && <a href="/" class="end-game-btn" > Poď na hlavnú stránku </a>}
+                      
             <h3 style={{color: state.color}}>Vitajte v hre pexeso, pre začatie hry zvoľte náročnosť nižšie </h3>
 
             <div id="levelBtns"  >

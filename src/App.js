@@ -1,5 +1,13 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import AppGame from "./AppGame"
+import Game from "./Game"
+import SharedLayout from "./components/OutsideTheGame/SharedLayout"
+import Home from "./components/OutsideTheGame/Home"
+import Rules from "./components/OutsideTheGame/Rules"
+import SharedAboutLayout from "./components/OutsideTheGame/SharedAboutLayout"
+import AboutGame from "./components/OutsideTheGame/AboutGame"
+import Images from "./components/OutsideTheGame/Images"
+import SingleImg from "./components/OutsideTheGame/SingleImg"
+
 import ErrorPage from "./components/ErrorPage"
 
 
@@ -8,7 +16,19 @@ const App = () => {
     
     <BrowserRouter>
         <Routes>
-             <Route path="/" element={<AppGame/>}/>
+             <Route path="/game" element={<Game/>}/>
+
+             <Route path="/" element={<SharedLayout/>}>
+                <Route index element={<Home/>}/>
+                
+                <Route path="/about-game" element={<SharedAboutLayout />}>
+                  <Route index element={<AboutGame />}/>
+                  <Route path="/about-game/rules" element={<Rules />} />    
+                  <Route path="/about-game/images" element={<Images />} />  
+                  <Route path="/about-game/images/:name" element={<SingleImg/>}/>
+                </Route>                  
+             </Route>
+
              <Route path="*" element={<ErrorPage/>}/>
 
         </Routes>

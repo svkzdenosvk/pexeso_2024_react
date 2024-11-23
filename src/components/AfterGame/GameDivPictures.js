@@ -9,11 +9,11 @@ import { _fmtMSS } from "./../../_inc/_inc_functions";
 import { _shuffleArray } from '../../_inc/_inc_functions.js';
 // import { divItems } from '../../_inc/data.js'; /*------------------------------------------------data -> source of names of pictures and array of objects from these names  */
 
-import { fetchImageNames  } from '../../_inc/data.js';
+import { fetchImageDivs  } from '../../_inc/data.js';
 
 let divItems
 // (async () => {
-  divItems = await fetchImageNames (); // waiting for img names array from firebase db
+  divItems = await fetchImageDivs(); // waiting for img names array from firebase db
 
 // })();
 
@@ -119,7 +119,8 @@ const defaultStateImg = {
           stopTimer();/*---------------------------------------------------stop increment seconds */
           let endTime=_fmtMSS(seconds);/*----------------------------------formating time */
 
-          document.getElementsByTagName("BODY")[0].firstElementChild.classList.add('div_center');/*---------------start ---animation of gratulation text */
+          // document.getElementsByTagName("BODY")[0].firstElementChild.classList.add('div_center');/*---------------start ---animation of gratulation text */
+          document.getElementById("result").setAttribute("style", "justify-content: center;");
           let timeArr=endTime.split(":");/*--------------------------------split time string (seconds:minutes) to array for separate minutes and second in gratulation text */
 
           document.getElementsByTagName("H1")[0].innerHTML = "Gratulácia, vyhrali ste za "+(timeArr[0]==="0"?"":timeArr[0]+"m")+" "+ timeArr[1]+"s";
