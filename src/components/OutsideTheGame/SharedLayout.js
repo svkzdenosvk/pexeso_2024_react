@@ -16,7 +16,7 @@ function SharedLayout() {
       </div>
       <div class="shared-main-content">
         {/* <main>  */}
-          <Outlet /> {/* Toto miesto bude obsahovať obsah vnorených trás */}
+          <Outlet /> {/* content from nested routes */}
         {/* </main> */}
        </div>         
 

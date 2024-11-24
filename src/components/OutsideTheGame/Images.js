@@ -32,7 +32,7 @@ const Images = () => {
         console.log("Not all images were loaded")
         // setLoadingImg(false);        //----------------------------------------set loading to false
         });
-    }, [loadingImg,/*arrImg*/]);
+    }, [loadingImg]);
     
     return (
       <div className="img-content">

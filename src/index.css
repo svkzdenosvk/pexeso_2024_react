@@ -266,7 +266,7 @@ html{
       -webkit-transform: rotate(360deg);
       transform: rotate(360deg); } }
   
-  /* media queries */
+  /* ----------------------------------------------media queries -----------------------------------------------*/
   @media screen and (min-width: 1650px) {
     #result{
       text-align: center;
@@ -278,7 +278,6 @@ html{
     }
   }
   
-  /* media queries */
   @media screen and (max-width: 540px) {
     .welcome h1 {
       margin-bottom: 0px;

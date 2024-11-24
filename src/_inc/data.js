@@ -13,7 +13,7 @@ export async function fetchImageNames(){
     const snapshot = await getDocs(collection(projectFirestore, "pexeso-img-names"));
     snapshot.forEach((doc) => {
       const name = doc.data().name;
-      const id = doc.id;           // Získanie ID dokumentu
+      const id = doc.id;           //get id of document 
 
       if (name) {
         arrImg.push({ id, name }); // add name to array 

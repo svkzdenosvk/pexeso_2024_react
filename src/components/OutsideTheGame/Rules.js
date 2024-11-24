@@ -22,13 +22,6 @@ const Rules = () => {
             </ul>
         </div>
 
-
-
-        
-
-
-
-
       </div>
     </div>
 

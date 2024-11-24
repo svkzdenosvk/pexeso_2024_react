@@ -33,7 +33,7 @@
 }
 
 .rules-main-content ul {
-    list-style-type: none; /* Skryje odrážky */
+    list-style-type: none; 
     padding-left:2%;
 }
 .rules-main-content ul li{
@@ -42,8 +42,7 @@
 }
 
 .rules-main-content li::before {
-    content: "✽\00a0\00a0\00a0\00a0"; /* Tvoj vlastný znak */
-    /* color: green;  Nastavenie farby */
+    content: "✽\00a0\00a0\00a0\00a0"; /* own symbol with non breaking spaces */
 }
 
 .rules-main-content .rules-level, .rules-principle {
