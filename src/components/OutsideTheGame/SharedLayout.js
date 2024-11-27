@@ -4,17 +4,17 @@ import './css/sharedLayout.css';
 
 function SharedLayout() {
   return (
-    <div class="shared-content">
-      <div class="shared-navigation">        
+    <div className="shared-content">
+      <div className="shared-navigation">        
         <nav>
       
           <NavLink to="/about-game">O Hre</NavLink>   
 
-          <NavLink to="/game">Hraj hru</NavLink>   
+          <NavLink to="/settings">Hraj hru</NavLink>   
 
         </nav>
       </div>
-      <div class="shared-main-content">
+      <div className="shared-main-content">
         {/* <main>  */}
           <Outlet /> {/* content from nested routes */}
         {/* </main> */}

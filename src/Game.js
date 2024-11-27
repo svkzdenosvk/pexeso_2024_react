@@ -1,12 +1,15 @@
 import { useRef, useReducer } from "react";
 // import { Link } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
+import SimpleCrypto from "simple-crypto-js";
 
 import { _stylingAfterLevel } from "./_inc/_inc_functions";
 
 import { GameDivPictures } from "./components/AfterGame/GameDivPictures";
 import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
 import {TimeAndStart} from "./components/AfterGame/TimeAndStart"
+
+
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -63,6 +66,29 @@ const AppGame = () =>{
  /*--------------------------------------------------------------------------------------------------------------------------------------------
  /*--------------------------------------------------------------------------------------------------------------------------------------------*/
  
+//  const { settings } = useParams();
+ let settingsData=useParams().settings
+
+ const secretKey = "encryption-key-for-settings"; // rovnaký kľúč ako na odosielajúcej stránke
+ const simpleCrypto = new SimpleCrypto(secretKey);
+
+ let gameSettings = {};
+
+ try {
+   // Dekódovanie a dešifrovanie údajov
+   const decryptedSettings = simpleCrypto.decrypt(decodeURIComponent(settingsData));
+      console.log("level:",decryptedSettings.level)
+      console.log("počet obrázkov :",decryptedSettings.imgCount)
+      console.log("game ID :",decryptedSettings.gameId)
+
+
+  //  gameSettings = JSON.parse(decryptedSettings); // Spracovanie JSON dát -mozno to nebude treba tento riadok !!!
+
+  //  console.log(gameSettings)
+ } catch (error) {
+   console.error("Dešifrovanie zlyhalo:", error);
+ }
+ console.log(gameSettings.level)
   // ---------------------------
  // ---------------------------set level fn´s
  // ---------------------------
@@ -80,9 +106,13 @@ const AppGame = () =>{
     dispatch({type: "SET_LEVEL", payload: levelName })
   
     const levelChanges = {
-      normal:  ["black"],
-      harder:  ["white", "#4d141d"],
-      hardest: ["white","black"]
+      // normal:  ["black"],
+      // harder:  ["white", "#4d141d"],
+      // hardest: ["white","black"]
+
+      easy:  ["black"],
+      medium:["white", "#4d141d"],
+      hard:  ["white","black"]
     }
 
    _setLevelStyleChanges(levelChanges[levelName][0],levelChanges[levelName][1]); /*---using dynamic object properties instead of switch*/ 
@@ -95,9 +125,11 @@ const AppGame = () =>{
          
             <h1 style={{color: state.color}}>Pexeso</h1>
 
-            {state.isEnd &&  <a href="/game" class="end-game-btn" > Hraj znova </a>}
+            {/* {state.isEnd &&  <a href="/game" class="end-game-btn" > Hraj znova </a>} */}
+            {state.isEnd &&  <a href="/game" className="end-game-btn" > Hraj znova </a>}
 
-            {!state.isRunning && <a href="/" class="end-game-btn" > Poď na hlavnú stránku </a>}
+            {/* {!state.isRunning && <a href="/" class="end-game-btn" > Poď na hlavnú stránku </a>} */}
+            {!state.isRunning && <a href="/" className="end-game-btn" > Poď na hlavnú stránku </a>}
                       
             <h3 style={{color: state.color}}>Vitajte v hre pexeso, pre začatie hry zvoľte náročnosť nižšie </h3>
 

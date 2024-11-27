@@ -127,7 +127,7 @@ html{
         flex-wrap: wrap;
   }
   
-  #levelBtns #normal, #levelBtns #harder, #levelBtns #hardest {
+  #levelBtns #easy, #levelBtns #medium, #levelBtns #hard {
     padding: 20px;
     font-size: 300%;
     float: left;
@@ -135,21 +135,21 @@ html{
     border-radius: 50%;
   }
     
-  #levelBtns #hardest:hover, #levelBtns #harder:hover, #levelBtns #normal:hover {
+  #levelBtns #easy:hover, #levelBtns #medium:hover, #levelBtns #hard:hover {
     color: #cc0606; 
   }
   
-  #levelBtns #normal{/*---------------------------------------------button level-normal */
+  #levelBtns #easy{/*---------------------------------------------button level-normal */
     color: black;
     border: 5px solid black;
   }
   
-  #levelBtns #harder {/*--------------------------------------------button level-harder */
+  #levelBtns #medium {/*--------------------------------------------button level-harder */
     color: white;
     background-color: #4d141d;
   }
   
-  #levelBtns #hardest {/*-------------------------------------------button level-hardest */
+  #levelBtns #hard {/*-------------------------------------------button level-hardest */
     color: white;
     background-color: black;
   }

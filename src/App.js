@@ -2,6 +2,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Game from "./Game"
 import SharedLayout from "./components/OutsideTheGame/SharedLayout"
 import Home from "./components/OutsideTheGame/Home"
+import Settings from "./components/BeforeGame/GameSettings"
 import Rules from "./components/OutsideTheGame/Rules"
 import SharedAboutLayout from "./components/OutsideTheGame/SharedAboutLayout"
 import AboutGame from "./components/OutsideTheGame/AboutGame"
@@ -16,10 +17,11 @@ const App = () => {
     
     <BrowserRouter>
         <Routes>
-             <Route path="/game" element={<Game/>}/>
+             <Route path="/game/:settings" element={<Game/>}/>
 
              <Route path="/" element={<SharedLayout/>}>
                 <Route index element={<Home/>}/>
+                <Route path="/settings" element={<Settings/>}/>
                 
                 <Route path="/about-game" element={<SharedAboutLayout />}>
                   <Route index element={<AboutGame />}/>
