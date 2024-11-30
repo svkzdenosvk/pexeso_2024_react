@@ -57,6 +57,35 @@ let divItems = imgsWithKeys.map(([id, pictureName]) => ({
   return divItems; // return final array 
 }
 
+export async function fetchImageDivsForCounts(selectedCountOfImg) {
+  let fetchedImageNamesAndId = []; // create empty array -> it will be filled with img´s names
+
+  fetchedImageNamesAndId= await fetchImageNames()
+
+  let arrImg = fetchedImageNamesAndId.map(imgNameAndId => imgNameAndId.name) // return only name of picture
+
+  //to shuffle before every game
+  _shuffleArray(arrImg);
+
+   let afterCutArrImg = arrImg.slice(0, selectedCountOfImg)
+
+   const doubleImgs = [...afterCutArrImg, ...afterCutArrImg];
+
+  //creation of 2-dimensional array: - out of component to make id´s stable
+// ['123e4567-e89b-12d3-a456-426614174000', 'lightning'],
+// ['123e4567-e89b-12d3-a456-426614174001', 'drop'],..
+  const imgsWithKeys = doubleImgs.map(pictureName => [uuid.v4(), pictureName]);
+
+//array of img names -> div>img
+let divItems = imgsWithKeys.map(([id, pictureName]) => ({
+    id: id,
+    imgPath: pictureName,
+    classNames: ["mask"],
+  }));
+
+  return divItems; // return final array 
+}
+
 export function preloadImages(imgIdAndNamesArr) { //-------------------------function during loading images 
   return Promise.all(
     imgIdAndNamesArr.map((picture) => {

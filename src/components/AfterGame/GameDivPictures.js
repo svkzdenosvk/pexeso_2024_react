@@ -9,12 +9,12 @@ import { _fmtMSS } from "./../../_inc/_inc_functions";
 import { _shuffleArray } from '../../_inc/_inc_functions.js';
 // import { divItems } from '../../_inc/data.js'; /*------------------------------------------------data -> source of names of pictures and array of objects from these names  */
 
-import { fetchImageDivs  } from '../../_inc/data.js';
+import { fetchImageDivsForCounts  } from '../../_inc/data.js';
 
-let divItems
-// (async () => {
-  divItems = await fetchImageDivs(); // waiting for img names array from firebase db
-
+// let divItems
+// // (async () => {
+//   divItems = await fetchImageDivsForCounts(); // waiting for img names array from firebase db
+// console.log("čo je to v tom divitems",divItems)
 // })();
 
 const reducerImg = (stateImg, action) => {
@@ -28,6 +28,7 @@ const reducerImg = (stateImg, action) => {
         divImgs: stateImg.divImgs
       } 
     case 'SHOW_ONE':
+
       let filteredArr=stateImg.divImgs.map(oneDiv => {
           if (oneDiv.id === action.payload.id) {
   
@@ -54,7 +55,7 @@ const reducerImg = (stateImg, action) => {
         }
       });
 
-      if(action.payload==="harder"/*||action.payload==="hardest"*/){
+      if(action.payload==="medium"/*||action.payload==="hardest"*/){
 
          _shuffleArray(afterUnMatchArr)
       }
@@ -84,19 +85,63 @@ const reducerImg = (stateImg, action) => {
       return { 
         divImgs: afterAfterMatchArr
       }  
+    case 'SELECTED_IMG_COUNT':
+      
+      // let afterCutArrImg = stateImg.divImgs.slice(0, parseInt(action.payload, 10))
+      
+      // let doubleImgs = [...afterCutArrImg, ...afterCutArrImg];
+      // console.log("som v selected dispatch",doubleImgs);
+
+      return { 
+        ...stateImg,
+        divImgs: action.payload
+      } 
     default:
       return stateImg;
   }
 }
 
 const defaultStateImg = {
-  divImgs:divItems,
+  // divImgs:divItems,
+     divImgs:[],
+
 }
 
-  export const GameDivPictures = ({intervalSecondRef, dispatch, isRunning, seconds, level, intervalShuffleHardestRef}) =>{
+  export const GameDivPictures = ({intervalSecondRef, dispatch, isRunning, seconds, level, intervalShuffleHardestRef,selectedImgCount}) =>{
   // ---------------------------useReducer
 
+  // const [stateImg,dispatchImg] = useReducer(reducerImg, defaultStateImg)
+
+//   let divItems
+// // (async () => {
+//   divItems = await fetchImageDivsForCounts(); // waiting for img names array from firebase db
+
+  useEffect(() => {
+    const fetchDivItemsWithCount = async () => {
+      try {
+        const imgDivs = await fetchImageDivsForCounts(selectedImgCount); // Funkcia na načítanie z Firebase
+        // setDivItems(items); // Nastav hodnoty do state
+        console.log(imgDivs)
+
+       dispatchImg({type: "SELECTED_IMG_COUNT",payload: imgDivs })
+
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    };
+
+    fetchDivItemsWithCount(); // Zavolaj asynchrónnu funkciu
+  }, [selectedImgCount]); // 
+
   const [stateImg,dispatchImg] = useReducer(reducerImg, defaultStateImg)
+
+    // if (stateImg.divImgs) {
+      // console.log("som v čo prislo z toho ref",selectedImgCount );
+
+      // dispatchImg({type: "SELECTED_IMG_COUNT",payload: selectedImgCount })
+      // dispatchImg({type: "SELECTED_IMG_COUNT" })
+
+    // }
 
  // ---------------------------
  // ---------------------------timing fn´s
@@ -115,7 +160,8 @@ const defaultStateImg = {
   // ---------------------------
 
   const checkEnd = useCallback(() => { /*--------------------------------------check if is end == each picture removed */
-      if(!document.getElementById("row").firstElementChild){/*-------------if all images on page are removed */
+     
+    if(!document.getElementById("row").firstElementChild&& selectedImgCount>0){/*-------------if all images on page are removed */
           stopTimer();/*---------------------------------------------------stop increment seconds */
           let endTime=_fmtMSS(seconds);/*----------------------------------formating time */
 
@@ -129,19 +175,18 @@ const defaultStateImg = {
           document.getElementsByClassName("welcome")[0].setAttribute('style', 'align-items: center');
 
       }
-  }, [seconds,stopTimer]); // adding dependencies
+  }, [seconds,stopTimer,isRunning]); // adding dependencies
 
   // ---------------------------
   // ---------------------------fn´s to show div>imgs
   // ---------------------------
 
   function showImg(element,divObject){
-   
+
     let selectedArr = stateImg.divImgs.filter(oneDiv => oneDiv.classNames.includes("selected_Div_img"));
     let rotateddArr = stateImg.divImgs.filter(oneDiv => oneDiv.classNames.includes("rotate-center")); /* after match */
 
     if(element.classList.contains('mask')&& divObject.selected!==true&& (selectedArr.length===0||selectedArr.length===1)&&(rotateddArr.length===0)){/*-------------if divImg is not selected + prevent 3 imgs show*/
-     
        dispatchImg({type: "SHOW_ONE", payload: divObject })
     }
   }
@@ -167,8 +212,11 @@ const defaultStateImg = {
              
                   dispatchImg({type: "REMOVE_AFTER_MATCH" })
                   // document.body.style.pointerEvents = "auto"//;------------------------prevent to show third image 
+                  checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
                 }, 200);
+                // checkEnd() /* checking whether all images are out -> so that´s end of the game  */
+
                       
               }else {/* -------------------------------------------------------------------if unmatch */
                
@@ -177,11 +225,11 @@ const defaultStateImg = {
             }
 
             document.body.style.pointerEvents = "auto";/*-------------------------------------------give back functionality to pointer*/
-      checkEnd() /* checking whether all images are out -> so that´s end of the game  */
+      // checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
     }, 200);
 
-    if (level === "hardest") {//---------------------------------------------------------------------in the hardest level shuffeling every 400 ms
+    if (level === "hard") {//---------------------------------------------------------------------in the hardest level shuffeling every 400 ms
       const intervalShuffleHardest = setInterval(() => {
         dispatchImg({ type: "HARDEST_LEVEL_SHUFFLE" });
       }, 400);

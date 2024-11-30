@@ -4,7 +4,9 @@ export const DivPicture = (props) =>{
 
     return (
         <div onClick={(e) => {props.sendingFunction(e.target.parentNode, props.object)}} className={`${props.classNames.join(' ')} div_on_click`} >
-            <img  src={"pictures/pexeso/"+props.pictureName+".jpg"} alt='Smiley face' />  
+            {/* <img  src={"pictures/pexeso/"+props.pictureName+".jpg"} alt='Smiley face' />  */}
+            <img  src={"/pictures/pexeso/"+props.pictureName+".jpg"} alt='Smiley face' />  
+ 
         </div> 
     )
 }

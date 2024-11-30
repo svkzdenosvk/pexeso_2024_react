@@ -10,7 +10,7 @@
     document.getElementsByTagName("BODY")[0].setAttribute('style', 'background-color: '+ color);
     
     // disappear settings buttons  
-    document.getElementById("levelBtns").setAttribute('style', 'display: none'); 
+    // document.getElementById("levelBtns").setAttribute('style', 'display: none'); 
 
     //change H3 content -> game instruction
     document.getElementsByTagName("H3")[0].textContent="Pre začatie hry slačte tlačítko štart"

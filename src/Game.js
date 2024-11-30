@@ -1,14 +1,12 @@
-import { useRef, useReducer } from "react";
-// import { Link } from "react-router-dom";
+import { useRef, useReducer, useEffect,/* useCallback,*/ useState } from "react";
 import { useParams } from "react-router-dom";
 import SimpleCrypto from "simple-crypto-js";
 
 import { _stylingAfterLevel } from "./_inc/_inc_functions";
 
 import { GameDivPictures } from "./components/AfterGame/GameDivPictures";
-import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
+// import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
 import {TimeAndStart} from "./components/AfterGame/TimeAndStart"
-
 
 
 const reducer = (state, action) => {
@@ -37,7 +35,8 @@ const reducer = (state, action) => {
     case 'SET_LEVEL':
       return {
         ...state,
-        level: action.payload
+        level: action.payload,
+        // imgCount:action.payload.selectedImgCount 
       }
     default:
       return state;
@@ -49,7 +48,8 @@ const defaultState = {
   color:"black",
   seconds:0,
   isRunning:false,
-  isEnd:false
+  isEnd:false,
+  // imgCount:8
 }
 
 const AppGame = () =>{
@@ -59,37 +59,57 @@ const AppGame = () =>{
  const intervalSecondRef = useRef(null); // Ref of  ID of interval seconds ... according to chat GPT it´s quicker than useState, because it prevents re-rendering
  const intervalShuffleHardestRef = useRef(null); // Ref of  ID of interval in hardest level for shuffeling
 
+ const imgCountRef = useRef(null);
+
  // ---------------------------useReducer
 
  const [state,dispatch] = useReducer(reducer, defaultState)
- /*-------------------------------------------------------------------------------------------------------------------------------------------- 
+
+ //----------------------------useState
+
+//  const [isLoaded, setIsLoaded] = useState(false);
+
  /*--------------------------------------------------------------------------------------------------------------------------------------------
  /*--------------------------------------------------------------------------------------------------------------------------------------------*/
  
-//  const { settings } = useParams();
  let settingsData=useParams().settings
 
- const secretKey = "encryption-key-for-settings"; // rovnaký kľúč ako na odosielajúcej stránke
- const simpleCrypto = new SimpleCrypto(secretKey);
+ useEffect(() => {
+  if (settingsData) { // if params were sent
 
- let gameSettings = {};
+  const secretKey = "encryption-key-for-settings"; // same key as on settings page 
+  const simpleCrypto = new SimpleCrypto(secretKey);
 
- try {
-   // Dekódovanie a dešifrovanie údajov
-   const decryptedSettings = simpleCrypto.decrypt(decodeURIComponent(settingsData));
-      console.log("level:",decryptedSettings.level)
-      console.log("počet obrázkov :",decryptedSettings.imgCount)
-      console.log("game ID :",decryptedSettings.gameId)
+    try {
+      // decrypting of data
+      const decryptedSettings = simpleCrypto.decrypt(decodeURIComponent(settingsData));
 
+          console.log("level z param:",decryptedSettings.level)
+          // console.log("počet obrázkov :",decryptedSettings.imgCount)
+          // console.log("game ID :",decryptedSettings.gameId)
 
-  //  gameSettings = JSON.parse(decryptedSettings); // Spracovanie JSON dát -mozno to nebude treba tento riadok !!!
+          dispatch({type: "SET_LEVEL", payload: decryptedSettings.level })
+          imgCountRef.current=decryptedSettings.imgCount;
+          // imgCount =decryptedSettings.imgCount;
 
-  //  console.log(gameSettings)
- } catch (error) {
-   console.error("Dešifrovanie zlyhalo:", error);
- }
- console.log(gameSettings.level)
-  // ---------------------------
+          const levelChanges = {
+            easy:  ["black"],
+            medium:["white", "#4d141d"],
+            hard:  ["white","black"]
+          }
+      _setLevelStyleChanges(levelChanges[decryptedSettings.level][0],levelChanges[decryptedSettings.level][1]); /*---using dynamic object properties instead of switch*/ 
+
+      //  gameSettings = JSON.parse(decryptedSettings); // Spracovanie JSON dát -mozno to nebude treba tento riadok !!!
+
+    } catch (error) {
+      console.error("Dešifrovanie zlyhalo:", error);
+    }
+  }
+}, [/*settings,*/ settingsData, dispatch]); // useEffect sa spustí iba vtedy, keď sa `settings` zmení
+
+// console.log("no hele kukaj useref", imgCountRef.current)
+
+ // ---------------------------
  // ---------------------------set level fn´s
  // ---------------------------
 
@@ -101,23 +121,7 @@ const AppGame = () =>{
     _stylingAfterLevel(colorBG);/*---------------------------------------------------partial f. with style changes after select level*/
   }
  
-  function my_setLevel(levelName) {/*------------------------------------------------main f. for set level*/
-    
-    dispatch({type: "SET_LEVEL", payload: levelName })
-  
-    const levelChanges = {
-      // normal:  ["black"],
-      // harder:  ["white", "#4d141d"],
-      // hardest: ["white","black"]
-
-      easy:  ["black"],
-      medium:["white", "#4d141d"],
-      hard:  ["white","black"]
-    }
-
-   _setLevelStyleChanges(levelChanges[levelName][0],levelChanges[levelName][1]); /*---using dynamic object properties instead of switch*/ 
-
-  }
+  console.log("nastavený level je",state.level)
 
   return (
     <>
@@ -125,17 +129,11 @@ const AppGame = () =>{
          
             <h1 style={{color: state.color}}>Pexeso</h1>
 
-            {/* {state.isEnd &&  <a href="/game" class="end-game-btn" > Hraj znova </a>} */}
-            {state.isEnd &&  <a href="/game" className="end-game-btn" > Hraj znova </a>}
+            {state.isEnd &&  <a href="/settings" className="end-game-btn" > Hraj znova </a>}
 
-            {/* {!state.isRunning && <a href="/" class="end-game-btn" > Poď na hlavnú stránku </a>} */}
             {!state.isRunning && <a href="/" className="end-game-btn" > Poď na hlavnú stránku </a>}
                       
             <h3 style={{color: state.color}}>Vitajte v hre pexeso, pre začatie hry zvoľte náročnosť nižšie </h3>
-
-            <div id="levelBtns"  >
-              <SetLevelBtns my_setLevel={my_setLevel}/>
-            </div>
 
             <TimeAndStart
                        seconds={state.seconds} 
@@ -147,7 +145,10 @@ const AppGame = () =>{
          </div>
         
          <div className="column_content" id="content">
-                <GameDivPictures level={state.level} seconds={state.seconds} intervalSecondRef={intervalSecondRef} intervalShuffleHardestRef={intervalShuffleHardestRef} isRunning={state.isRunning} dispatch={dispatch}/> 
+                <GameDivPictures level={state.level} seconds={state.seconds} intervalSecondRef={intervalSecondRef} 
+                                 intervalShuffleHardestRef={intervalShuffleHardestRef} isRunning={state.isRunning} 
+                                 dispatch={dispatch} selectedImgCount={ imgCountRef.current} 
+                                 isEnd={state.isEnd}/> 
          </div>
 
     </>
