@@ -2,11 +2,11 @@ import { useRef, useReducer, useEffect,/* useCallback,*/ useState } from "react"
 import { useParams } from "react-router-dom";
 import SimpleCrypto from "simple-crypto-js";
 
-import { _stylingAfterLevel } from "./_inc/_inc_functions";
+import { _stylingAfterLevel } from "../../_inc/_inc_functions";
 
-import { GameDivPictures } from "./components/AfterGame/GameDivPictures";
+import { GameDivPictures } from "./GameDivPictures";
 // import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
-import {TimeAndStart} from "./components/AfterGame/TimeAndStart"
+import {TimeAndStart} from "./TimeAndStart"
 
 
 const reducer = (state, action) => {
@@ -127,7 +127,7 @@ const AppGame = () =>{
     <>
          <div className="welcome">
          
-            <h1 style={{color: state.color}}>Pexeso</h1>
+            {/* <h1 style={{color: state.color}}>Pexeso</h1> */}
 
             {state.isEnd &&  <a href="/settings" className="end-game-btn" > Hraj znova </a>}
 

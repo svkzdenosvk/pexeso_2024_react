@@ -1,8 +1,8 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Game from "./Game"
+import Game from "./components/RelatedToGame/Game"
 import SharedLayout from "./components/OutsideTheGame/SharedLayout"
 import Home from "./components/OutsideTheGame/Home"
-import Settings from "./components/BeforeGame/GameSettings"
+import Settings from "./components/RelatedToGame/GameSettings"
 import Rules from "./components/OutsideTheGame/Rules"
 import SharedAboutLayout from "./components/OutsideTheGame/SharedAboutLayout"
 import AboutGame from "./components/OutsideTheGame/AboutGame"

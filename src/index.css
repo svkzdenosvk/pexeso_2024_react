@@ -188,19 +188,36 @@ html{
     background-image: url("../public/pictures/joker.jpg");
     background-position: center; 
     background-repeat: no-repeat;
-    background-size: auto;
+    /* background-size: auto; */
+        background-size: cover;
+
     opacity: 100%;
     cursor: pointer;
     }
   
-  .column_content .row .div_on_click {
+  /* .column_content .row .div_on_click {
     margin: 3%; 
     width: 125px;
     height: 125px; 
+  } */
+  .column_content .row .div_on_click {
+    /* margin: 3%;  */
+    margin: 2%; 
+
+    width: 107px;
+    height: 107px;
   }
-  .column_content .row img {
+  /* .column_content .row img {
     width: 100%;
     height: 100%;
+    opacity: 0%; 
+    // transition: opacity 0.05s ease; 
+  } */
+  .column_content .row img {
+    /* width: 80%;
+    height: 80%; */
+    width: 107px;
+    height: 107px;
     opacity: 0%; 
     /* transition: opacity 0.05s ease; */
   }

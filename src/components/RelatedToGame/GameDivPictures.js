@@ -1,21 +1,11 @@
-// import {Link} from 'react-router-dom'
-// import ReactDOM from 'react-dom';
 
-
-import { DivPicture } from './DivPicture.js';
 import { useReducer, useEffect, useCallback } from "react";
 
-import { _fmtMSS } from "./../../_inc/_inc_functions";
+import { _fmtMSS } from "../../_inc/_inc_functions.js";
 import { _shuffleArray } from '../../_inc/_inc_functions.js';
 // import { divItems } from '../../_inc/data.js'; /*------------------------------------------------data -> source of names of pictures and array of objects from these names  */
 
 import { fetchImageDivsForCounts  } from '../../_inc/data.js';
-
-// let divItems
-// // (async () => {
-//   divItems = await fetchImageDivsForCounts(); // waiting for img names array from firebase db
-// console.log("čo je to v tom divitems",divItems)
-// })();
 
 const reducerImg = (stateImg, action) => {
   switch (action.type) {
@@ -86,11 +76,6 @@ const reducerImg = (stateImg, action) => {
         divImgs: afterAfterMatchArr
       }  
     case 'SELECTED_IMG_COUNT':
-      
-      // let afterCutArrImg = stateImg.divImgs.slice(0, parseInt(action.payload, 10))
-      
-      // let doubleImgs = [...afterCutArrImg, ...afterCutArrImg];
-      // console.log("som v selected dispatch",doubleImgs);
 
       return { 
         ...stateImg,
@@ -110,18 +95,12 @@ const defaultStateImg = {
   export const GameDivPictures = ({intervalSecondRef, dispatch, isRunning, seconds, level, intervalShuffleHardestRef,selectedImgCount}) =>{
   // ---------------------------useReducer
 
-  // const [stateImg,dispatchImg] = useReducer(reducerImg, defaultStateImg)
-
-//   let divItems
-// // (async () => {
-//   divItems = await fetchImageDivsForCounts(); // waiting for img names array from firebase db
+  const [stateImg,dispatchImg] = useReducer(reducerImg, defaultStateImg)
 
   useEffect(() => {
     const fetchDivItemsWithCount = async () => {
       try {
-        const imgDivs = await fetchImageDivsForCounts(selectedImgCount); // Funkcia na načítanie z Firebase
-        // setDivItems(items); // Nastav hodnoty do state
-        console.log(imgDivs)
+        const imgDivs = await fetchImageDivsForCounts(selectedImgCount); // loading from firebase
 
        dispatchImg({type: "SELECTED_IMG_COUNT",payload: imgDivs })
 
@@ -130,18 +109,9 @@ const defaultStateImg = {
       }
     };
 
-    fetchDivItemsWithCount(); // Zavolaj asynchrónnu funkciu
+    fetchDivItemsWithCount(); // to call async f.
   }, [selectedImgCount]); // 
 
-  const [stateImg,dispatchImg] = useReducer(reducerImg, defaultStateImg)
-
-    // if (stateImg.divImgs) {
-      // console.log("som v čo prislo z toho ref",selectedImgCount );
-
-      // dispatchImg({type: "SELECTED_IMG_COUNT",payload: selectedImgCount })
-      // dispatchImg({type: "SELECTED_IMG_COUNT" })
-
-    // }
 
  // ---------------------------
  // ---------------------------timing fn´s
@@ -244,13 +214,13 @@ const defaultStateImg = {
 
         {stateImg.divImgs.map((oneDiv) => (      //array of img names -> div>img
 
-          <DivPicture
-            key={oneDiv.id} // unique key for each div
-            sendingFunction={showImg}
-            pictureName={oneDiv.imgPath} // name of image
-            classNames={oneDiv.classNames}
-            object={oneDiv}
-          />
+          <div onClick={(e) => {showImg(e.target.parentNode, oneDiv)}} 
+              className={oneDiv.classNames.join(' ') + ' div_on_click'} >
+            {/* <img  src={"pictures/pexeso/"+props.pictureName+".jpg"} alt='Smiley face' />  */}
+            <img  src={"/pictures/pexeso/"+oneDiv.imgPath+".jpg"} alt='Smiley face' />  
+
+          </div> 
+
         ))}
      </div>
   );
