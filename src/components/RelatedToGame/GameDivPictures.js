@@ -92,8 +92,9 @@ const defaultStateImg = {
 
 }
 
-  export const GameDivPictures = ({intervalSecondRef, dispatch, isRunning, seconds, level, intervalShuffleHardestRef,selectedImgCount}) =>{
-  // ---------------------------useReducer
+  export const GameDivPictures = ({intervalSecondRef, dispatch, isRunning, seconds, level, /* intervalShuffleHardestRef*/ selectedImgCount, setIsLoaded, isLoaded}) =>{
+  
+    // ---------------------------useReducer
 
   const [stateImg,dispatchImg] = useReducer(reducerImg, defaultStateImg)
 
@@ -103,6 +104,7 @@ const defaultStateImg = {
         const imgDivs = await fetchImageDivsForCounts(selectedImgCount); // loading from firebase
 
        dispatchImg({type: "SELECTED_IMG_COUNT",payload: imgDivs })
+       setIsLoaded(false)
 
       } catch (error) {
         console.error("Error fetching items:", error);
@@ -131,7 +133,8 @@ const defaultStateImg = {
 
   const checkEnd = useCallback(() => { /*--------------------------------------check if is end == each picture removed */
      
-    if(!document.getElementById("row").firstElementChild&& selectedImgCount>0){/*-------------if all images on page are removed */
+    // if(!document.getElementById("row").firstElementChild && isLoaded === false){/*-------------if all images on page are removed */
+    if ((!document.getElementById("row") || document.getElementById("row").childElementCount === 0)&& isLoaded === false ){
           stopTimer();/*---------------------------------------------------stop increment seconds */
           let endTime=_fmtMSS(seconds);/*----------------------------------formating time */
 
@@ -182,7 +185,7 @@ const defaultStateImg = {
              
                   dispatchImg({type: "REMOVE_AFTER_MATCH" })
                   // document.body.style.pointerEvents = "auto"//;------------------------prevent to show third image 
-                  checkEnd() /* checking whether all images are out -> so that´s end of the game  */
+                  // checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
                 }, 200);
                 // checkEnd() /* checking whether all images are out -> so that´s end of the game  */
@@ -195,7 +198,7 @@ const defaultStateImg = {
             }
 
             document.body.style.pointerEvents = "auto";/*-------------------------------------------give back functionality to pointer*/
-      // checkEnd() /* checking whether all images are out -> so that´s end of the game  */
+      checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
     }, 200);
 
@@ -214,7 +217,7 @@ const defaultStateImg = {
 
         {stateImg.divImgs.map((oneDiv) => (      //array of img names -> div>img
 
-          <div onClick={(e) => {showImg(e.target.parentNode, oneDiv)}} 
+          <div  key={oneDiv.id} onClick={(e) => {showImg(e.target.parentNode, oneDiv)}} 
               className={oneDiv.classNames.join(' ') + ' div_on_click'} >
             {/* <img  src={"pictures/pexeso/"+props.pictureName+".jpg"} alt='Smiley face' />  */}
             <img  src={"/pictures/pexeso/"+oneDiv.imgPath+".jpg"} alt='Smiley face' />  

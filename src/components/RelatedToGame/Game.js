@@ -1,11 +1,10 @@
-import { useRef, useReducer, useEffect,/* useCallback,*/ useState } from "react";
-import { useParams } from "react-router-dom";
-import SimpleCrypto from "simple-crypto-js";
+import { useRef, useReducer, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import SimpleCrypto from "simple-crypto-js"; //this provide crypting and decrypting params in URL
 
 import { _stylingAfterLevel } from "../../_inc/_inc_functions";
 
 import { GameDivPictures } from "./GameDivPictures";
-// import {SetLevelBtns} from "./components/BeforeGame/SetLevelBtns";
 import {TimeAndStart} from "./TimeAndStart"
 
 
@@ -36,7 +35,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         level: action.payload,
-        // imgCount:action.payload.selectedImgCount 
       }
     default:
       return state;
@@ -49,7 +47,6 @@ const defaultState = {
   seconds:0,
   isRunning:false,
   isEnd:false,
-  // imgCount:8
 }
 
 const AppGame = () =>{
@@ -67,12 +64,14 @@ const AppGame = () =>{
 
  //----------------------------useState
 
-//  const [isLoaded, setIsLoaded] = useState(false);
+ const [isLoaded, setIsLoaded] = useState(true);
 
  /*--------------------------------------------------------------------------------------------------------------------------------------------
  /*--------------------------------------------------------------------------------------------------------------------------------------------*/
  
  let settingsData=useParams().settings
+ const navigate = useNavigate();
+
 
  useEffect(() => {
   if (settingsData) { // if params were sent
@@ -84,32 +83,47 @@ const AppGame = () =>{
       // decrypting of data
       const decryptedSettings = simpleCrypto.decrypt(decodeURIComponent(settingsData));
 
-          console.log("level z param:",decryptedSettings.level)
-          // console.log("počet obrázkov :",decryptedSettings.imgCount)
-          // console.log("game ID :",decryptedSettings.gameId)
+      if (
+        !["easy", "medium", "hard"].includes(decryptedSettings.level) || 
+        ![5, 6, 7, 8].includes(decryptedSettings.imgCount)
+      ){
+       // _setLevelStyleChanges("black","white",)
+      
+       navigate('/settings'); 
+       if(["medium", "hard"].includes(decryptedSettings.level)){
+        console.log("vykonalo sa")
+         window.location.reload(); //reset color changes (background, ..) 
+       }
 
+      }    
+     
           dispatch({type: "SET_LEVEL", payload: decryptedSettings.level })
           imgCountRef.current=decryptedSettings.imgCount;
-          // imgCount =decryptedSettings.imgCount;
-
+    
           const levelChanges = {
             easy:  ["black"],
             medium:["white", "#4d141d"],
             hard:  ["white","black"]
           }
-      _setLevelStyleChanges(levelChanges[decryptedSettings.level][0],levelChanges[decryptedSettings.level][1]); /*---using dynamic object properties instead of switch*/ 
 
-      //  gameSettings = JSON.parse(decryptedSettings); // Spracovanie JSON dát -mozno to nebude treba tento riadok !!!
-
+          _setLevelStyleChanges(levelChanges[decryptedSettings.level][0],levelChanges[decryptedSettings.level][1]); /*---using dynamic object properties instead of switch*/ 
+    
     } catch (error) {
       console.error("Dešifrovanie zlyhalo:", error);
+      navigate('/settings'); 
+
     }
+  }else{
+    // _setLevelStyleChanges("black","white",)
+    
+    navigate('/settings'); 
+    // window.location.reload();
+   
   }
-}, [/*settings,*/ settingsData, dispatch]); // useEffect sa spustí iba vtedy, keď sa `settings` zmení
+}, [/*settings,*/ settingsData, dispatch, navigate]); 
 
-// console.log("no hele kukaj useref", imgCountRef.current)
 
- // ---------------------------
+// ---------------------------
  // ---------------------------set level fn´s
  // ---------------------------
 
@@ -127,7 +141,7 @@ const AppGame = () =>{
     <>
          <div className="welcome">
          
-            {/* <h1 style={{color: state.color}}>Pexeso</h1> */}
+            {state.isEnd && <h1 style={{color: state.color}}>Pexeso</h1>}
 
             {state.isEnd &&  <a href="/settings" className="end-game-btn" > Hraj znova </a>}
 
@@ -146,9 +160,9 @@ const AppGame = () =>{
         
          <div className="column_content" id="content">
                 <GameDivPictures level={state.level} seconds={state.seconds} intervalSecondRef={intervalSecondRef} 
-                                 intervalShuffleHardestRef={intervalShuffleHardestRef} isRunning={state.isRunning} 
+                                 /*intervalShuffleHardestRef={intervalShuffleHardestRef}*/ isRunning={state.isRunning} 
                                  dispatch={dispatch} selectedImgCount={ imgCountRef.current} 
-                                 isEnd={state.isEnd}/> 
+                                 isEnd={state.isEnd} setIsLoaded={setIsLoaded} isLoaded={isLoaded}/> 
          </div>
 
     </>
