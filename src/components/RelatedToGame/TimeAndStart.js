@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { _stylingAfterStart } from '../../_inc/_inc_functions';
  
-export const TimeAndStart = ({seconds,intervalSecondRef,color,isRunning,dispatch}) => {
+export const TimeAndStart = ({seconds,intervalSecondRef,color,isRunning,dispatch,setSeconds}) => {
     
     useEffect(() => {
       if (!isRunning) return;
 
       function _incrementSeconds() {
-        dispatch({type: "SET_SECONDS" })
+        // dispatch({type: "SET_SECONDS" })
+        setSeconds(prevseconds => prevseconds + 1);
 
       }
       // set interval to increase seconds
@@ -17,7 +18,7 @@ export const TimeAndStart = ({seconds,intervalSecondRef,color,isRunning,dispatch
       // return () => {
       //   clearInterval(intervalSecondRef.current);
       // };
-    }, [isRunning, intervalSecondRef,dispatch]);
+    }, [isRunning,setSeconds, intervalSecondRef/*,dispatch*/]);
    
 
     function timer(){/*---------------------------------------------------------------button start */
