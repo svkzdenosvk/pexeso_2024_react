@@ -54,7 +54,6 @@ const AppGame = () =>{
  // ---------------------------useRefs
 
  const intervalSecondRef = useRef(null); // Ref of  ID of interval seconds ... according to chat GPT it´s quicker than useState, because it prevents re-rendering
- const intervalShuffleHardestRef = useRef(null); // Ref of  ID of interval in hardest level for shuffeling
 
  const imgCountRef = useRef(null);
 
@@ -91,7 +90,6 @@ const AppGame = () =>{
       
        navigate('/settings'); 
        if(["medium", "hard"].includes(decryptedSettings.level)){
-        console.log("vykonalo sa")
          window.location.reload(); //reset color changes (background, ..) 
        }
 
@@ -120,7 +118,7 @@ const AppGame = () =>{
     // window.location.reload();
    
   }
-}, [/*settings,*/ settingsData, dispatch, navigate]); 
+}, [ settingsData, dispatch, navigate]); 
 
 
 // ---------------------------
@@ -135,19 +133,19 @@ const AppGame = () =>{
     _stylingAfterLevel(colorBG);/*---------------------------------------------------partial f. with style changes after select level*/
   }
  
-  console.log("nastavený level je",state.level)
 
   return (
     <>
          <div className="welcome">
          
-            {state.isEnd && <h1 style={{color: state.color}}>Pexeso</h1>}
-
             {state.isEnd &&  <a href="/settings" className="end-game-btn" > Hraj znova </a>}
 
             {!state.isRunning && <a href="/" className="end-game-btn" > Poď na hlavnú stránku </a>}
+
+            <a href="/settings" className="end-game-btn" > {linkName} </a>
+
                       
-            <h3 style={{color: state.color}}>Vitajte v hre pexeso, pre začatie hry zvoľte náročnosť nižšie </h3>
+            <h3 style={{color: state.color}}> </h3>
 
             <TimeAndStart
                        seconds={state.seconds} 
@@ -160,7 +158,7 @@ const AppGame = () =>{
         
          <div className="column_content" id="content">
                 <GameDivPictures level={state.level} seconds={state.seconds} intervalSecondRef={intervalSecondRef} 
-                                 /*intervalShuffleHardestRef={intervalShuffleHardestRef}*/ isRunning={state.isRunning} 
+                                 color={state.color} isRunning={state.isRunning} 
                                  dispatch={dispatch} selectedImgCount={ imgCountRef.current} 
                                  isEnd={state.isEnd} setIsLoaded={setIsLoaded} isLoaded={isLoaded}/> 
          </div>

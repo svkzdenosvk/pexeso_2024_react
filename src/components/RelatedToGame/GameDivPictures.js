@@ -92,7 +92,7 @@ const defaultStateImg = {
 
 }
 
-  export const GameDivPictures = ({intervalSecondRef, dispatch, isRunning, seconds, level, /* intervalShuffleHardestRef*/ selectedImgCount, setIsLoaded, isLoaded}) =>{
+  export const GameDivPictures = ({intervalSecondRef, dispatch, isRunning, seconds, level, color, selectedImgCount, setIsLoaded, isLoaded}) =>{
   
     // ---------------------------useReducer
 
@@ -141,9 +141,19 @@ const defaultStateImg = {
           // document.getElementsByTagName("BODY")[0].firstElementChild.classList.add('div_center');/*---------------start ---animation of gratulation text */
           document.getElementById("result").setAttribute("style", "justify-content: center;");
           let timeArr=endTime.split(":");/*--------------------------------split time string (seconds:minutes) to array for separate minutes and second in gratulation text */
+          
+          let h1
+          if (!document.querySelector('h1')) {
+             h1 = document.createElement('h1');
+             h1.style.color = color;
 
-          document.getElementsByTagName("H1")[0].innerHTML = "Gratulácia, vyhrali ste za "+(timeArr[0]==="0"?"":timeArr[0]+"m")+" "+ timeArr[1]+"s";
-          document.getElementsByTagName("H1")[0].classList.add('h1End');/*-end ---animation of gratulation text */
+             document.getElementsByClassName("welcome")[0].appendChild(h1);  
+          }else{
+             h1=document.querySelector('h1')
+          }
+          
+          h1.innerHTML = "Gratulácia, vyhrali ste za "+(timeArr[0]==="0"?"":timeArr[0]+"m")+" "+ timeArr[1]+"s";
+          h1.classList.add('h1End');/*-end ---animation of gratulation text */
 
           document.getElementsByClassName("welcome")[0].setAttribute('style', 'align-items: center');
 
@@ -219,8 +229,7 @@ const defaultStateImg = {
 
           <div  key={oneDiv.id} onClick={(e) => {showImg(e.target.parentNode, oneDiv)}} 
               className={oneDiv.classNames.join(' ') + ' div_on_click'} >
-            {/* <img  src={"pictures/pexeso/"+props.pictureName+".jpg"} alt='Smiley face' />  */}
-            <img  src={"/pictures/pexeso/"+oneDiv.imgPath+".jpg"} alt='Smiley face' />  
+              <img  src={"/pictures/pexeso/"+oneDiv.imgPath+".jpg"} alt='Smiley face' />  
 
           </div> 
 
