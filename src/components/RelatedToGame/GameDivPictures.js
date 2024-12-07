@@ -229,7 +229,7 @@ const defaultStateImg = {
 
           <div  key={oneDiv.id} onClick={(e) => {showImg(e.target.parentNode, oneDiv)}} 
               className={oneDiv.classNames.join(' ') + ' div_on_click'} >
-              <img  src={"/pictures/pexeso/"+oneDiv.imgPath+".jpg"} alt='Smiley face' />  
+            <img  src={"/pictures/pexeso/"+oneDiv.imgPath+".jpg"} alt='Smiley face' />  
 
           </div> 
 

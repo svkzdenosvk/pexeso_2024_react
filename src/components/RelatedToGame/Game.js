@@ -10,21 +10,19 @@ import {TimeAndStart} from "./TimeAndStart"
 
 const reducer = (state, action) => {
   switch (action.type) {
-    // case 'SET_SECONDS':
-    //   return { 
-    //     ...state,
-    //     seconds: state.seconds + 1
-    //   }
+   
     case 'SET_START_GAME':
       return { 
         ...state,
-        isRunning: true
+        isRunning: true,
+        linkName: "Nová hra."
+
       }  
     case 'SET_STOP_GAME':
     return { 
       ...state,
       isRunning: false,
-      isEnd: true
+      linkName: "Hraj znova"
     } 
     case 'SET_COLOR':
       return { 
@@ -36,6 +34,11 @@ const reducer = (state, action) => {
         ...state,
         level: action.payload,
       }
+    case 'SET_LINK_NAME':
+      return {
+       ...state,
+       level: action.payload,
+     }  
     default:
       return state;
   }
@@ -44,10 +47,8 @@ const reducer = (state, action) => {
 const defaultState = {
   level:"",
   color:"black",
-  // seconds:0,
   isRunning:false,
-  isEnd:false,
-  linkName:"Poď na hlavnú stránku/Hraj znova"
+  linkName:"Späť na nastavenia hry."
 }
 
 const AppGame = () =>{
@@ -134,18 +135,12 @@ const AppGame = () =>{
     
     _stylingAfterLevel(colorBG);/*---------------------------------------------------partial f. with style changes after select level*/
   }
- 
 
   return (
     <>
          <div className="welcome">
          
-            {/* {state.isEnd &&  <a href="/settings" className="end-game-btn" > Hraj znova </a>}
-
-            {!state.isRunning && <a href="/" className="end-game-btn" > Poď na hlavnú stránku </a>} */}
-
             <a href="/settings" className="end-game-btn" > {state.linkName} </a>
-
                       
             <h3 style={{color: state.color}}> </h3>
 
@@ -163,7 +158,7 @@ const AppGame = () =>{
                 <GameDivPictures level={state.level} seconds={seconds} intervalSecondRef={intervalSecondRef} 
                                  color={state.color} isRunning={state.isRunning} 
                                  dispatch={dispatch} selectedImgCount={ imgCountRef.current} 
-                                 isEnd={state.isEnd} setIsLoaded={setIsLoaded} isLoaded={isLoaded}/> 
+                                 setIsLoaded={setIsLoaded} isLoaded={isLoaded}/> 
          </div>
 
     </>
