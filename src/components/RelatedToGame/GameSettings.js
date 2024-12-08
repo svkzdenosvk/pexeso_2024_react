@@ -9,6 +9,13 @@ const GameSettings = () => {
   const [imgCountChosen, setimgCountChosen] = useState(null); //----count of choosen images
   const [error, setError] = useState(""); 
 
+  const imgCount = [5, 6, 7, 8]; // --------------------------------count of images for game 
+
+  const levels = [
+    { value: "easy", label: "Ľahký" },
+    { value: "medium", label: "Stredný" },
+    { value: "hard", label: "Ťažký" },
+  ];
 
   // const imageOptions = ["vesmir", "kvapka", "more", "sun", "vibracia", "vietor", "drevo", "blesk"];
  
@@ -48,8 +55,7 @@ const GameSettings = () => {
     imgCount: imgCountChosen,
     gameId: gameNumber
   };
-  
-  
+   
   // const encryptedSettings = simpleCrypto.encrypt(chosenSettings);
   const encryptedSettings = simpleCrypto.encrypt(JSON.stringify(chosenSettings));//--encrypt data
 
@@ -61,40 +67,37 @@ const GameSettings = () => {
     <form onSubmit={handleSubmit}>
       <h2>Nastavte parametre hry</h2>
 
-      
-      <fieldset> {/* -----------------------------------------------choose level */}
-        <legend>Vyberte úroveň obtiažnosti:</legend>
-        <label>
-          <input
-            type="radio"
-            name="level"
-            value="easy"
-            onChange={(e) => setlevelChosen(e.target.value)}
-          />
-          Ľahký
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="level"
-            value="medium"
-            onChange={(e) => setlevelChosen(e.target.value)}
-
-          />
-          Stredný
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="level"
-            value="hard"
-            onChange={(e) => setlevelChosen(e.target.value)}
-          />
-          Ťažký
-        </label>
+      <fieldset>
+        <legend>Vyberte úroveň obtiažnosti:</legend>{/* -----------choose level */}
+        {levels.map((level, index) => (
+          <label key={index}>
+            <input
+              type="radio"
+              name="level"
+              value={level.value}
+              onChange={(e) => setlevelChosen(e.target.value)}
+            />
+            {level.label}
+          </label>
+        ))}
       </fieldset>
 
-      {/* Checklist of images
+      <fieldset>
+        <legend>Vyberte počet obrázkov:</legend>{/* --------------------choose count of images to play*/}
+        {imgCount.map((value, index) => (
+          <label key={index}>
+            <input
+              type="radio"
+              name="imageCount"
+              value={value}
+              onChange={(e) => setimgCountChosen(parseInt(e.target.value, 10))}
+            />
+            {value * 2} {/* ---------------------------------------------pair is 5 * 2 = 10) */}
+          </label>
+        ))}
+      </fieldset>
+
+          {/* Checklist of images
       <fieldset>
         <legend>Vyberte obrázky:</legend>
         {imageOptions.map((image) => (
@@ -108,46 +111,6 @@ const GameSettings = () => {
           </label>
         ))}
       </fieldset> */}
-
-      <fieldset>{/* -----------------------------------------------choose count of images */}
-        <legend>Vyberte počet obrázkov:</legend>
-        <label>
-          <input
-            type="radio"
-            name="imageCount"
-            value="5"
-            onChange={(e) => setimgCountChosen(parseInt(e.target.value,10))}
-          />
-          10
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="imageCount"
-            value="6"
-            onChange={(e) => setimgCountChosen(parseInt(e.target.value,10))}
-          />
-          12
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="imageCount"
-            value="7"
-            onChange={(e) => setimgCountChosen(parseInt(e.target.value,10))}
-          />
-          14
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="imageCount"
-            value="8"
-            onChange={(e) => setimgCountChosen(parseInt(e.target.value,10))}
-          />
-          16
-        </label>
-      </fieldset>
 
       {error && <p style={{ color: "red" }}>{error}</p>} {/* ------error message */} 
 
