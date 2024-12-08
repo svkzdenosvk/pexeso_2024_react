@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './css/gameSettings.css';
 
 const uuid = require('uuid')
 const gameNumber = uuid.v4()//--------------------------------------unique string
@@ -112,7 +113,7 @@ const GameSettings = () => {
         ))}
       </fieldset> */}
 
-      {error && <p style={{ color: "red" }}>{error}</p>} {/* ------error message */} 
+      {error && <p>{error}</p>} {/* -------------------------------------error message */} 
 
       <button type="submit">Hraj</button>
     </form>
