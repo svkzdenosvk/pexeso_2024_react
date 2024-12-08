@@ -34,11 +34,6 @@ const reducer = (state, action) => {
         ...state,
         level: action.payload,
       }
-    case 'SET_LINK_NAME':
-      return {
-       ...state,
-       level: action.payload,
-     }  
     default:
       return state;
   }
@@ -48,7 +43,7 @@ const defaultState = {
   level:"",
   color:"black",
   isRunning:false,
-  linkName:"Späť na nastavenia hry."
+  linkName:"Späť na nastavenia hry.",
 }
 
 const AppGame = () =>{
@@ -57,7 +52,7 @@ const AppGame = () =>{
 
  const intervalSecondRef = useRef(null); // Ref of  ID of interval seconds ... according to chat GPT it´s quicker than useState, because it prevents re-rendering
 
- const imgCountRef = useRef(null);
+ const imgCountRef = useRef(null); //!!!!!!!!!!!!!!!!maybe this add to useReducer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
  // ---------------------------useReducer
 
@@ -66,7 +61,6 @@ const AppGame = () =>{
  //----------------------------useState
 
  let [seconds, setSeconds] = useState(0);
- const [isLoaded, setIsLoaded] = useState(true);
 
  /*--------------------------------------------------------------------------------------------------------------------------------------------
  /*--------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -87,17 +81,16 @@ const AppGame = () =>{
 
       if (
         !["easy", "medium", "hard"].includes(decryptedSettings.level) || 
-        ![5, 6, 7, 8].includes(decryptedSettings.imgCount)
-      ){
-       // _setLevelStyleChanges("black","white",)
+        ![5, 6, 7, 8].includes(decryptedSettings.imgCount)){
       
-       navigate('/settings'); 
-       if(["medium", "hard"].includes(decryptedSettings.level)){
-         window.location.reload(); //reset color changes (background, ..) 
-       }
+           navigate('/settings'); 
+           
+           if(["medium", "hard"].includes(decryptedSettings.level)){
+             window.location.reload(); //reset color changes (background, ..) 
+           }
 
       }    
-     
+
           dispatch({type: "SET_LEVEL", payload: decryptedSettings.level })
           imgCountRef.current=decryptedSettings.imgCount;
     
@@ -142,7 +135,7 @@ const AppGame = () =>{
          
             <a href="/settings" className="end-game-btn" > {state.linkName} </a>
                       
-            <h3 style={{color: state.color}}> </h3>
+            <h3 style={{color: state.color}}> </h3> {/*this needs to be rewritten!!!!!!!!!!!!!!!!!!!!!!! */}
 
             <TimeAndStart
                        seconds={seconds} 
@@ -158,7 +151,7 @@ const AppGame = () =>{
                 <GameDivPictures level={state.level} seconds={seconds} intervalSecondRef={intervalSecondRef} 
                                  color={state.color} isRunning={state.isRunning} 
                                  dispatch={dispatch} selectedImgCount={ imgCountRef.current} 
-                                 setIsLoaded={setIsLoaded} isLoaded={isLoaded}/> 
+                                /> 
          </div>
 
     </>

@@ -50,6 +50,7 @@ const reducerImg = (stateImg, action) => {
          _shuffleArray(afterUnMatchArr)
       }
       return { 
+        ...stateImg,
         divImgs: afterUnMatchArr
       }
     case 'MATCH':
@@ -73,13 +74,16 @@ const reducerImg = (stateImg, action) => {
       let afterAfterMatchArr = stateImg.divImgs.filter(oneDiv => !oneDiv.classNames.includes("rotate-center"));
 
       return { 
+        ...stateImg,
         divImgs: afterAfterMatchArr
       }  
     case 'SELECTED_IMG_COUNT':
 
       return { 
         ...stateImg,
-        divImgs: action.payload
+        divImgs: action.payload,
+        isLoaded:false
+
       } 
     default:
       return stateImg;
@@ -88,11 +92,13 @@ const reducerImg = (stateImg, action) => {
 
 const defaultStateImg = {
   // divImgs:divItems,
-     divImgs:[],
+  isLoaded:true,
+  divImgs:[]
+
 
 }
 
-  export const GameDivPictures = ({intervalSecondRef, dispatch, isRunning, seconds, level, color, selectedImgCount, setIsLoaded, isLoaded}) =>{
+  export const GameDivPictures = ({intervalSecondRef, dispatch, isRunning, seconds, level, color, selectedImgCount /*, setIsLoaded, isLoaded*/}) =>{
   
     // ---------------------------useReducer
 
@@ -104,7 +110,7 @@ const defaultStateImg = {
         const imgDivs = await fetchImageDivsForCounts(selectedImgCount); // loading from firebase
 
        dispatchImg({type: "SELECTED_IMG_COUNT",payload: imgDivs })
-       setIsLoaded(false)
+      //  setIsLoaded(false)
 
       } catch (error) {
         console.error("Error fetching items:", error);
@@ -134,7 +140,7 @@ const defaultStateImg = {
   const checkEnd = useCallback(() => { /*--------------------------------------check if is end == each picture removed */
      
     // if(!document.getElementById("row").firstElementChild && isLoaded === false){/*-------------if all images on page are removed */
-    if ((!document.getElementById("row") || document.getElementById("row").childElementCount === 0)&& isLoaded === false ){
+    if ((!document.getElementById("row") || document.getElementById("row").childElementCount === 0)&& stateImg.isLoaded === false ){
           stopTimer();/*---------------------------------------------------stop increment seconds */
           let endTime=_fmtMSS(seconds);/*----------------------------------formating time */
 
@@ -158,7 +164,7 @@ const defaultStateImg = {
           document.getElementsByClassName("welcome")[0].setAttribute('style', 'align-items: center');
 
       }
-  }, [seconds,stopTimer,isRunning]); // adding dependencies
+  }, [seconds,stopTimer,/*isRunning,*/ color,stateImg.isLoaded]); // adding dependencies
 
   // ---------------------------
   // ---------------------------fn´s to show div>imgs
@@ -229,7 +235,7 @@ const defaultStateImg = {
 
           <div  key={oneDiv.id} onClick={(e) => {showImg(e.target.parentNode, oneDiv)}} 
               className={oneDiv.classNames.join(' ') + ' div_on_click'} >
-            <img  src={"/pictures/pexeso/"+oneDiv.imgPath+".jpg"} alt='Smiley face' />  
+              <img  src={"/pictures/pexeso/"+oneDiv.imgPath+".jpg"} alt='Smiley face' />  
 
           </div> 
 
