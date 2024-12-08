@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
 const uuid = require('uuid')
-const gameNumber = uuid.v4()
+const gameNumber = uuid.v4()//--------------------------------------unique string
 
 const GameSettings = () => {
-  const [levelChosen, setlevelChosen] = useState(""); // Uchováva vybraný level
-  // const [selectedImages, setSelectedImages] = useState([]); // Uchováva zaškrtnuté obrázky
-  const [imgCountChosen, setimgCountChosen] = useState(null); // Uchováva počet obrázkov
-  const [error, setError] = useState(""); // Uchováva chybové hlásenie
+  const [levelChosen, setlevelChosen] = useState(""); 
+  // const [selectedImages, setSelectedImages] = useState([]); //---choosen images
+  const [imgCountChosen, setimgCountChosen] = useState(null); //----count of choosen images
+  const [error, setError] = useState(""); 
 
 
   // const imageOptions = ["vesmir", "kvapka", "more", "sun", "vibracia", "vietor", "drevo", "blesk"];
@@ -25,9 +25,7 @@ const GameSettings = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(levelChosen)
-    // console.log(imgCountChosen)
-
+    
     if (!levelChosen){
     
       setError("Nastav level obtiažnosti")
@@ -36,13 +34,13 @@ const GameSettings = () => {
       setError("Nastav počet obrázkov, s ktorými chceš hrať.")
       return
     }else{ 
-      setError(""); // reset error message
+      setError(""); //----------------------------------------------reset error message
     }
   
-    // import SimpleCrypto
-  const SimpleCrypto = require("simple-crypto-js").default;
+  
+  const SimpleCrypto = require("simple-crypto-js").default;//-------import SimpleCrypto
 
-  const secretKey = "encryption-key-for-settings"; // shared key on both sides
+  const secretKey = "encryption-key-for-settings"; //---------------shared key on both sides
   const simpleCrypto = new SimpleCrypto(secretKey);
   
   const chosenSettings = {
@@ -51,11 +49,9 @@ const GameSettings = () => {
     gameId: gameNumber
   };
   
-  // Šifrovanie dát
+  
   // const encryptedSettings = simpleCrypto.encrypt(chosenSettings);
-  const encryptedSettings = simpleCrypto.encrypt(JSON.stringify(chosenSettings));
-
-  // window.location.href = `/game/${encryptedSettings}`;
+  const encryptedSettings = simpleCrypto.encrypt(JSON.stringify(chosenSettings));//--encrypt data
 
   window.location.href = `/game/${encodeURIComponent(encryptedSettings)}`;
 
@@ -65,8 +61,8 @@ const GameSettings = () => {
     <form onSubmit={handleSubmit}>
       <h2>Nastavte parametre hry</h2>
 
-      {/* Výber obtiažnosti */}
-      <fieldset>
+      
+      <fieldset> {/* -----------------------------------------------choose level */}
         <legend>Vyberte úroveň obtiažnosti:</legend>
         <label>
           <input
@@ -83,7 +79,6 @@ const GameSettings = () => {
             name="level"
             value="medium"
             onChange={(e) => setlevelChosen(e.target.value)}
-            // onChange={(e) => levelChosen=e.target.value}
 
           />
           Stredný
@@ -99,7 +94,7 @@ const GameSettings = () => {
         </label>
       </fieldset>
 
-      {/* Checklist obrázkov
+      {/* Checklist of images
       <fieldset>
         <legend>Vyberte obrázky:</legend>
         {imageOptions.map((image) => (
@@ -114,8 +109,7 @@ const GameSettings = () => {
         ))}
       </fieldset> */}
 
-      {/* Výber počtu obrázkov */}
-      <fieldset>
+      <fieldset>{/* -----------------------------------------------choose count of images */}
         <legend>Vyberte počet obrázkov:</legend>
         <label>
           <input
@@ -123,8 +117,6 @@ const GameSettings = () => {
             name="imageCount"
             value="5"
             onChange={(e) => setimgCountChosen(parseInt(e.target.value,10))}
-            // onChange={(e) => setimgCountChosen=parseInt(e.target.value,10)}
-
           />
           10
         </label>
@@ -157,10 +149,9 @@ const GameSettings = () => {
         </label>
       </fieldset>
 
-      {/* Chybové hlásenie */}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>} {/* ------error message */} 
 
-      <button type="submit">Odoslať</button>
+      <button type="submit">Hraj</button>
     </form>
   );
 };
