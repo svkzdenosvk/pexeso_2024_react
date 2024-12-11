@@ -22,15 +22,19 @@ const reducer = (state, action) => {
       isRunning: false,
       linkName: "Hraj znova"
     } 
-    case 'SET_COLOR':
-      return { 
-        ...state,
-        color: action.payload
-      }
-    case 'SET_LEVEL':
+    case 'SET_LEVEL_AND_STYLING':
+        
+    const levelChanges = {/*---using dynamic object properties*/
+      easy:  ["black","white"],
+      medium:["white", "#4d141d"],
+      hard:  ["white","black"]
+    }
+
       return {
         ...state,
         level: action.payload,
+        colorText:levelChanges[action.payload][0],
+        colorBG:levelChanges[action.payload][1]
       }
     default:
       return state;
@@ -39,9 +43,10 @@ const reducer = (state, action) => {
 
 const defaultState = {
   level:"",
-  color:"black",
   isRunning:false,
   linkName:"Späť na nastavenia hry.",
+  colorText: "black",
+  colorBG:"white"
 }
 
 const AppGame = () =>{
@@ -89,49 +94,23 @@ const AppGame = () =>{
 
       }    
 
-          dispatch({type: "SET_LEVEL", payload: decryptedSettings.level })
+          dispatch({type: "SET_LEVEL_AND_STYLING", payload: decryptedSettings.level })
           imgCountRef.current=decryptedSettings.imgCount;
-    
-          const levelChanges = {
-            easy:  ["black"],
-            medium:["white", "#4d141d"],
-            hard:  ["white","black"]
-          }
 
-          _setLevelStyleChanges(levelChanges[decryptedSettings.level][0],levelChanges[decryptedSettings.level][1]); /*---using dynamic object properties instead of switch*/ 
-    
+          document.getElementsByTagName("BODY")[0].setAttribute('style', 'background-color: '+ state.colorBG);
+
     } catch (error) {
       console.error("Dešifrovanie zlyhalo:", error);
       navigate('/settings'); 
 
     }
   }else{
-    // _setLevelStyleChanges("black","white",)
     
     navigate('/settings'); 
     // window.location.reload();
    
   }
-}, [ settingsData, dispatch, navigate]); 
-
-
-// ---------------------------
- // ---------------------------set level fn´s
- // ---------------------------
-
-  function _setLevelStyleChanges(colorText,colorBG,) { /*--------------------------- partial function for set level of the game (it´s also about change styles)*/
-    
-    //style -> color of H1, H3 and seconds
-    dispatch({type: "SET_COLOR", payload: colorText })
-    
-    document.getElementsByTagName("BODY")[0].setAttribute('style', 'background-color: '+ colorBG);
-
-  }
-
-      // document.getElementsByTagName("BODY")[0].setAttribute('style', 'background-color: '+ color);
-      // useEffect(() => {
-      //   document.body.style.backgroundColor = state.color;
-      // }, [state.color]);
+}, [ settingsData, dispatch, navigate, state.colorBG]); 
 
   return (
     <>
@@ -139,21 +118,21 @@ const AppGame = () =>{
          
             <a href="/settings" className="end-game-btn" > {state.linkName} </a>
                       
-            <h3 style={{color: state.color}}> Pre začatie hry slačte tlačítko štart  </h3> 
+            <h3 style={{color: state.colorText}}> Pre začatie hry slačte tlačítko štart  </h3> 
 
             <TimeAndStart
                        seconds={seconds} 
                        setSeconds={setSeconds}
                        dispatch={dispatch}
                        intervalSecondRef={intervalSecondRef}
-                       color={state.color}
+                       color={state.colorText}
                        isRunning={state.isRunning}
                        /> 
          </div>
         
          <div className="column_content" id="content">
                 <GameDivPictures level={state.level} seconds={seconds} intervalSecondRef={intervalSecondRef} 
-                                 color={state.color} isRunning={state.isRunning} 
+                                 color={state.colorText} isRunning={state.isRunning} 
                                  dispatch={dispatch} selectedImgCount={ imgCountRef.current} 
                                 /> 
          </div>
