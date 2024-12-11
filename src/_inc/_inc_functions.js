@@ -5,19 +5,11 @@
 
   // ---------------------------functions of styles
 
- export function _stylingAfterLevel(color){/*---------------------f. for style changes after select level ..inc to App.js*/
-    // set background of page
-    document.getElementsByTagName("BODY")[0].setAttribute('style', 'background-color: '+ color);
+//  export function _stylingAfterLevel(color){/*---------------------f. for style changes after select level ..inc to App.js*/
+//     // set background of page
+//     // document.getElementsByTagName("BODY")[0].setAttribute('style', 'background-color: '+ color);
     
-    // disappear settings buttons  
-    // document.getElementById("levelBtns").setAttribute('style', 'display: none'); 
-
-    //change H3 content -> game instruction
-    document.getElementsByTagName("H3")[0].textContent="Pre začatie hry slačte tlačítko štart"
-
-    //show timer and starter of game
-    document.getElementById("timeAndStart").setAttribute('style', 'display: flex');  
- }
+//  }
 
  export function _stylingAfterStart(){/*-----------------------------f. for style changes after click on "start" button ..inc to TimeAndStart.js*/
        //to hide start button 

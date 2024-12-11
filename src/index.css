@@ -38,7 +38,8 @@ html{
   }
 
   #timeAndStart {
-    display: none;
+    /* display: none; */
+    display:flex;
   }
   
   #timeAndStart #seconds, #timeAndStart #start{/*----------------------div seconds and start  */

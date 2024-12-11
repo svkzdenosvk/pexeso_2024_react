@@ -2,8 +2,6 @@ import { useRef, useReducer, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import SimpleCrypto from "simple-crypto-js"; //this provide crypting and decrypting params in URL
 
-import { _stylingAfterLevel } from "../../_inc/_inc_functions";
-
 import { GameDivPictures } from "./GameDivPictures";
 import {TimeAndStart} from "./TimeAndStart"
 
@@ -126,8 +124,14 @@ const AppGame = () =>{
     //style -> color of H1, H3 and seconds
     dispatch({type: "SET_COLOR", payload: colorText })
     
-    _stylingAfterLevel(colorBG);/*---------------------------------------------------partial f. with style changes after select level*/
+    document.getElementsByTagName("BODY")[0].setAttribute('style', 'background-color: '+ colorBG);
+
   }
+
+      // document.getElementsByTagName("BODY")[0].setAttribute('style', 'background-color: '+ color);
+      // useEffect(() => {
+      //   document.body.style.backgroundColor = state.color;
+      // }, [state.color]);
 
   return (
     <>
@@ -135,7 +139,7 @@ const AppGame = () =>{
          
             <a href="/settings" className="end-game-btn" > {state.linkName} </a>
                       
-            <h3 style={{color: state.color}}> </h3> {/*this needs to be rewritten!!!!!!!!!!!!!!!!!!!!!!! */}
+            <h3 style={{color: state.color}}> Pre začatie hry slačte tlačítko štart  </h3> 
 
             <TimeAndStart
                        seconds={seconds} 
