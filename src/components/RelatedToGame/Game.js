@@ -22,7 +22,7 @@ const reducer = (state, action) => {
       isRunning: false,
       linkName: "Hraj znova"
     } 
-    case 'SET_LEVEL_AND_STYLING':
+    case 'SET_LEVEL_AND_STYLING_AND_IMGCOUNT':
         
     const levelChanges = {/*---using dynamic object properties*/
       easy:  ["black","white"],
@@ -32,9 +32,10 @@ const reducer = (state, action) => {
 
       return {
         ...state,
-        level: action.payload,
-        colorText:levelChanges[action.payload][0],
-        colorBG:levelChanges[action.payload][1]
+        level: action.payload.level,
+        colorText:levelChanges[action.payload.level][0],
+        colorBG:levelChanges[action.payload.level][1],
+        imgCount:action.payload.imgCount
       }
     default:
       return state;
@@ -46,7 +47,8 @@ const defaultState = {
   isRunning:false,
   linkName:"Späť na nastavenia hry.",
   colorText: "black",
-  colorBG:"white"
+  colorBG:"white",
+  imgCount:5
 }
 
 const AppGame = () =>{
@@ -54,8 +56,6 @@ const AppGame = () =>{
  // ---------------------------useRefs
 
  const intervalSecondRef = useRef(null); // Ref of  ID of interval seconds ... according to chat GPT it´s quicker than useState, because it prevents re-rendering
-
- const imgCountRef = useRef(null); //!!!!!!!!!!!!!!!!maybe this add to useReducer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
  // ---------------------------useReducer
 
@@ -94,8 +94,11 @@ const AppGame = () =>{
 
       }    
 
-          dispatch({type: "SET_LEVEL_AND_STYLING", payload: decryptedSettings.level })
-          imgCountRef.current=decryptedSettings.imgCount;
+          dispatch({type: "SET_LEVEL_AND_STYLING_AND_IMGCOUNT",
+                    payload:{
+                             level: decryptedSettings.level,
+                             imgCount: decryptedSettings.imgCount
+                            } })
 
           document.getElementsByTagName("BODY")[0].setAttribute('style', 'background-color: '+ state.colorBG);
 
@@ -133,7 +136,7 @@ const AppGame = () =>{
          <div className="column_content" id="content">
                 <GameDivPictures level={state.level} seconds={seconds} intervalSecondRef={intervalSecondRef} 
                                  color={state.colorText} isRunning={state.isRunning} 
-                                 dispatch={dispatch} selectedImgCount={ imgCountRef.current} 
+                                 dispatch={dispatch} selectedImgCount={ state.imgCount} 
                                 /> 
          </div>
 
