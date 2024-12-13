@@ -98,7 +98,7 @@ const defaultStateImg = {
 
 }
 
-  export const GameDivPictures = ({intervalSecondRef, dispatch, isRunning, seconds, level, color, selectedImgCount /*, setIsLoaded, isLoaded*/}) =>{
+  export const GameDivPictures = ({intervalSecondRef, dispatch, seconds, level, colorText, selectedImgCount /*, setIsLoaded, isLoaded*/}) =>{
   
     // ---------------------------useReducer
 
@@ -110,7 +110,6 @@ const defaultStateImg = {
         const imgDivs = await fetchImageDivsForCounts(selectedImgCount); // loading from firebase
 
        dispatchImg({type: "SELECTED_IMG_COUNT",payload: imgDivs })
-      //  setIsLoaded(false)
 
       } catch (error) {
         console.error("Error fetching items:", error);
@@ -151,7 +150,7 @@ const defaultStateImg = {
           let h1
           if (!document.querySelector('h1')) {
              h1 = document.createElement('h1');
-             h1.style.color = color;
+             h1.style.color = colorText;
 
              document.getElementsByClassName("welcome")[0].appendChild(h1);  
           }else{
@@ -164,7 +163,7 @@ const defaultStateImg = {
           document.getElementsByClassName("welcome")[0].setAttribute('style', 'align-items: center');
 
       }
-  }, [seconds,stopTimer,/*isRunning,*/ color,stateImg.isLoaded]); // adding dependencies
+  }, [seconds,stopTimer,/*isRunning,*/ colorText,stateImg.isLoaded]); // adding dependencies
 
   // ---------------------------
   // ---------------------------fn´s to show div>imgs
@@ -227,6 +226,12 @@ const defaultStateImg = {
     }
     
   }, [stateImg.divImgs,checkEnd,level])
+
+  
+  // useEffect(() => {                         //maybe this is better than check it after match .. will be tested 
+  //   checkEnd()
+  // }, [stateImg.divImgs,checkEnd])
+
 
   return (
      <div className="row" id="row">

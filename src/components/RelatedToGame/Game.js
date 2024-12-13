@@ -128,15 +128,15 @@ const AppGame = () =>{
                        setSeconds={setSeconds}
                        dispatch={dispatch}
                        intervalSecondRef={intervalSecondRef}
-                       color={state.colorText}
+                       colorText={state.colorText}
                        isRunning={state.isRunning}
                        /> 
          </div>
         
          <div className="column_content" id="content">
                 <GameDivPictures level={state.level} seconds={seconds} intervalSecondRef={intervalSecondRef} 
-                                 color={state.colorText} isRunning={state.isRunning} 
-                                 dispatch={dispatch} selectedImgCount={ state.imgCount} 
+                                 colorText={state.colorText} dispatch={dispatch}
+                                 selectedImgCount={ state.imgCount} 
                                 /> 
          </div>
 
