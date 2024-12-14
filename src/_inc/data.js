@@ -64,12 +64,15 @@ export async function fetchImageDivsForCounts(selectedCountOfImg) {
 
   let arrImg = fetchedImageNamesAndId.map(imgNameAndId => imgNameAndId.name) // return only name of picture
 
-  //to shuffle before every game
-  _shuffleArray(arrImg);
-
+  // //to shuffle before every game
+  // _shuffleArray(arrImg);
+  
    let afterCutArrImg = arrImg.slice(0, selectedCountOfImg)
 
    const doubleImgs = [...afterCutArrImg, ...afterCutArrImg];
+
+   //to shuffle before every game
+  _shuffleArray(doubleImgs);
 
   //creation of 2-dimensional array: - out of component to make id´s stable
 // ['123e4567-e89b-12d3-a456-426614174000', 'lightning'],

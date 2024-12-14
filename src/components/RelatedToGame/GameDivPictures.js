@@ -213,7 +213,7 @@ const defaultStateImg = {
             }
 
             document.body.style.pointerEvents = "auto";/*-------------------------------------------give back functionality to pointer*/
-      checkEnd() /* checking whether all images are out -> so that´s end of the game  */
+//this uncomment      checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
     }, 200);
 
@@ -228,9 +228,13 @@ const defaultStateImg = {
   }, [stateImg.divImgs,checkEnd,level])
 
   
-  // useEffect(() => {                         //maybe this is better than check it after match .. will be tested 
-  //   checkEnd()
-  // }, [stateImg.divImgs,checkEnd])
+  useEffect(() => {  
+                           //maybe this is better than check it after match .. will be tested 
+    if(stateImg.divImgs.length===0){
+       checkEnd()
+    }
+   
+  }, [stateImg.divImgs,checkEnd])
 
 
   return (

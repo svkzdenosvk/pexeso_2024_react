@@ -4,22 +4,18 @@ import { _stylingAfterStart } from '../../_inc/_inc_functions';
 export const TimeAndStart = ({seconds,colorText,isRunning,dispatch,setSeconds}) => {
     
     useEffect(() => {
+
       if (!isRunning) return;
 
-      function _incrementSeconds() {
+      const startTime = Date.now();
+      const interval = setInterval(() => {
+        setSeconds(Math.floor((Date.now() - startTime) / 1000));// ---------more accurate second counter (advice from chatGPT)
+      }, 1000);
+  
+      return () => clearInterval(interval);
+    }
 
-        setSeconds(prevseconds => prevseconds + 1);
-
-      }
-      
-      const secondInterval = setInterval(_incrementSeconds, 1000);/* -------set interval to increase seconds*/
-
-
-      return () => {//----------------------------------------------------- cleaning the interval when unmounting or changing dependencies
-
-        clearInterval(secondInterval);
-      };
-    }, [isRunning,setSeconds]);
+    , [isRunning,setSeconds]);
    
 
     function timer(){/*------------------------------------------------------button start */
