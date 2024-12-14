@@ -125,12 +125,12 @@ const defaultStateImg = {
  // ---------------------------
 
   let stopTimer= useCallback(() => { /*----------------------------------------------------------stop seconds increment */
-      clearInterval(intervalSecondRef.current);
+      // clearInterval(intervalSecondRef.current);
 
       dispatch({type: "SET_STOP_GAME" })
 
       document.getElementById("seconds").style.display="none";
-  }, [intervalSecondRef, dispatch]); // dependencies
+  }, [/*intervalSecondRef,*/ dispatch]); // dependencies
 
   // ---------------------------
   // ---------------------------ending fn

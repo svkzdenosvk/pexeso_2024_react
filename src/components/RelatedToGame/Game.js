@@ -1,4 +1,4 @@
-import { useRef, useReducer, useEffect, useState } from "react";
+import { useReducer, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import SimpleCrypto from "simple-crypto-js"; //this provide crypting and decrypting params in URL
 
@@ -52,10 +52,6 @@ const defaultState = {
 }
 
 const AppGame = () =>{
-
- // ---------------------------useRefs
-
- const intervalSecondRef = useRef(null); // Ref of  ID of interval seconds ... according to chat GPT it´s quicker than useState, because it prevents re-rendering
 
  // ---------------------------useReducer
 
@@ -127,14 +123,13 @@ const AppGame = () =>{
                        seconds={seconds} 
                        setSeconds={setSeconds}
                        dispatch={dispatch}
-                       intervalSecondRef={intervalSecondRef}
                        colorText={state.colorText}
                        isRunning={state.isRunning}
                        /> 
          </div>
         
          <div className="column_content" id="content">
-                <GameDivPictures level={state.level} seconds={seconds} intervalSecondRef={intervalSecondRef} 
+                <GameDivPictures level={state.level} seconds={seconds} 
                                  colorText={state.colorText} dispatch={dispatch}
                                  selectedImgCount={ state.imgCount} 
                                 /> 

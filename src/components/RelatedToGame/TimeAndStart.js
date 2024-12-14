@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { _stylingAfterStart } from '../../_inc/_inc_functions';
  
-export const TimeAndStart = ({seconds,intervalSecondRef,colorText,isRunning,dispatch,setSeconds}) => {
+export const TimeAndStart = ({seconds,colorText,isRunning,dispatch,setSeconds}) => {
     
     useEffect(() => {
       if (!isRunning) return;
@@ -12,16 +12,17 @@ export const TimeAndStart = ({seconds,intervalSecondRef,colorText,isRunning,disp
 
       }
       
-      intervalSecondRef.current=setInterval(_incrementSeconds, 1000);/* -------set interval to increase seconds*/
+      const secondInterval = setInterval(_incrementSeconds, 1000);/* -------set interval to increase seconds*/
 
-      // Cleaning the interval when unmounting or changing dependencies
-      // return () => {
-      //   clearInterval(intervalSecondRef.current);
-      // };
-    }, [isRunning,setSeconds, intervalSecondRef]);
+
+      return () => {//----------------------------------------------------- cleaning the interval when unmounting or changing dependencies
+
+        clearInterval(secondInterval);
+      };
+    }, [isRunning,setSeconds]);
    
 
-    function timer(){/*---------------------------------------------------------------button start */
+    function timer(){/*------------------------------------------------------button start */
      
       _stylingAfterStart();
 
