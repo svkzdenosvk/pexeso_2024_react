@@ -98,7 +98,7 @@ const defaultStateImg = {
 
 }
 
-  export const GameDivPictures = ({intervalSecondRef, dispatch, seconds, level, colorText, selectedImgCount /*, setIsLoaded, isLoaded*/}) =>{
+  export const GameDivPictures = ({dispatch, seconds, level, colorText, selectedImgCount }) =>{
   
     // ---------------------------useReducer
 
@@ -119,33 +119,23 @@ const defaultStateImg = {
     fetchDivItemsWithCount(); // to call async f.
   }, [selectedImgCount]); // 
 
-
- // ---------------------------
- // ---------------------------timing fn´s
- // ---------------------------
-
-  let stopTimer= useCallback(() => { /*----------------------------------------------------------stop seconds increment */
-      // clearInterval(intervalSecondRef.current);
-
-      dispatch({type: "SET_STOP_GAME" })
-
-      document.getElementById("seconds").style.display="none";
-  }, [/*intervalSecondRef,*/ dispatch]); // dependencies
-
   // ---------------------------
   // ---------------------------ending fn
   // ---------------------------
 
-  const checkEnd = useCallback(() => { /*--------------------------------------check if is end == each picture removed */
+  const checkEnd = useCallback(() => { /*---------------------------------------------------check if is end == each picture removed */
      
-    // if(!document.getElementById("row").firstElementChild && isLoaded === false){/*-------------if all images on page are removed */
+    // if(!document.getElementById("row").firstElementChild && isLoaded === false){/*-------if all images on page are removed */
     if ((!document.getElementById("row") || document.getElementById("row").childElementCount === 0)&& stateImg.isLoaded === false ){
-          stopTimer();/*---------------------------------------------------stop increment seconds */
+          
+          dispatch({type: "SET_STOP_GAME" })/*----------------------------------------------stop increment seconds */
+
+          document.getElementById("seconds").style.display="none";
           let endTime=_fmtMSS(seconds);/*----------------------------------formating time */
 
-          // document.getElementsByTagName("BODY")[0].firstElementChild.classList.add('div_center');/*---------------start ---animation of gratulation text */
+           document.getElementsByTagName("BODY")[0].firstElementChild.classList.add('div_center');/*start ---animation of gratulation text */
           document.getElementById("result").setAttribute("style", "justify-content: center;");
-          let timeArr=endTime.split(":");/*--------------------------------split time string (seconds:minutes) to array for separate minutes and second in gratulation text */
+          let timeArr=endTime.split(":");/*-------------------------------------------------split time string (seconds:minutes) to array for separate minutes and second in gratulation text */
           
           let h1
           if (!document.querySelector('h1')) {
@@ -158,12 +148,14 @@ const defaultStateImg = {
           }
           
           h1.innerHTML = "Gratulácia, vyhrali ste za "+(timeArr[0]==="0"?"":timeArr[0]+"m")+" "+ timeArr[1]+"s";
-          h1.classList.add('h1End');/*-end ---animation of gratulation text */
+          // document.getElementsByTagName("BODY")[0].firstElementChild.classList.add('div_center');/*start ---animation of gratulation text */
+
+           //h1.classList.add('h1End');/*-end ---animation of gratulation text */
 
           document.getElementsByClassName("welcome")[0].setAttribute('style', 'align-items: center');
 
       }
-  }, [seconds,stopTimer,/*isRunning,*/ colorText,stateImg.isLoaded]); // adding dependencies
+  }, [seconds, dispatch /*,stopTimer*/, colorText,stateImg.isLoaded]); // adding dependencies
 
   // ---------------------------
   // ---------------------------fn´s to show div>imgs
@@ -213,7 +205,7 @@ const defaultStateImg = {
             }
 
             document.body.style.pointerEvents = "auto";/*-------------------------------------------give back functionality to pointer*/
-//this uncomment      checkEnd() /* checking whether all images are out -> so that´s end of the game  */
+       checkEnd() /* checking whether all images are out -> so that´s end of the game  */
 
     }, 200);
 
@@ -226,16 +218,6 @@ const defaultStateImg = {
     }
     
   }, [stateImg.divImgs,checkEnd,level])
-
-  
-  useEffect(() => {  
-                           //maybe this is better than check it after match .. will be tested 
-    if(stateImg.divImgs.length===0){
-       checkEnd()
-    }
-   
-  }, [stateImg.divImgs,checkEnd])
-
 
   return (
      <div className="row" id="row">
