@@ -233,10 +233,10 @@ html{
     -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%); }
     
-  .h1End { /*--------------------------------------------------text of gratulation  */
-    font-size: 750%;
+  /* .h1End { /*--------------------------------------------------text of gratulation  */
+    /*font-size: 750%;
     -webkit-transition: font-size 0.52s;
-    transition: font-size 0.52s; }
+    transition: font-size 0.52s; } */
     
   .selected_Div_img {/*----------------------------------------prevent to select selected div > img  */
     pointer-events: none;

@@ -155,7 +155,7 @@ const defaultStateImg = {
           document.getElementsByClassName("welcome")[0].setAttribute('style', 'align-items: center');
 
       }
-  }, [seconds, dispatch /*,stopTimer*/, colorText,stateImg.isLoaded]); // adding dependencies
+  }, [seconds, dispatch, colorText,stateImg.isLoaded]); // adding dependencies
 
   // ---------------------------
   // ---------------------------fn´s to show div>imgs

@@ -1,6 +1,6 @@
 import { useReducer, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import SimpleCrypto from "simple-crypto-js"; //this provide crypting and decrypting params in URL
+import SimpleCrypto from "simple-crypto-js"; //------------------------this provide crypting and decrypting params in URL
 
 import { GameDivPictures } from "./GameDivPictures";
 import {TimeAndStart} from "./TimeAndStart"
@@ -24,7 +24,7 @@ const reducer = (state, action) => {
     } 
     case 'SET_LEVEL_AND_STYLING_AND_IMGCOUNT':
         
-    const levelChanges = {/*---using dynamic object properties*/
+    const levelChanges = {/*--------------------------------------------using dynamic object properties*/
       easy:  ["black","white"],
       medium:["white", "#4d141d"],
       hard:  ["white","black"]
