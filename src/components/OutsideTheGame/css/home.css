@@ -1,8 +1,7 @@
-.main-content-home{
-    min-height:70vh;
+.main-content-home {
+  min-height: 70vh;
 }
 
-.main-content-home h1{
-    font-size: calc(2rem + 5vw);
-
+.main-content-home h1 {
+  font-size: calc(2rem + 5vw);
 }

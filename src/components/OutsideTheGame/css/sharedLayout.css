@@ -1,75 +1,77 @@
-.shared-content{
-    padding: 0;
-    margin:0;
-    box-sizing: border-box;
-    min-height: 100vh;
-    width:100%;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: space-around; */
+.shared-content {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-around; */
 }
 
-.shared-content .shared-navigation{
-    height:30vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
+.shared-content .shared-navigation {
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 }
 
 .shared-content .shared-navigation nav {
-    display: flex;
-    width:100%;
-    background-color:grey;
-    /* padding: 20px; */
+  display: flex;
+  width: 100%;
+  background-color: grey;
+  /* padding: 20px; */
 }
 
-.shared-content .shared-navigation nav a{
-    width:50%;
-    padding: 20px;
-    color:white;
-    font-size: 20px; 
-    font-weight: bold;
-    text-decoration: none;
-    transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+.shared-content .shared-navigation nav a {
+  width: 50%;
+  padding: 20px;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }
 
-.shared-content .shared-navigation nav a:hover, div .dropbtn:hover{
-    color:goldenrod;
-    background-color: #696969;
-    box-shadow: 0px 4px 8px rgba(255, 165, 0, 0.3);
+.shared-content .shared-navigation nav a:hover,
+div .dropbtn:hover {
+  color: goldenrod;
+  background-color: #696969;
+  box-shadow: 0px 4px 8px rgba(255, 165, 0, 0.3);
 }
- 
-.shared-main-content{
-  display:flex;
+
+.shared-main-content {
+  display: flex;
   flex-direction: row;
   min-height: 100%;
   width: 100%;
-  justify-content:center;
+  justify-content: center;
 }
 
 @media screen and (max-width: 600px) {
-    .shared-main-content{
-        flex-direction: column;
-    }
+  .shared-main-content {
+    flex-direction: column;
   }
+}
 
-  @media screen and (max-width: 436px) {
-    /* .shared-content .shared-navigation{
+@media screen and (max-width: 436px) {
+  /* .shared-content .shared-navigation{
         height:30vh;
         flex-direction: column;
         justify-content: end;
     } */
-    .shared-content .shared-navigation nav {
-        flex-direction: column;
-        text-align: center;
-        align-items: center;
-
-
-    }
-    
-    .shared-content .shared-navigation nav a{
-        width:100%;
-        text-align: center;
-        align-items: center;
-    }
+  .shared-content .shared-navigation nav {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
   }
+
+  .shared-content .shared-navigation nav a {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+}

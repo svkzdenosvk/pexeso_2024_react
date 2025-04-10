@@ -1,56 +1,52 @@
-form fieldset{
-    border-radius:25px;
+form fieldset {
+  border-radius: 25px;
 }
 
 form fieldset:first-of-type {
-    margin-bottom:10px;
+  margin-bottom: 10px;
 }
 
-form fieldset legend{
-    font-weight: bold;
+form fieldset legend {
+  font-weight: bold;
 }
 
 form button {
-    text-decoration: none;
-    border:none;
-    background-color:transparent;
-    /* color: grey;  */
-    color: black;
-    margin-top:10px;
-    font-weight: bold;
-    /* position: relative; */
-    padding: 10px 25px ;
-    display: inline-block;
-    border-radius:25px;
-    animation: pulse-shadow 1.5s infinite ease-in-out;
-
-  }
-
-form button:hover{
-    color: goldenrod;
-    transition: color 0.3s ease;
-    /* box-shadow: 0px 4px 8px rgba(255, 165, 0, 0.3); */
-    box-shadow: 0px 7px 10px grey;
-
-} 
-
-form p{
-    color:red;
-    font-weight: bold;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  /* color: grey;  */
+  color: black;
+  margin-top: 10px;
+  font-weight: bold;
+  /* position: relative; */
+  padding: 10px 25px;
+  display: inline-block;
+  border-radius: 25px;
+  animation: pulse-shadow 1.5s infinite ease-in-out;
 }
 
-  @keyframes pulse-shadow {
-    0% {
-      /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); */
-      box-shadow: 0 2px 0px white;
+form button:hover {
+  color: goldenrod;
+  transition: color 0.3s ease;
+  /* box-shadow: 0px 4px 8px rgba(255, 165, 0, 0.3); */
+  box-shadow: 0px 7px 10px grey;
+}
 
-    }
-    50% {
-      /* box-shadow: 0 7px 12px rgba(0, 0, 0, 0.8); */
-      box-shadow: 0 6px 10px goldenrod;
+form p {
+  color: red;
+  font-weight: bold;
+}
 
-    }
-    100% {
-      box-shadow: 0 2px 0px white;
-    }
+@keyframes pulse-shadow {
+  0% {
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); */
+    box-shadow: 0 2px 0px white;
   }
+  50% {
+    /* box-shadow: 0 7px 12px rgba(0, 0, 0, 0.8); */
+    box-shadow: 0 6px 10px goldenrod;
+  }
+  100% {
+    box-shadow: 0 2px 0px white;
+  }
+}
